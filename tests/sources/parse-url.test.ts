@@ -89,6 +89,14 @@ describe("parseSourceUrl — même source écrite différemment", () => {
     expect(ok(parseSourceUrl("https://www.itsnicethat.com/")).key).toBe("web:itsnicethat.com");
   });
 
+  it("Web : un port non standard est conservé", () => {
+    expect(ok(parseSourceUrl("http://example.com:8080/blog"))).toMatchObject({
+      url: "http://example.com:8080/blog",
+      key: "web:example.com:8080/blog",
+    });
+    expect(ok(parseSourceUrl("https://example.com:443/blog")).key).toBe("web:example.com/blog");
+  });
+
   it("Web : http est conservé dans l'adresse mais pas dans la clé", () => {
     const source = ok(parseSourceUrl("http://example.com/news"));
     expect(source.url).toBe("http://example.com/news");

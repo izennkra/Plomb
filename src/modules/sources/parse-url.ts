@@ -50,7 +50,8 @@ export function parseSourceUrl(input: string): ParseResult {
   if (host === "instagram.com" || host.endsWith(".instagram.com")) return parseInstagram(segments);
   if (["x.com", "twitter.com", "mobile.twitter.com", "mobile.x.com"].includes(host)) return parseX(segments);
   if (host === "linkedin.com" || host.endsWith(".linkedin.com")) return parseLinkedIn(segments);
-  return parseWeb(url, host);
+  // Keep a non-standard port (example.com:8080): it is part of the address.
+  return parseWeb(url, url.port ? `${host}:${url.port}` : host);
 }
 
 function toUrl(input: string): URL | null {
