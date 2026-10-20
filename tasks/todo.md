@@ -54,10 +54,10 @@
 ## Tâche 6 : Niveau 2a — liens d'articles
 **Description :** `findArticleLinks(html, pageUrl)` : liens du même site, regroupés par famille d'adresse, en écartant catégories, tags, auteurs, pages de menu ; renvoie les liens dans l'ordre de la page.
 **Critères :**
-- [ ] the-brandidentity.com/features → ≥ 10 liens `/project/…`
-- [ ] itsnicethat.com → ≥ 10 liens `/articles/…`
-- [ ] Brand New → ≥ 10 liens d'articles, **aucun** lien `/category/…`
-- [ ] D&AD → entrées de l'archive reconnues
+- [x] the-brandidentity.com/features → ≥ 10 liens `/project/…`
+- [x] itsnicethat.com → ≥ 10 liens `/articles/…`
+- [x] Brand New → ≥ 10 liens d'articles, **aucun** lien `/category/…`
+- [x] D&AD → entrées de l'archive reconnues
 **Vérification :** `npm test` sur copies figées
 **Dépendances :** 4 · **Taille :** M
 **Fichiers :** `src/modules/aspiration-web/article-links.ts`, `tests/aspiration-web/article-links.test.ts`
