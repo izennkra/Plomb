@@ -10,6 +10,8 @@ export type FetchOptions = {
   maxRedirects?: number;
   /** false: only the status matters, the page is not downloaded. */
   readBody?: boolean;
+  /** true: the raw bytes (images…) in `bytes`, instead of text. */
+  binary?: boolean;
   headers?: Record<string, string>;
   /** Tests only: let local test servers through. */
   allowInternal?: boolean | ((host: string) => boolean);
@@ -17,7 +19,7 @@ export type FetchOptions = {
 };
 
 export type FetchResult =
-  | { ok: true; url: string; status: number; contentType: string; body: string }
+  | { ok: true; url: string; status: number; contentType: string; body: string; bytes?: Uint8Array }
   | { ok: false; reason: FetchFailure; error: string };
 
 export type FetchFailure = "invalid" | "blocked" | "timeout" | "unreachable" | "too-large" | "too-many-redirects";
@@ -52,6 +54,7 @@ export async function safeFetch(
     maxBytes = 5_000_000,
     maxRedirects = 5,
     readBody = true,
+    binary = false,
     headers = BROWSER_HEADERS,
     allowInternal = false,
     lookup = defaultLookup,
@@ -81,9 +84,11 @@ export async function safeFetch(
         await response.body?.cancel();
         return { ok: true, url, status: response.status, contentType, body: "" };
       }
-      const body = await readLimited(response, maxBytes);
-      if (body === null) return fail("too-large");
-      return { ok: true, url, status: response.status, contentType, body };
+      const bytes = await readLimited(response, maxBytes);
+      if (bytes === null) return fail("too-large");
+      if (binary) return { ok: true, url, status: response.status, contentType, body: "", bytes };
+      const charset = /charset=([\w-]+)/i.exec(contentType)?.[1] ?? "utf-8";
+      return { ok: true, url, status: response.status, contentType, body: decode(bytes, charset) };
     }
   } catch (error) {
     if (signal.aborted) return fail("timeout");
@@ -122,13 +127,13 @@ async function checkHost(
   return addresses.length > 0 && addresses.every(isPublicIp) ? null : "blocked";
 }
 
-/** Reads the body as text, or returns null as soon as it exceeds maxBytes. */
-async function readLimited(response: Response, maxBytes: number): Promise<string | null> {
+/** Reads the body, or returns null as soon as it exceeds maxBytes. */
+async function readLimited(response: Response, maxBytes: number): Promise<Uint8Array | null> {
   if (Number(response.headers.get("content-length") ?? 0) > maxBytes) {
     await response.body?.cancel();
     return null;
   }
-  if (!response.body) return "";
+  if (!response.body) return new Uint8Array();
 
   const chunks: Uint8Array[] = [];
   let size = 0;
@@ -140,8 +145,7 @@ async function readLimited(response: Response, maxBytes: number): Promise<string
     }
     chunks.push(chunk);
   }
-  const charset = /charset=([\w-]+)/i.exec(response.headers.get("content-type") ?? "")?.[1] ?? "utf-8";
-  return decode(Buffer.concat(chunks), charset);
+  return Buffer.concat(chunks);
 }
 
 function decode(bytes: Uint8Array, charset: string): string {

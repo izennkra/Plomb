@@ -12,3 +12,6 @@ data/
 !.env.example
 
 .DS_Store
+
+# Copies of social media images (local development)
+public/media/

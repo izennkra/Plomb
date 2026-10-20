@@ -3,6 +3,8 @@ import { getRedacteur } from "@/modules/edition/redacteur";
 import { isClockAuthorized } from "@/modules/planification/clock-auth";
 import { runClock } from "@/modules/planification/clock";
 import { createResendSender } from "@/modules/planification/resend-sender";
+import { createApifyClient } from "@/modules/social/apify";
+import { getMediaStore } from "@/modules/social/media-store";
 
 // The online host stops a call after 5 minutes; the clock keeps a margin.
 export const maxDuration = 300;
@@ -23,6 +25,8 @@ async function handle(request: Request): Promise<Response> {
     sendEmail: (message) => createResendSender({ apiKey: process.env.RESEND_API_KEY ?? "", from: process.env.PLOMB_EMAIL_FROM })(message),
     emailTo: process.env.PLOMB_EMAIL_TO ?? "",
     journalUrl: `${appUrl}/journal`,
+    apify: () => (process.env.APIFY_TOKEN ? createApifyClient({ token: process.env.APIFY_TOKEN }) : null),
+    mediaStore: getMediaStore(),
   });
   return Response.json(report);
 }

@@ -223,7 +223,7 @@ async function readFromPage(
 }
 
 /** Listed addresses never seen before, at most one relève's worth, in the source's order (newest first). */
-async function newOnes(db: Db, sourceId: number, listed: string[]): Promise<string[]> {
+export async function newOnes(db: Db, sourceId: number, listed: string[]): Promise<string[]> {
   if (listed.length === 0) return [];
   const [stored, seen] = await Promise.all([
     db.select({ url: posts.url }).from(posts).where(and(eq(posts.sourceId, sourceId), inArray(posts.url, listed))),
@@ -240,7 +240,11 @@ async function newOnes(db: Db, sourceId: number, listed: string[]): Promise<stri
  * Stores the new articles. The very first relève of a source is a starting point, not news:
  * its articles are marked as such, and everything it lists is remembered as already seen.
  */
-async function store(db: Db, sourceId: number, found: Extract<Found, { ok: true }>): Promise<number> {
+export async function store(
+  db: Db,
+  sourceId: number,
+  found: Pick<Extract<Found, { ok: true }>, "listed" | "handled" | "posts"> & { method: Method | "social" },
+): Promise<number> {
   const [[{ storedBefore }], [{ seenBefore }]] = await Promise.all([
     db.select({ storedBefore: count() }).from(posts).where(eq(posts.sourceId, sourceId)),
     db.select({ seenBefore: count() }).from(seenLinks).where(eq(seenLinks.sourceId, sourceId)),
@@ -265,7 +269,7 @@ async function store(db: Db, sourceId: number, found: Extract<Found, { ok: true 
   return inserted.length;
 }
 
-function newArticlesMessage(added: number): string {
+export function newArticlesMessage(added: number): string {
   if (added === 0) return "aucun nouvel article";
   return `${added} ${added > 1 ? "nouveaux articles" : "nouvel article"}`;
 }

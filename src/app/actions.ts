@@ -2,10 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { after } from "next/server";
-import { inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { DEFAULT_USER_ID } from "@/db/client";
 import { getDb } from "@/db";
-import { sources } from "@/db/schema";
+import { socialRuns, sources } from "@/db/schema";
 import {
   FEED_SOURCE_TYPES,
   isFeedSource,
@@ -18,6 +18,9 @@ import { buildEdition } from "@/modules/edition/build";
 import { editionTestMode } from "@/modules/edition/select";
 import { saveSchedule } from "@/modules/edition/settings";
 import { getRedacteur } from "@/modules/edition/redacteur";
+import { createApifyClient } from "@/modules/social/apify";
+import { getMediaStore } from "@/modules/social/media-store";
+import { collectSocialRuns, launchSocialRuns } from "@/modules/social/refresh-social";
 import { addSource } from "@/modules/sources/add-source";
 import { setFavorite } from "@/modules/sources/favorite";
 import { unsubscribe } from "@/modules/sources/unsubscribe";
@@ -62,7 +65,24 @@ export async function refreshAllAction(): Promise<void> {
     websites.map((source) => source.id),
   );
   after(() => refreshAllSources(db));
+  // Social networks too (button only: the clock does it at 7:30 and 17:30), within the free credit.
+  if (process.env.APIFY_TOKEN) {
+    const apify = createApifyClient({ token: process.env.APIFY_TOKEN });
+    await launchSocialRuns(db, { apify, force: true }).catch(() => null);
+    after(() => waitForSocialRuns(db, apify));
+  }
   revalidatePath("/", "layout");
+}
+
+/** After the button: collects the social answers as they come back (a minute or two), for up to 4 minutes. */
+async function waitForSocialRuns(db: Awaited<ReturnType<typeof getDb>>, apify: ReturnType<typeof createApifyClient>) {
+  const mediaStore = getMediaStore();
+  for (let round = 0; round < 24; round++) {
+    await new Promise((resolve) => setTimeout(resolve, 10_000));
+    await collectSocialRuns(db, { apify, mediaStore }).catch(() => null);
+    const left = await db.select({ id: socialRuns.id }).from(socialRuns).where(eq(socialRuns.status, "running"));
+    if (left.length === 0) return;
+  }
 }
 
 export async function unsubscribeAction(formData: FormData): Promise<void> {

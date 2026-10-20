@@ -26,16 +26,16 @@ garde-fou de crédit), puis Instagram, X, LinkedIn un par un, la copie des image
 - [x] @itsnicethat dans Plomb : ses vidéos dans la Salle de Dépêches (robots.txt YouTube → mode lecteur de flux, décidé par Izenn)
 
 ### Phase 2 : Socle Apify
-- [ ] Tâche 3 : Client Apify (lancer, statut, résultats, consommation du mois) + table `social_runs`
-- [ ] Tâche 4 : Copie des images (Vercel Blob / dossier local), supprimées avec les posts
+- [x] Tâche 3 : Client Apify (lancer, statut, résultats, consommation du mois) + table `social_runs`
+- [x] Tâche 4 : Copie des images (Vercel Blob / dossier local), supprimées avec les posts
 
 ### Phase 3 : Plateformes
-- [ ] Tâche 5 : Instagram (posts, carrousels, légende)
-- [ ] Tâche 6 : X (tweets, images)
-- [ ] Tâche 7 : LinkedIn (posts de page et de profil)
+- [x] Tâche 5 : Instagram (posts, carrousels, légende)
+- [x] Tâche 6 : X (tweets, images)
+- [x] Tâche 7 : LinkedIn (posts de page et de profil)
 
 ### Phase 4 : Horloge
-- [ ] Tâche 8 : Relevés sociaux à 7h30 et 17h30, récupération au passage suivant, garde-fou
+- [x] Tâche 8 : Relevés sociaux à 7h30 et 17h30, récupération au passage suivant, garde-fou
 
 ### Checkpoint final
 - [ ] Essai réel sur un compte de chaque plateforme ; consommation Apify vérifiée (0 € facturé)

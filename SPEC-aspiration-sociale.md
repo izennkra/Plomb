@@ -79,5 +79,13 @@ pour un usage personnel ; à revoir avant les abonnés payants.
    comporte en **lecteur de flux** (règle robots.txt non appliquée, rythme poli conservé). Ailleurs, robots.txt reste respecté.
    (Alternative non retenue : API officielle YouTube, gratuite, avec une clé Google Cloud.)
 
+## Résultats réels (2026-10-20)
+- YouTube @itsnicethat : 15 vidéos lues (3 de moins de 7 jours affichées), miniature et description.
+- Instagram @naomikolsteren : 3 posts, 7–8 images copiées par post, carrousel dans la Salle de Dépêches.
+- X @studiobakers et LinkedIn Pentagram : réponses réelles lues correctement (tests sur copies).
+- Coût Apify de la journée d'essais : **0,027 $** sur 5 $ gratuits.
+- Robots Apify retenus : `apify/instagram-post-scraper` (0,0017 $/post), `kaitoeasyapi/…-cheapest` pour X
+  (0,00025 $/tweet, 20 tweets minimum par demande), `harvestapi/linkedin-company-posts` / `-profile-posts` (0,002 $/post).
+
 ## Open Questions
 - Aucune.
