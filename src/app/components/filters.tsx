@@ -3,6 +3,7 @@ import type { Source } from "@/db/schema";
 
 const TYPE_LABELS: Record<Source["type"], string> = {
   web: "Sites web",
+  youtube: "YouTube",
   instagram: "Instagram",
   x: "X",
   linkedin: "LinkedIn",

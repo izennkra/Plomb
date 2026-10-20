@@ -2,16 +2,25 @@
 
 import { revalidatePath } from "next/cache";
 import { after } from "next/server";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { DEFAULT_USER_ID } from "@/db/client";
 import { getDb } from "@/db";
-import { sources } from "@/db/schema";
-import { markRefreshing, refreshAllSources, refreshSource } from "@/modules/aspiration-web/refresh-source";
+import { socialRuns, sources } from "@/db/schema";
+import {
+  FEED_SOURCE_TYPES,
+  isFeedSource,
+  markRefreshing,
+  refreshAllSources,
+  refreshSource,
+} from "@/modules/aspiration-web/refresh-source";
 import { completeGalleries } from "@/modules/depeches/complete-galleries";
 import { buildEdition } from "@/modules/edition/build";
 import { editionTestMode } from "@/modules/edition/select";
 import { saveSchedule } from "@/modules/edition/settings";
 import { getRedacteur } from "@/modules/edition/redacteur";
+import { createApifyClient } from "@/modules/social/apify";
+import { createDbMediaStore } from "@/modules/social/media-store";
+import { collectSocialRuns, launchSocialRuns } from "@/modules/social/refresh-social";
 import { addSource } from "@/modules/sources/add-source";
 import { setFavorite } from "@/modules/sources/favorite";
 import { unsubscribe } from "@/modules/sources/unsubscribe";
@@ -31,7 +40,7 @@ export async function addSourceAction(_previous: AddSourceState, formData: FormD
   if (!result.ok) return { status: "error", message: result.error, input };
 
   const { source } = result;
-  const firstRelève = source.type === "web" && source.lastFetchedAt === null;
+  const firstRelève = isFeedSource(source.type) && source.lastFetchedAt === null;
   if (firstRelève) {
     // The first relève takes a few seconds per article: it runs after the answer, the page updates itself.
     await markRefreshing(db, [source.id]);
@@ -50,13 +59,30 @@ export async function addSourceAction(_previous: AddSourceState, formData: FormD
 
 export async function refreshAllAction(): Promise<void> {
   const db = await getDb();
-  const websites = await db.select({ id: sources.id }).from(sources).where(eq(sources.type, "web"));
+  const websites = await db.select({ id: sources.id }).from(sources).where(inArray(sources.type, FEED_SOURCE_TYPES));
   await markRefreshing(
     db,
     websites.map((source) => source.id),
   );
   after(() => refreshAllSources(db));
+  // Social networks too (button only: the clock does it at 7:30 and 17:30), within the free credit.
+  if (process.env.APIFY_TOKEN) {
+    const apify = createApifyClient({ token: process.env.APIFY_TOKEN });
+    await launchSocialRuns(db, { apify, force: true }).catch(() => null);
+    after(() => waitForSocialRuns(db, apify));
+  }
   revalidatePath("/", "layout");
+}
+
+/** After the button: collects the social answers as they come back (a minute or two), for up to 4 minutes. */
+async function waitForSocialRuns(db: Awaited<ReturnType<typeof getDb>>, apify: ReturnType<typeof createApifyClient>) {
+  const mediaStore = createDbMediaStore(db);
+  for (let round = 0; round < 24; round++) {
+    await new Promise((resolve) => setTimeout(resolve, 10_000));
+    await collectSocialRuns(db, { apify, mediaStore }).catch(() => null);
+    const left = await db.select({ id: socialRuns.id }).from(socialRuns).where(eq(socialRuns.status, "running"));
+    if (left.length === 0) return;
+  }
 }
 
 export async function unsubscribeAction(formData: FormData): Promise<void> {

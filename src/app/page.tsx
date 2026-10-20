@@ -9,7 +9,7 @@ import { PostCard } from "./components/post-card";
 
 export const dynamic = "force-dynamic";
 
-const TYPES: Source["type"][] = ["web", "instagram", "x", "linkedin"];
+const TYPES: Source["type"][] = ["web", "youtube", "instagram", "x", "linkedin"];
 
 type SearchParams = Promise<{ type?: string; source?: string }>;
 

@@ -11,12 +11,15 @@ Validé le 2026-10-20.
 | edition | IA Rédacteur en Chef : édition du matin (Une 1 + 2, suite par importance), sources favorites, page Journal, contenu de l'e-mail ; français par défaut, langue réglable | depeches |
 | planification | **Mise en ligne** (serveur toujours allumé, base Turso, IA Claude Haiku 5.5 en ligne) ; relève des sources par lots (30–60 min), préparation de l'édition à 8h00 selon la fréquence choisie, publication + **envoi de l'e-mail** à 9h00 (Europe/Paris) — fonctionne Mac éteint | aspiration-web, edition |
 | aspiration-sociale | Instagram / X / LinkedIn via service tiers (Apify, SocialData…) + cache des médias (expirent sous 48h) | sources |
-| comptes-abonnement | Comptes utilisateurs et abonnement à 5 €/mois | — |
+| ~~comptes-abonnement~~ | ~~Comptes utilisateurs et abonnement à 5 €/mois~~ — **abandonnée** : Plomb reste un outil personnel (Izenn, 2026-10-20) | — |
 | interface | Intégration du design system Figma / animations Framer sur le moteur | tous |
 
-Ordre de construction : sources → aspiration-web → depeches → edition → planification → aspiration-sociale → comptes-abonnement → interface
+Ordre de construction : sources → aspiration-web → depeches → edition → planification → aspiration-sociale → interface
 
 ## Décisions déjà prises
+- **Plomb est un outil personnel, pour Izenn seul, sans usage commercial, ni maintenant ni plus tard** (Izenn, 2026-10-20).
+  Raisons : la récupération des réseaux sociaux (Apify) est contraire à leurs conditions d'utilisation, les images
+  reprises en entier relèvent du droit d'auteur, et l'offre gratuite de Vercel interdit l'usage commercial.
 - Version 1 : un seul utilisateur (Izenn), en local. Le modèle de données prévoit quand même plusieurs utilisateurs (mutualisation des sources).
 - Réseaux sociaux (payants) seulement après le moteur web.
 - Langue de l'édition : français par défaut, avec choix d'une autre langue (anglais, etc.).

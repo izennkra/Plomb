@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { blob, index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 const createdAt = () =>
   integer("created_at", { mode: "timestamp" })
@@ -9,7 +9,7 @@ const createdAt = () =>
 /** A source is stored once, shared by every user who follows it. */
 export const sources = sqliteTable("sources", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  type: text("type", { enum: ["web", "instagram", "x", "linkedin"] }).notNull(),
+  type: text("type", { enum: ["web", "youtube", "instagram", "x", "linkedin"] }).notNull(),
   displayName: text("display_name").notNull(),
   url: text("url").notNull(),
   key: text("key").notNull().unique(),
@@ -44,7 +44,7 @@ export const posts = sqliteTable(
       .default(sql`(unixepoch())`),
     /** Full text, for the AI editor only: never displayed. */
     content: text("content"),
-    method: text("method", { enum: ["rss", "page"] }).notNull(),
+    method: text("method", { enum: ["rss", "page", "social"] }).notNull(),
     /** Already published when the source was added: a starting point, not news. */
     beforeSubscription: integer("before_subscription", { mode: "boolean" }).notNull().default(false),
   },
@@ -53,6 +53,40 @@ export const posts = sqliteTable(
     index("posts_source_idx").on(table.sourceId, table.discoveredAt),
   ],
 );
+
+/**
+ * A request sent to Apify for a social source (Instagram, X, LinkedIn): started by the clock, results read at a later
+ * call (the scraper takes a minute or two).
+ */
+export const socialRuns = sqliteTable(
+  "social_runs",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    sourceId: integer("source_id")
+      .notNull()
+      .references(() => sources.id, { onDelete: "cascade" }),
+    actor: text("actor").notNull(),
+    runId: text("run_id").notNull(),
+    datasetId: text("dataset_id").notNull(),
+    status: text("status", { enum: ["running", "done", "failed"] }).notNull().default("running"),
+    startedAt: createdAt(),
+    finishedAt: integer("finished_at", { mode: "timestamp" }),
+    message: text("message"),
+  },
+  (table) => [index("social_runs_status_idx").on(table.status, table.sourceId)],
+);
+
+/**
+ * Copies of social images (Instagram and LinkedIn addresses expire after a few days), served by Plomb at /media/<name>.
+ * Deleted with their posts after 7 days.
+ */
+export const media = sqliteTable("media", {
+  /** "<sha1 of the original address>.<extension>": copying the same image twice costs nothing. */
+  name: text("name").primaryKey(),
+  contentType: text("content_type").notNull(),
+  data: blob("data", { mode: "buffer" }).notNull(),
+  createdAt: createdAt(),
+});
 
 /**
  * Every article address already listed by a source, read or not: only addresses that appear later are news.

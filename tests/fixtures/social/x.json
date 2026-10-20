@@ -1,0 +1,6317 @@
+[
+ {
+  "type": "tweet",
+  "id": "2112473899858313453",
+  "url": "https://x.com/studiobakers/status/2112473899858313453",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2112473899858313453",
+  "text": "website explorations https://t.co/Abm4pd860A",
+  "source": "",
+  "retweetCount": 1,
+  "replyCount": 3,
+  "likeCount": 97,
+  "quoteCount": 0,
+  "viewCount": 1979,
+  "createdAt": "Tue Oct 20 09:20:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 37,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2112473899858313453",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/Abm4pd860A",
+     "expanded_url": "https://x.com/studiobakers/status/2112473899858313453/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469618665324544",
+     "indices": [
+      21,
+      44
+     ],
+     "media_key": "3_2112469618665324544",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/+0DWgAACgACHVED0c5WwO0AAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/7QNaAAAKAAIdUQPRzlbA7QAA",
+       "media_key": "3_2112469618665324544"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_7QNaAAAnFgr.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 725
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 87
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/Abm4pd860A"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/Abm4pd860A",
+     "expanded_url": "https://x.com/studiobakers/status/2112473899858313453/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469618661220352",
+     "indices": [
+      21,
+      44
+     ],
+     "media_key": "3_2112469618661220352",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/+0DG2AACgACHVED0c5WwO0AAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/7QMbYAAKAAIdUQPRzlbA7QAA",
+       "media_key": "3_2112469618661220352"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_7QMbYAAphkj.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 2158
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 1198
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 792
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/Abm4pd860A"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/Abm4pd860A",
+     "expanded_url": "https://x.com/studiobakers/status/2112473899858313453/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469618682150912",
+     "indices": [
+      21,
+      44
+     ],
+     "media_key": "3_2112469618682150912",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/+0EWsAACgACHVED0c5WwO0AAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/7QRawAAKAAIdUQPRzlbA7QAA",
+       "media_key": "3_2112469618682150912"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_7QRawAAFFD2.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 315
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/Abm4pd860A"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/Abm4pd860A",
+     "expanded_url": "https://x.com/studiobakers/status/2112473899858313453/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469618665431040",
+     "indices": [
+      21,
+      44
+     ],
+     "media_key": "3_2112469618665431040",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/+0DW6AACgACHVED0c5WwO0AAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/7QNboAAKAAIdUQPRzlbA7QAA",
+       "media_key": "3_2112469618665431040"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_7QNboAA9kTo.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1544
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 906
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 703
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/Abm4pd860A"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2112472641345069509",
+  "url": "https://x.com/studiobakers/status/2112472641345069509",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2112472641345069509",
+  "text": "social assets for giza https://t.co/Lt8oOvsAZH",
+  "source": "",
+  "retweetCount": 1,
+  "replyCount": 3,
+  "likeCount": 78,
+  "quoteCount": 0,
+  "viewCount": 1504,
+  "createdAt": "Tue Oct 20 09:15:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 37,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2112472641345069509",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/Lt8oOvsAZH",
+     "expanded_url": "https://x.com/studiobakers/status/2112472641345069509/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469516907368448",
+     "indices": [
+      23,
+      46
+     ],
+     "media_key": "3_2112469516907368448",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/9VSGtAACgACHVECrMkaocUAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/1VIa0AAKAAIdUQKsyRqhxQAA",
+       "media_key": "3_2112469516907368448"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_1VIa0AA_9ts.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1134
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 496
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 293
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/Lt8oOvsAZH"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/Lt8oOvsAZH",
+     "expanded_url": "https://x.com/studiobakers/status/2112472641345069509/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469516882198528",
+     "indices": [
+      23,
+      46
+     ],
+     "media_key": "3_2112469516882198528",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/9VQmsAACgACHVECrMkaocUAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/1VCawAAKAAIdUQKsyRqhxQAA",
+       "media_key": "3_2112469516882198528"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_1VCawAAO08c.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1749
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 1111
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 792
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/Lt8oOvsAZH"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/Lt8oOvsAZH",
+     "expanded_url": "https://x.com/studiobakers/status/2112472641345069509/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469516911583232",
+     "indices": [
+      23,
+      46
+     ],
+     "media_key": "3_2112469516911583232",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/9VSWyAACgACHVECrMkaocUAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/1VJbIAAKAAIdUQKsyRqhxQAA",
+       "media_key": "3_2112469516911583232"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_1VJbIAA6xAv.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1339
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 701
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 498
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/Lt8oOvsAZH"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2112471383691219214",
+  "url": "https://x.com/studiobakers/status/2112471383691219214",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2112471383691219214",
+  "text": "website for creative intelligence company https://t.co/8WqIbs1A5w",
+  "source": "",
+  "retweetCount": 6,
+  "replyCount": 1,
+  "likeCount": 149,
+  "quoteCount": 0,
+  "viewCount": 2022,
+  "createdAt": "Tue Oct 20 09:10:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 46,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2112471383691219214",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/8WqIbs1A5w",
+     "expanded_url": "https://x.com/studiobakers/status/2112471383691219214/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": [
+        {
+         "h": 338,
+         "w": 338,
+         "x": 104,
+         "y": 214
+        }
+       ]
+      },
+      "orig": {
+       "faces": [
+        {
+         "h": 676,
+         "w": 676,
+         "x": 208,
+         "y": 428
+        }
+       ]
+      }
+     },
+     "id_str": "2112469403615047680",
+     "indices": [
+      42,
+      65
+     ],
+     "media_key": "3_2112469403615047680",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/7rxWzAACgACHVEBh/cX0Q4AAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/uvFbMAAKAAIdUQGH9xfRDgAA",
+       "media_key": "3_2112469403615047680"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_uvFbMAAoDKU.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 110
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/8WqIbs1A5w"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/8WqIbs1A5w",
+     "expanded_url": "https://x.com/studiobakers/status/2112471383691219214/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469403606597632",
+     "indices": [
+      42,
+      65
+     ],
+     "media_key": "3_2112469403606597632",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/7rw2kAACgACHVEBh/cX0Q4AAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/uvDaQAAKAAIdUQGH9xfRDgAA",
+       "media_key": "3_2112469403606597632"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_uvDaQAAnnvi.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 520
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/8WqIbs1A5w"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/8WqIbs1A5w",
+     "expanded_url": "https://x.com/studiobakers/status/2112471383691219214/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469403610865664",
+     "indices": [
+      42,
+      65
+     ],
+     "media_key": "3_2112469403610865664",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/7rxG2AACgACHVEBh/cX0Q4AAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/uvEbYAAKAAIdUQGH9xfRDgAA",
+       "media_key": "3_2112469403610865664"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_uvEbYAAGofJ.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 725
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 87
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 512,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/8WqIbs1A5w"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2112470125748084946",
+  "url": "https://x.com/studiobakers/status/2112470125748084946",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2112470125748084946",
+  "text": "brand identity for sound x vision https://t.co/Td7lYoJEn4",
+  "source": "",
+  "retweetCount": 2,
+  "replyCount": 1,
+  "likeCount": 56,
+  "quoteCount": 0,
+  "viewCount": 939,
+  "createdAt": "Tue Oct 20 09:05:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 12,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2112470125748084946",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/Td7lYoJEn4",
+     "expanded_url": "https://x.com/studiobakers/status/2112470125748084946/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469304730120192",
+     "indices": [
+      34,
+      57
+     ],
+     "media_key": "3_2112469304730120192",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/6PrWvAACgACHVEAYxPW4NIAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/o+ta8AAKAAIdUQBjE9bg0gAA",
+       "media_key": "3_2112469304730120192"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_o-ta8AA64tb.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1339
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 701
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 498
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 850,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/Td7lYoJEn4"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/Td7lYoJEn4",
+     "expanded_url": "https://x.com/studiobakers/status/2112470125748084946/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469304793051136",
+     "indices": [
+      34,
+      57
+     ],
+     "media_key": "3_2112469304793051136",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/6PvGzAACgACHVEAYxPW4NIAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/o+8bMAAKAAIdUQBjE9bg0gAA",
+       "media_key": "3_2112469304793051136"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_o-8bMAAI-xz.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 2158
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 1198
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 792
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 102,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/Td7lYoJEn4"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/Td7lYoJEn4",
+     "expanded_url": "https://x.com/studiobakers/status/2112470125748084946/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469304767832065",
+     "indices": [
+      34,
+      57
+     ],
+     "media_key": "3_2112469304767832065",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/6PtmmABCgACHVEAYxPW4NIAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/o+2aYAEKAAIdUQBjE9bg0gAA",
+       "media_key": "3_2112469304767832065"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_o-2aYAEIOen.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 929
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 291
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 88
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 716,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/Td7lYoJEn4"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/Td7lYoJEn4",
+     "expanded_url": "https://x.com/studiobakers/status/2112470125748084946/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469304713359360",
+     "indices": [
+      34,
+      57
+     ],
+     "media_key": "3_2112469304713359360",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/6PqWzAACgACHVEAYxPW4NIAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/o+pbMAAKAAIdUQBjE9bg0gAA",
+       "media_key": "3_2112469304713359360"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_o-pbMAAxIUe.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 110
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 307,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/Td7lYoJEn4"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2112469206075838694",
+  "url": "https://x.com/studiobakers/status/2112469206075838694",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2112469206075838694",
+  "text": "ui experiments handhold https://t.co/TxOvdDdNKH",
+  "source": "",
+  "retweetCount": 0,
+  "replyCount": 4,
+  "likeCount": 69,
+  "quoteCount": 0,
+  "viewCount": 1685,
+  "createdAt": "Tue Oct 20 09:01:21 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 28,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2112469206075838694",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/TxOvdDdNKH",
+     "expanded_url": "https://x.com/studiobakers/status/2112469206075838694/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": [
+        {
+         "h": 144,
+         "w": 144,
+         "x": 184,
+         "y": 1318
+        },
+        {
+         "h": 182,
+         "w": 182,
+         "x": 294,
+         "y": 878
+        },
+        {
+         "h": 236,
+         "w": 236,
+         "x": 910,
+         "y": 700
+        }
+       ]
+      },
+      "orig": {
+       "faces": [
+        {
+         "h": 288,
+         "w": 288,
+         "x": 368,
+         "y": 2636
+        },
+        {
+         "h": 364,
+         "w": 364,
+         "x": 588,
+         "y": 1756
+        },
+        {
+         "h": 472,
+         "w": 472,
+         "x": 1820,
+         "y": 1400
+        }
+       ]
+      }
+     },
+     "id_str": "2112469148840464384",
+     "indices": [
+      24,
+      47
+     ],
+     "media_key": "3_2112469148840464384",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/3+fm5AACgACHVD/jPMaEOYAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/f5+bkAAKAAIdUP+M8xoQ5gAA",
+       "media_key": "3_2112469148840464384"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_f5-bkAAvIL8.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 929
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 291
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 88
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 850,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/TxOvdDdNKH"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/TxOvdDdNKH",
+     "expanded_url": "https://x.com/studiobakers/status/2112469206075838694/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469148848828416",
+     "indices": [
+      24,
+      47
+     ],
+     "media_key": "3_2112469148848828416",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/3+gGzAACgACHVD/jPMaEOYAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/f6AbMAAKAAIdUP+M8xoQ5gAA",
+       "media_key": "3_2112469148848828416"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_f6AbMAAFFBJ.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1339
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 701
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 498
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/TxOvdDdNKH"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/TxOvdDdNKH",
+     "expanded_url": "https://x.com/studiobakers/status/2112469206075838694/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2112469148886507520",
+     "indices": [
+      24,
+      47
+     ],
+     "media_key": "3_2112469148886507520",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Q/3+iWiAACgACHVD/jPMaEOYAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHVD/f6JaIAAKAAIdUP+M8xoQ5gAA",
+       "media_key": "3_2112469148886507520"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HVD_f6JaIAAARBZ.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/TxOvdDdNKH"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2111791636028194885",
+  "url": "https://x.com/studiobakers/status/2111791636028194885",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2111791636028194885",
+  "text": "Branch Computer ahead of its time https://t.co/9w6ytkVqVt",
+  "source": "",
+  "retweetCount": 1,
+  "replyCount": 2,
+  "likeCount": 66,
+  "quoteCount": 0,
+  "viewCount": 2571,
+  "createdAt": "Sun Oct 18 12:08:55 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 32,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2111791636028194885",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "additional_media_info": {
+      "monetizable": false
+     },
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/9w6ytkVqVt",
+     "expanded_url": "https://x.com/studiobakers/status/2111791636028194885/video/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "id_str": "2111791515236204544",
+     "indices": [
+      34,
+      57
+     ],
+     "media_key": "13_2111791515236204544",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwABAoAAR1OlzHBVoAAAAA=",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAAECgABHU6XMcFWgAAAAA==",
+       "media_key": "13_2111791515236204544"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2111791515236204544/img/P-rMJuImnBnpPtqL.jpg",
+     "original_info": {
+      "focus_rects": [],
+      "height": 1080,
+      "width": 1920
+     },
+     "sizes": {
+      "large": {
+       "h": 1080,
+       "w": 1920
+      }
+     },
+     "type": "video",
+     "url": "https://t.co/9w6ytkVqVt",
+     "video_info": {
+      "aspect_ratio": [
+       16,
+       9
+      ],
+      "duration_millis": 36288,
+      "variants": [
+       {
+        "content_type": "application/x-mpegURL",
+        "url": "https://video-s.twimg.com/amplify_video/2111791515236204544/pl/YM0dNXuJ9Y4vD5sI.m3u8?tag=29&v=cfc"
+       },
+       {
+        "bitrate": 256000,
+        "content_type": "video/mp4",
+        "url": "https://video-s.twimg.com/amplify_video/2111791515236204544/vid/avc1/480x270/3KIjw7rCijDihu0D.mp4?tag=29"
+       },
+       {
+        "bitrate": 832000,
+        "content_type": "video/mp4",
+        "url": "https://video-s.twimg.com/amplify_video/2111791515236204544/vid/avc1/640x360/oA1U2wg4DEWQ-WuS.mp4?tag=29"
+       },
+       {
+        "bitrate": 2176000,
+        "content_type": "video/mp4",
+        "url": "https://video-s.twimg.com/amplify_video/2111791515236204544/vid/avc1/1280x720/b6YGGEGBUizsh_dH.mp4?tag=29"
+       },
+       {
+        "bitrate": 10368000,
+        "content_type": "video/mp4",
+        "url": "https://video-s.twimg.com/amplify_video/2111791515236204544/vid/avc1/1920x1080/GRNQdIYmjtyhmSJa.mp4?tag=29"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2111791127086944737",
+  "url": "https://x.com/studiobakers/status/2111791127086944737",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2111791127086944737",
+  "text": "@danilosierra @dApp_boi @PlayGRN @BrettFromDJ looking good Danilo 🖤",
+  "source": "",
+  "retweetCount": 0,
+  "replyCount": 1,
+  "likeCount": 1,
+  "quoteCount": 0,
+  "viewCount": 25,
+  "createdAt": "Sun Oct 18 12:06:54 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": true,
+  "inReplyToId": "2099814596584304825",
+  "conversationId": "2099814596584304825",
+  "inReplyToUserId": "1967535104311332864",
+  "inReplyToUsername": "danilosierra",
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {},
+  "card": null,
+  "place": {},
+  "entities": {
+   "user_mentions": [
+    {
+     "id_str": "1967535104311332864",
+     "indices": [
+      0,
+      13
+     ],
+     "name": "Danilo Sierra",
+     "screen_name": "danilosierra"
+    },
+    {
+     "id_str": "2522148259",
+     "indices": [
+      14,
+      23
+     ],
+     "name": "𝔪𝔞𝔱𝔱𝔥𝔢𝔴 𝔳𝔢𝔯𝔫𝔬𝔫",
+     "screen_name": "dApp_boi"
+    },
+    {
+     "id_str": "701116358189256704",
+     "indices": [
+      24,
+      32
+     ],
+     "name": "gabriel ribeiro",
+     "screen_name": "PlayGRN"
+    },
+    {
+     "id_str": "1222553096196222976",
+     "indices": [
+      33,
+      45
+     ],
+     "name": "Brett",
+     "screen_name": "BrettFromDJ"
+    }
+   ]
+  },
+  "reply_to_user_results": {
+   "rest_id": "1967535104311332864",
+   "result": {
+    "__typename": "User",
+    "core": {
+     "screen_name": "danilosierra"
+    },
+    "rest_id": "1967535104311332864"
+   }
+  },
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2111791028101419470",
+  "url": "https://x.com/studiobakers/status/2111791028101419470",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2111791028101419470",
+  "text": "@PeterIrunokhai its croissants man 🥐",
+  "source": "",
+  "retweetCount": 0,
+  "replyCount": 1,
+  "likeCount": 1,
+  "quoteCount": 0,
+  "viewCount": 36,
+  "createdAt": "Sun Oct 18 12:06:30 +0000 2026",
+  "lang": "fr",
+  "bookmarkCount": 0,
+  "isReply": true,
+  "inReplyToId": "2099971889557111117",
+  "conversationId": "2099971889557111117",
+  "inReplyToUserId": "1228214947324149771",
+  "inReplyToUsername": "PeterIrunokhai",
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {},
+  "card": null,
+  "place": {},
+  "entities": {
+   "user_mentions": [
+    {
+     "id_str": "1228214947324149771",
+     "indices": [
+      0,
+      15
+     ],
+     "name": "Peter ✍️",
+     "screen_name": "PeterIrunokhai"
+    }
+   ]
+  },
+  "reply_to_user_results": {
+   "rest_id": "1228214947324149771",
+   "result": {
+    "__typename": "User",
+    "core": {
+     "screen_name": "PeterIrunokhai"
+    },
+    "rest_id": "1228214947324149771"
+   }
+  },
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2111790898874876147",
+  "url": "https://x.com/studiobakers/status/2111790898874876147",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2111790898874876147",
+  "text": "@hamzaalabou thank you man feeling the love, btw you have great taste 🖤",
+  "source": "",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 1,
+  "quoteCount": 0,
+  "viewCount": 32,
+  "createdAt": "Sun Oct 18 12:06:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": true,
+  "inReplyToId": "2107162402366058619",
+  "conversationId": "2107162402366058619",
+  "inReplyToUserId": "1731317183974653952",
+  "inReplyToUsername": "hamzaalabou",
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {},
+  "card": null,
+  "place": {},
+  "entities": {
+   "user_mentions": [
+    {
+     "id_str": "1731317183974653952",
+     "indices": [
+      0,
+      12
+     ],
+     "name": "hamza",
+     "screen_name": "hamzaalabou"
+    }
+   ]
+  },
+  "reply_to_user_results": {
+   "rest_id": "1731317183974653952",
+   "result": {
+    "__typename": "User",
+    "core": {
+     "screen_name": "hamzaalabou"
+    },
+    "rest_id": "1731317183974653952"
+   }
+  },
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2111742649929781358",
+  "url": "https://x.com/studiobakers/status/2111742649929781358",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2111742649929781358",
+  "text": "@abduzeedo thank you chef 👨🏻‍🍳",
+  "source": "",
+  "retweetCount": 0,
+  "replyCount": 0,
+  "likeCount": 0,
+  "quoteCount": 0,
+  "viewCount": 87,
+  "createdAt": "Sun Oct 18 08:54:16 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 0,
+  "isReply": true,
+  "inReplyToId": "2111470672514052171",
+  "conversationId": "2111470672514052171",
+  "inReplyToUserId": "41553",
+  "inReplyToUsername": "abduzeedo",
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {},
+  "card": null,
+  "place": {},
+  "entities": {
+   "user_mentions": [
+    {
+     "id_str": "41553",
+     "indices": [
+      0,
+      10
+     ],
+     "name": "Fabio - abduzeedo",
+     "screen_name": "abduzeedo"
+    }
+   ]
+  },
+  "reply_to_user_results": {
+   "rest_id": "41553",
+   "result": {
+    "__typename": "User",
+    "core": {
+     "screen_name": "abduzeedo"
+    },
+    "rest_id": "41553"
+   }
+  },
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2111049527797186726",
+  "url": "https://x.com/studiobakers/status/2111049527797186726",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2111049527797186726",
+  "text": "ascii + pixel crush https://t.co/XCL2LcR8pN",
+  "source": "",
+  "retweetCount": 25,
+  "replyCount": 8,
+  "likeCount": 763,
+  "quoteCount": 1,
+  "viewCount": 22158,
+  "createdAt": "Fri Oct 16 11:00:03 +0000 2026",
+  "lang": "ro",
+  "bookmarkCount": 383,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2111049527797186726",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/XCL2LcR8pN",
+     "expanded_url": "https://x.com/studiobakers/status/2111049527797186726/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111044512500125696",
+     "indices": [
+      20,
+      43
+     ],
+     "media_key": "3_2111044512500125696",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L78ygm5AACgACHUv0XFebgKYAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvzKCbkAAKAAIdS/RcV5uApgAA",
+       "media_key": "3_2111044512500125696"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvzKCbkAAfQPr.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 534,
+        "w": 953,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 953,
+        "w": 953,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 1086,
+        "w": 953,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 1200,
+        "w": 600,
+        "x": 330,
+        "y": 0
+       },
+       {
+        "h": 1200,
+        "w": 953,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 1200,
+      "width": 953
+     },
+     "sizes": {
+      "large": {
+       "h": 1200,
+       "w": 953
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/XCL2LcR8pN"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/XCL2LcR8pN",
+     "expanded_url": "https://x.com/studiobakers/status/2111049527797186726/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111044512495861760",
+     "indices": [
+      20,
+      43
+     ],
+     "media_key": "3_2111044512495861760",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L78ygWoAACgACHUv0XFebgKYAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvzKBagAAKAAIdS/RcV5uApgAA",
+       "media_key": "3_2111044512495861760"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvzKBagAAcdE_.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 534,
+        "w": 953,
+        "x": 0,
+        "y": 543
+       },
+       {
+        "h": 953,
+        "w": 953,
+        "x": 0,
+        "y": 247
+       },
+       {
+        "h": 1086,
+        "w": 953,
+        "x": 0,
+        "y": 114
+       },
+       {
+        "h": 1200,
+        "w": 600,
+        "x": 353,
+        "y": 0
+       },
+       {
+        "h": 1200,
+        "w": 953,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 1200,
+      "width": 953
+     },
+     "sizes": {
+      "large": {
+       "h": 1200,
+       "w": 953
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/XCL2LcR8pN"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/XCL2LcR8pN",
+     "expanded_url": "https://x.com/studiobakers/status/2111049527797186726/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111044512512712704",
+     "indices": [
+      20,
+      43
+     ],
+     "media_key": "3_2111044512512712704",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L78yhW6AACgACHUv0XFebgKYAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvzKFboAAKAAIdS/RcV5uApgAA",
+       "media_key": "3_2111044512512712704"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvzKFboAA8ggX.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 534,
+        "w": 953,
+        "x": 0,
+        "y": 483
+       },
+       {
+        "h": 953,
+        "w": 953,
+        "x": 0,
+        "y": 247
+       },
+       {
+        "h": 1086,
+        "w": 953,
+        "x": 0,
+        "y": 114
+       },
+       {
+        "h": 1200,
+        "w": 600,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 1200,
+        "w": 953,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 1200,
+      "width": 953
+     },
+     "sizes": {
+      "large": {
+       "h": 1200,
+       "w": 953
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/XCL2LcR8pN"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2111048255740227893",
+  "url": "https://x.com/studiobakers/status/2111048255740227893",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2111048255740227893",
+  "text": "website for quantinium https://t.co/LH8M0PZ3rq",
+  "source": "",
+  "retweetCount": 0,
+  "replyCount": 3,
+  "likeCount": 138,
+  "quoteCount": 0,
+  "viewCount": 3617,
+  "createdAt": "Fri Oct 16 10:55:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 57,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2111048255740227893",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/LH8M0PZ3rq",
+     "expanded_url": "https://x.com/studiobakers/status/2111048255740227893/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111044272703303680",
+     "indices": [
+      23,
+      46
+     ],
+     "media_key": "3_2111044272703303680",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L75TLmnAACgACHUvzNCsasTUAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvlMuacAAKAAIdS/M0KxqxNQAA",
+       "media_key": "3_2111044272703303680"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvlMuacAAu7aj.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1134
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 496
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 293
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/LH8M0PZ3rq"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/LH8M0PZ3rq",
+     "expanded_url": "https://x.com/studiobakers/status/2111048255740227893/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111044272703311872",
+     "indices": [
+      23,
+      46
+     ],
+     "media_key": "3_2111044272703311872",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L75TLmpAACgACHUvzNCsasTUAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvlMuakAAKAAIdS/M0KxqxNQAA",
+       "media_key": "3_2111044272703311872"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvlMuakAAomAW.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 110
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 716,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/LH8M0PZ3rq"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/LH8M0PZ3rq",
+     "expanded_url": "https://x.com/studiobakers/status/2111048255740227893/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111044273219272705",
+     "indices": [
+      23,
+      46
+     ],
+     "media_key": "3_2111044273219272705",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L75TqW4ABCgACHUvzNCsasTUAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvlOpbgAEKAAIdS/M0KxqxNQAA",
+       "media_key": "3_2111044273219272705"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvlOpbgAE79es.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1339
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 701
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 498
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 512,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/LH8M0PZ3rq"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2111046494253965385",
+  "url": "https://x.com/studiobakers/status/2111046494253965385",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2111046494253965385",
+  "text": "giza wrapped https://t.co/SKR9GPZf5c",
+  "source": "",
+  "retweetCount": 9,
+  "replyCount": 4,
+  "likeCount": 225,
+  "quoteCount": 0,
+  "viewCount": 3566,
+  "createdAt": "Fri Oct 16 10:48:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 84,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2111046494253965385",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/SKR9GPZf5c",
+     "expanded_url": "https://x.com/studiobakers/status/2111046494253965385/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111044164800675840",
+     "indices": [
+      13,
+      36
+     ],
+     "media_key": "3_2111044164800675840",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L73usGwAACgACHUvxmgpXYEkAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvve6wbAAAKAAIdS/GaCldgSQAA",
+       "media_key": "3_2111044164800675840"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvve6wbAAAj4Vc.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1953
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 1198
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 792
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 850,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/SKR9GPZf5c"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/SKR9GPZf5c",
+     "expanded_url": "https://x.com/studiobakers/status/2111046494253965385/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111044164825808896",
+     "indices": [
+      13,
+      36
+     ],
+     "media_key": "3_2111044164825808896",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L73utmoAACgACHUvxmgpXYEkAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvve62agAAKAAIdS/GaCldgSQAA",
+       "media_key": "3_2111044164825808896"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvve62agAAoMf5.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 2363
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 1198
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 792
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 850,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/SKR9GPZf5c"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/SKR9GPZf5c",
+     "expanded_url": "https://x.com/studiobakers/status/2111046494253965385/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111044164779687936",
+     "indices": [
+      13,
+      36
+     ],
+     "media_key": "3_2111044164779687936",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L73uq2sAACgACHUvxmgpXYEkAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvve6rawAAKAAIdS/GaCldgSQAA",
+       "media_key": "3_2111044164779687936"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvve6rawAAK0iP.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 520
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/SKR9GPZf5c"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2111044985671877095",
+  "url": "https://x.com/studiobakers/status/2111044985671877095",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2111044985671877095",
+  "text": "branch visuals https://t.co/4hzlghfUZ1",
+  "source": "",
+  "retweetCount": 6,
+  "replyCount": 6,
+  "likeCount": 180,
+  "quoteCount": 0,
+  "viewCount": 3571,
+  "createdAt": "Fri Oct 16 10:42:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 73,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2111044985671877095",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/4hzlghfUZ1",
+     "expanded_url": "https://x.com/studiobakers/status/2111044985671877095/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111044064854601729",
+     "indices": [
+      15,
+      38
+     ],
+     "media_key": "3_2111044064854601729",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L72Rm2vABCgACHUvwOsvXgecAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvZGba8AEKAAIdS/A6y9eB5wAA",
+       "media_key": "3_2111044064854601729"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvZGba8AEioAc.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/4hzlghfUZ1"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/4hzlghfUZ1",
+     "expanded_url": "https://x.com/studiobakers/status/2111044985671877095/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111044064858836992",
+     "indices": [
+      15,
+      38
+     ],
+     "media_key": "3_2111044064858836992",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L72RnG5AACgACHUvwOsvXgecAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvZGcbkAAKAAIdS/A6y9eB5wAA",
+       "media_key": "3_2111044064858836992"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvZGcbkAA1aZK.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 512,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/4hzlghfUZ1"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/4hzlghfUZ1",
+     "expanded_url": "https://x.com/studiobakers/status/2111044985671877095/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": [
+        {
+         "h": 84,
+         "w": 84,
+         "x": 698,
+         "y": 1140
+        }
+       ]
+      },
+      "orig": {
+       "faces": [
+        {
+         "h": 168,
+         "w": 168,
+         "x": 1396,
+         "y": 2280
+        }
+       ]
+      }
+     },
+     "id_str": "2111044064854601728",
+     "indices": [
+      15,
+      38
+     ],
+     "media_key": "3_2111044064854601728",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L72Rm2vAACgACHUvwOsvXgecAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvZGba8AAKAAIdS/A6y9eB5wAA",
+       "media_key": "3_2111044064854601728"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvZGba8AAqAbR.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/4hzlghfUZ1"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/4hzlghfUZ1",
+     "expanded_url": "https://x.com/studiobakers/status/2111044985671877095/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": [
+        {
+         "h": 242,
+         "w": 242,
+         "x": 904,
+         "y": 920
+        }
+       ]
+      },
+      "orig": {
+       "faces": [
+        {
+         "h": 484,
+         "w": 484,
+         "x": 1808,
+         "y": 1840
+        }
+       ]
+      }
+     },
+     "id_str": "2111044064850464768",
+     "indices": [
+      15,
+      38
+     ],
+     "media_key": "3_2111044064850464768",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L72Rmm9AACgACHUvwOsvXgecAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvZGab0AAKAAIdS/A6y9eB5wAA",
+       "media_key": "3_2111044064850464768"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvZGab0AAYrqM.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1339
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 701
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 498
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/4hzlghfUZ1"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2111044013143081227",
+  "url": "https://x.com/studiobakers/status/2111044013143081227",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2111044013143081227",
+  "text": "ui card for hanhdold https://t.co/UOy2kBpUTY",
+  "source": "",
+  "retweetCount": 9,
+  "replyCount": 1,
+  "likeCount": 219,
+  "quoteCount": 0,
+  "viewCount": 4071,
+  "createdAt": "Fri Oct 16 10:38:08 +0000 2026",
+  "lang": "no",
+  "bookmarkCount": 97,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2111044013143081227",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/UOy2kBpUTY",
+     "expanded_url": "https://x.com/studiobakers/status/2111044013143081227/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111043994608394240",
+     "indices": [
+      21,
+      44
+     ],
+     "media_key": "3_2111043994608394240",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L71QL2uAACgACHUvvWFybwQsAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvVAva4AAKAAIdS+9YXJvBCwAA",
+       "media_key": "3_2111043994608394240"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvVAva4AAmMoc.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1134
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 496
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 293
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/UOy2kBpUTY"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/UOy2kBpUTY",
+     "expanded_url": "https://x.com/studiobakers/status/2111044013143081227/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111043994608373760",
+     "indices": [
+      21,
+      44
+     ],
+     "media_key": "3_2111043994608373760",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L71QL2pAACgACHUvvWFybwQsAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvVAvakAAKAAIdS+9YXJvBCwAA",
+       "media_key": "3_2111043994608373760"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvVAvakAAzFYf.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 2158
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 1198
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 792
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/UOy2kBpUTY"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/UOy2kBpUTY",
+     "expanded_url": "https://x.com/studiobakers/status/2111044013143081227/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2111043994604179456",
+     "indices": [
+      21,
+      44
+     ],
+     "media_key": "3_2111043994604179456",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1L71QLmpAACgACHUvvWFybwQsAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUvvVAuakAAKAAIdS+9YXJvBCwAA",
+       "media_key": "3_2111043994604179456"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUvvVAuakAAOm23.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1134
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 496
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 293
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 850,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/UOy2kBpUTY"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2110699709367046459",
+  "url": "https://x.com/studiobakers/status/2110699709367046459",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2110699709367046459",
+  "text": "giza gradients https://t.co/NUBSxB6Bj8",
+  "source": "",
+  "retweetCount": 2,
+  "replyCount": 3,
+  "likeCount": 99,
+  "quoteCount": 0,
+  "viewCount": 2725,
+  "createdAt": "Thu Oct 15 11:50:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 47,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2110699709367046459",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/NUBSxB6Bj8",
+     "expanded_url": "https://x.com/studiobakers/status/2110699709367046459/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696817482690560",
+     "indices": [
+      15,
+      38
+     ],
+     "media_key": "3_2110696817482690560",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks5KSmnAACgACHUq2M+RX0TsAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzkpKacAAKAAIdSrYz5FfROwAA",
+       "media_key": "3_2110696817482690560"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzkpKacAAfZCX.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 929
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 291
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 88
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 716,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/NUBSxB6Bj8"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/NUBSxB6Bj8",
+     "expanded_url": "https://x.com/studiobakers/status/2110699709367046459/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696817495261184",
+     "indices": [
+      15,
+      38
+     ],
+     "media_key": "3_2110696817495261184",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks5KTWkAACgACHUq2M+RX0TsAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzkpNaQAAKAAIdSrYz5FfROwAA",
+       "media_key": "3_2110696817495261184"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzkpNaQAAYzOb.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/NUBSxB6Bj8"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/NUBSxB6Bj8",
+     "expanded_url": "https://x.com/studiobakers/status/2110699709367046459/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": [
+        {
+         "h": 72,
+         "w": 72,
+         "x": 602,
+         "y": 916
+        },
+        {
+         "h": 88,
+         "w": 88,
+         "x": 204,
+         "y": 114
+        },
+        {
+         "h": 240,
+         "w": 240,
+         "x": 596,
+         "y": 1552
+        },
+        {
+         "h": 242,
+         "w": 242,
+         "x": 928,
+         "y": 1554
+        }
+       ]
+      },
+      "orig": {
+       "faces": [
+        {
+         "h": 144,
+         "w": 144,
+         "x": 1204,
+         "y": 1832
+        },
+        {
+         "h": 176,
+         "w": 176,
+         "x": 408,
+         "y": 228
+        },
+        {
+         "h": 480,
+         "w": 480,
+         "x": 1192,
+         "y": 3104
+        },
+        {
+         "h": 484,
+         "w": 484,
+         "x": 1856,
+         "y": 3108
+        }
+       ]
+      }
+     },
+     "id_str": "2110696817528840193",
+     "indices": [
+      15,
+      38
+     ],
+     "media_key": "3_2110696817528840193",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks5KVWqABCgACHUq2M+RX0TsAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzkpVaoAEKAAIdSrYz5FfROwAA",
+       "media_key": "3_2110696817528840193"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzkpVaoAEidnk.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 2473
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 1198
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 792
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/NUBSxB6Bj8"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2110698954140602660",
+  "url": "https://x.com/studiobakers/status/2110698954140602660",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2110698954140602660",
+  "text": "narwhal brand https://t.co/BjAti3INYk",
+  "source": "",
+  "retweetCount": 4,
+  "replyCount": 5,
+  "likeCount": 162,
+  "quoteCount": 0,
+  "viewCount": 3432,
+  "createdAt": "Thu Oct 15 11:47:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 50,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2110698954140602660",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/BjAti3INYk",
+     "expanded_url": "https://x.com/studiobakers/status/2110698954140602660/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696696770674688",
+     "indices": [
+      14,
+      37
+     ],
+     "media_key": "3_2110696696770674688",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks3Z3m0AACgACHUq1hA1W0SQAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzdnebQAAKAAIdSrWEDVbRJAAA",
+       "media_key": "3_2110696696770674688"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzdnebQAAYn_t.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 725
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 87
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 307,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/BjAti3INYk"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/BjAti3INYk",
+     "expanded_url": "https://x.com/studiobakers/status/2110698954140602660/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696696749641728",
+     "indices": [
+      14,
+      37
+     ],
+     "media_key": "3_2110696696749641728",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks3Z2WlAACgACHUq1hA1W0SQAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzdnZaUAAKAAIdSrWEDVbRJAAA",
+       "media_key": "3_2110696696749641728"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzdnZaUAAt2BY.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 725
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 87
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 850,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/BjAti3INYk"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/BjAti3INYk",
+     "expanded_url": "https://x.com/studiobakers/status/2110698954140602660/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696696770633728",
+     "indices": [
+      14,
+      37
+     ],
+     "media_key": "3_2110696696770633728",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks3Z3mqAACgACHUq1hA1W0SQAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzdneaoAAKAAIdSrWEDVbRJAAA",
+       "media_key": "3_2110696696770633728"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzdneaoAAJ0Ac.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1749
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 1111
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 792
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 850,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/BjAti3INYk"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/BjAti3INYk",
+     "expanded_url": "https://x.com/studiobakers/status/2110698954140602660/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696696749699073",
+     "indices": [
+      14,
+      37
+     ],
+     "media_key": "3_2110696696749699073",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks3Z2WzABCgACHUq1hA1W0SQAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzdnZbMAEKAAIdSrWEDVbRJAAA",
+       "media_key": "3_2110696696749699073"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzdnZbMAEEsHY.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 929
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 291
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 88
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 850,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/BjAti3INYk"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2110698450757312667",
+  "url": "https://x.com/studiobakers/status/2110698450757312667",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2110698450757312667",
+  "text": "AI chatbox https://t.co/UKE83LsKvM",
+  "source": "",
+  "retweetCount": 6,
+  "replyCount": 4,
+  "likeCount": 280,
+  "quoteCount": 0,
+  "viewCount": 6142,
+  "createdAt": "Thu Oct 15 11:45:00 +0000 2026",
+  "lang": "lv",
+  "bookmarkCount": 118,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2110698450757312667",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/UKE83LsKvM",
+     "expanded_url": "https://x.com/studiobakers/status/2110698450757312667/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696559239393280",
+     "indices": [
+      11,
+      34
+     ],
+     "media_key": "3_2110696559239393280",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks1ZyGnAACgACHUq1DtlbYJsAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzVnIacAAKAAIdSrUO2VtgmwAA",
+       "media_key": "3_2110696559239393280"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzVnIacAAmQca.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 929
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 291
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 88
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/UKE83LsKvM"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/UKE83LsKvM",
+     "expanded_url": "https://x.com/studiobakers/status/2110698450757312667/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696559247826944",
+     "indices": [
+      11,
+      34
+     ],
+     "media_key": "3_2110696559247826944",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks1ZymyAACgACHUq1DtlbYJsAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzVnKbIAAKAAIdSrUO2VtgmwAA",
+       "media_key": "3_2110696559247826944"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzVnKbIAAuFzc.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1953
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 1198
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 792
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/UKE83LsKvM"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/UKE83LsKvM",
+     "expanded_url": "https://x.com/studiobakers/status/2110698450757312667/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696559239401472",
+     "indices": [
+      11,
+      34
+     ],
+     "media_key": "3_2110696559239401472",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks1ZyGpAACgACHUq1DtlbYJsAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzVnIakAAKAAIdSrUO2VtgmwAA",
+       "media_key": "3_2110696559239401472"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzVnIakAA5OYV.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 102,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/UKE83LsKvM"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/UKE83LsKvM",
+     "expanded_url": "https://x.com/studiobakers/status/2110698450757312667/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696559222587392",
+     "indices": [
+      11,
+      34
+     ],
+     "media_key": "3_2110696559222587392",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks1ZxGgAACgACHUq1DtlbYJsAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzVnEaAAAKAAIdSrUO2VtgmwAA",
+       "media_key": "3_2110696559222587392"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzVnEaAAANlz0.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1134
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 496
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 293
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 512,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/UKE83LsKvM"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2110697192604532838",
+  "url": "https://x.com/studiobakers/status/2110697192604532838",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2110697192604532838",
+  "text": "fastino website https://t.co/6vCCITOz1s",
+  "source": "",
+  "retweetCount": 3,
+  "replyCount": 15,
+  "likeCount": 372,
+  "quoteCount": 0,
+  "viewCount": 8232,
+  "createdAt": "Thu Oct 15 11:40:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 174,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2110697192604532838",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/6vCCITOz1s",
+     "expanded_url": "https://x.com/studiobakers/status/2110697192604532838/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696477630873602",
+     "indices": [
+      16,
+      39
+     ],
+     "media_key": "3_2110696477630873602",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks0Nx20ACCgACHUqz6embgGYAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzQ3HbQAIKAAIdSrPp6ZuAZgAA",
+       "media_key": "3_2110696477630873602"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzQ3HbQAIaPW8.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 860,
+        "w": 1536,
+        "x": 0,
+        "y": 568
+       },
+       {
+        "h": 1536,
+        "w": 1536,
+        "x": 0,
+        "y": 230
+       },
+       {
+        "h": 1751,
+        "w": 1536,
+        "x": 0,
+        "y": 123
+       },
+       {
+        "h": 3072,
+        "w": 1536,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3072,
+        "w": 1536,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 3072,
+      "width": 1536
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1024
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/6vCCITOz1s"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/6vCCITOz1s",
+     "expanded_url": "https://x.com/studiobakers/status/2110697192604532838/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696477647683585",
+     "indices": [
+      16,
+      39
+     ],
+     "media_key": "3_2110696477647683585",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks0Ny28ABCgACHUqz6embgGYAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzQ3LbwAEKAAIdSrPp6ZuAZgAA",
+       "media_key": "3_2110696477647683585"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzQ3LbwAEp7yR.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 860,
+        "w": 1536,
+        "x": 0,
+        "y": 1182
+       },
+       {
+        "h": 1536,
+        "w": 1536,
+        "x": 0,
+        "y": 844
+       },
+       {
+        "h": 1751,
+        "w": 1536,
+        "x": 0,
+        "y": 737
+       },
+       {
+        "h": 3072,
+        "w": 1536,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3072,
+        "w": 1536,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 3072,
+      "width": 1536
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1024
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/6vCCITOz1s"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/6vCCITOz1s",
+     "expanded_url": "https://x.com/studiobakers/status/2110697192604532838/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696477647634432",
+     "indices": [
+      16,
+      39
+     ],
+     "media_key": "3_2110696477647634432",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1Ks0Ny2wAACgACHUqz6embgGYAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzQ3LbAAAKAAIdSrPp6ZuAZgAA",
+       "media_key": "3_2110696477647634432"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzQ3LbAAAYqw2.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 860,
+        "w": 1536,
+        "x": 0,
+        "y": 107
+       },
+       {
+        "h": 1536,
+        "w": 1536,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 1751,
+        "w": 1536,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3072,
+        "w": 1536,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3072,
+        "w": 1536,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 3072,
+      "width": 1536
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1024
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/6vCCITOz1s"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ },
+ {
+  "type": "tweet",
+  "id": "2110696437021581740",
+  "url": "https://x.com/studiobakers/status/2110696437021581740",
+  "twitterUrl": "https://twitter.com/studiobakers/status/2110696437021581740",
+  "text": "egregore identity https://t.co/jv3ldiF6jI",
+  "source": "",
+  "retweetCount": 20,
+  "replyCount": 9,
+  "likeCount": 676,
+  "quoteCount": 1,
+  "viewCount": 9824,
+  "createdAt": "Thu Oct 15 11:37:00 +0000 2026",
+  "lang": "en",
+  "bookmarkCount": 245,
+  "isReply": false,
+  "inReplyToId": null,
+  "conversationId": "2110696437021581740",
+  "inReplyToUserId": null,
+  "inReplyToUsername": null,
+  "isPinned": false,
+  "author": {
+   "type": "user",
+   "userName": "studiobakers",
+   "url": "https://x.com/studiobakers",
+   "twitterUrl": "https://twitter.com/studiobakers",
+   "id": "1697512412159631360",
+   "name": "Bakers Studio",
+   "isVerified": false,
+   "isBlueVerified": true,
+   "profilePicture": "https://pbs.twimg.com/profile_images/2108495434519891968/tfs39_Cj_normal.jpg",
+   "coverPicture": "https://pbs.twimg.com/profile_banners/1697512412159631360/1791539461",
+   "description": "",
+   "location": "",
+   "followers": 8047,
+   "following": 375,
+   "status": "",
+   "canDm": true,
+   "canMediaTag": true,
+   "createdAt": "Fri Sep 01 07:31:21 +0000 2023",
+   "entities": {
+    "description": {
+     "urls": []
+    },
+    "url": {}
+   },
+   "fastFollowersCount": 0,
+   "favouritesCount": 2935,
+   "hasCustomTimelines": true,
+   "isTranslator": false,
+   "mediaCount": 605,
+   "statusesCount": 1433,
+   "withheldInCountries": [],
+   "affiliatesHighlightedLabel": {},
+   "possiblySensitive": false,
+   "pinnedTweetIds": [],
+   "profile_bio": {
+    "description": "Want to cook something?👨🏻‍🍳 \n\nReach us  💌  hey@bakers.studio\nor book a call ☎️  https://t.co/VM0CSasSWz",
+    "entities": {
+     "description": {
+      "urls": [
+       {
+        "display_url": "cal.com/studiobakers",
+        "expanded_url": "https://cal.com/studiobakers",
+        "indices": [
+         80,
+         103
+        ],
+        "url": "https://t.co/VM0CSasSWz"
+       }
+      ]
+     },
+     "url": {
+      "urls": [
+       {
+        "display_url": "bakers.studio",
+        "expanded_url": "https://bakers.studio/",
+        "indices": [
+         0,
+         23
+        ],
+        "url": "https://t.co/9fRMFuVrvO"
+       }
+      ]
+     }
+    }
+   },
+   "isAutomated": false,
+   "automatedBy": null
+  },
+  "extendedEntities": {
+   "media": [
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/jv3ldiF6jI",
+     "expanded_url": "https://x.com/studiobakers/status/2110696437021581740/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696425831186432",
+     "indices": [
+      18,
+      41
+     ],
+     "media_key": "3_2110696425831186432",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1KszdiWsAACgACHUqzOf1aoawAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzN2JawAAKAAIdSrM5/VqhrAAA",
+       "media_key": "3_2110696425831186432"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzN2JawAAv39U.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/jv3ldiF6jI"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/jv3ldiF6jI",
+     "expanded_url": "https://x.com/studiobakers/status/2110696437021581740/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696425826983936",
+     "indices": [
+      18,
+      41
+     ],
+     "media_key": "3_2110696425826983936",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1KszdiGqAACgACHUqzOf1aoawAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzN2IaoAAKAAIdSrM5/VqhrAAA",
+       "media_key": "3_2110696425826983936"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzN2IaoAAkkND.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 2363
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 1198
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 792
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 425,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/jv3ldiF6jI"
+    },
+    {
+     "allow_download_status": {
+      "allow_download": true
+     },
+     "display_url": "pic.x.com/jv3ldiF6jI",
+     "expanded_url": "https://x.com/studiobakers/status/2110696437021581740/photo/1",
+     "ext_master_playlist_only": [],
+     "ext_media_availability": {
+      "status": "Available"
+     },
+     "ext_playlists": [],
+     "features": {
+      "large": {
+       "faces": []
+      },
+      "orig": {
+       "faces": []
+      }
+     },
+     "id_str": "2110696425831157760",
+     "indices": [
+      18,
+      41
+     ],
+     "media_key": "3_2110696425831157760",
+     "media_results": {
+      "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAAR1KszdiWlAACgACHUqzOf1aoawAAA==",
+      "result": {
+       "__typename": "ApiMedia",
+       "id": "QXBpTWVkaWE6DAABCgABHUqzN2JaUAAKAAIdSrM5/VqhrAAA",
+       "media_key": "3_2110696425831157760"
+      }
+     },
+     "media_url_https": "https://pbs.twimg.com/media/HUqzN2JaUAA-qwZ.jpg",
+     "original_info": {
+      "focus_rects": [
+       {
+        "h": 1623,
+        "w": 2898,
+        "x": 0,
+        "y": 1339
+       },
+       {
+        "h": 2898,
+        "w": 2898,
+        "x": 0,
+        "y": 701
+       },
+       {
+        "h": 3304,
+        "w": 2898,
+        "x": 0,
+        "y": 498
+       },
+       {
+        "h": 4096,
+        "w": 2048,
+        "x": 716,
+        "y": 0
+       },
+       {
+        "h": 4096,
+        "w": 2898,
+        "x": 0,
+        "y": 0
+       }
+      ],
+      "height": 4096,
+      "width": 2898
+     },
+     "sizes": {
+      "large": {
+       "h": 2048,
+       "w": 1449
+      }
+     },
+     "type": "photo",
+     "url": "https://t.co/jv3ldiF6jI"
+    }
+   ]
+  },
+  "card": null,
+  "place": {},
+  "entities": {},
+  "reply_to_user_results": null,
+  "quoted_tweet_results": null,
+  "quoted_tweet": null,
+  "retweeted_tweet": null,
+  "isConversationControlled": false
+ }
+]

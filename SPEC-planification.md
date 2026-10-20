@@ -13,12 +13,12 @@ Pour cela, Plomb quitte le Mac : il tourne en ligne, avec une **IA en ligne** (C
 - J'ouvre Plomb depuis **n'importe quel ordinateur ou téléphone** (adresse web) : le journal, les dépêches et mes sources sont là.
 - Les dépêches arrivent toutes seules au fil de la journée (relevé automatique des sources).
 - Si le journal n'a pas pu être préparé, je reçois un e-mail qui me le dit (au lieu d'un silence).
-- Personne d'autre que moi ne peut ouvrir mon Plomb (mot de passe), en attendant les comptes abonnés (brique 7).
+- Personne d'autre que moi ne peut ouvrir mon Plomb (mot de passe), (outil personnel : pas d'autres comptes prévus).
 
 ## Architecture retenue : solution gratuite
 | Besoin | Service | Coût |
 |---|---|---|
-| L'app en ligne | **Vercel** (offre Hobby) | Gratuit — **usage personnel non commercial** : à revoir quand Plomb aura des abonnés payants (offre Pro ~20 $/mois ou autre hébergeur) |
+| L'app en ligne | **Vercel** (offre Hobby) | Gratuit — **usage personnel non commercial** : c'est le cas de Plomb (outil personnel, jamais vendu) |
 | Base de données | **Turso** (même moteur que la base actuelle : presque aucun changement de code) | Gratuit (5 Go, sans carte bancaire) |
 | Horloge | **cron-job.org** : appelle Plomb toutes les 15 minutes (précis à la minute) | Gratuit |
 | IA en ligne | **Claude Haiku 5.5** (API d'Anthropic, crédit prépayé) | ~0,60 $ par mois (journal quotidien de 50 articles) ; crédit minimum à acheter sur console.anthropic.com |

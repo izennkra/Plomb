@@ -28,11 +28,13 @@ export function constantTimeEqual(a: string, b: string): boolean {
   return difference === 0;
 }
 
-/** Paths that never ask for the password: the sign-in page, the clock (it has its own token), Next.js files. */
+/** Paths that never ask for the password: sign-in page, clock (own token), image copies, Next.js files. */
 export function isPublicPath(pathname: string): boolean {
   return (
     pathname === "/connexion" ||
     pathname.startsWith("/api/horloge") ||
+    // Copies of social images: also shown in the 9:00 e-mail, outside the app.
+    pathname.startsWith("/media/") ||
     pathname.startsWith("/_next/") ||
     pathname === "/favicon.ico"
   );

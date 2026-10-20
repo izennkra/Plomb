@@ -46,7 +46,8 @@ export function renderEditionEmail(edition: Edition, items: EditionItem[], { jou
     `Lire le journal : ${journalUrl}`,
   ].join("\n");
 
-  const image = une?.images[0];
+  // Copies of social images are served by Plomb (/media/…): the e-mail needs their full address.
+  const image = une?.images[0] ? new URL(une.images[0], journalUrl).toString() : undefined;
   const html = `<!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>${escape(subject)}</title></head>
 <body style="margin:0;padding:24px 12px;background:#fafaf7;font-family:Georgia,'Times New Roman',serif;color:#111">

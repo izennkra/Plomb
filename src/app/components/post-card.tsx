@@ -4,6 +4,7 @@ import { Carousel } from "./carousel";
 
 const TYPE_LABELS: Record<FeedItem["source"]["type"], string> = {
   web: "Site web",
+  youtube: "YouTube",
   instagram: "Instagram",
   x: "X",
   linkedin: "LinkedIn",

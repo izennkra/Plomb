@@ -59,17 +59,22 @@ export function parseFeed(xml: string, feedUrl: string): FeedResult {
     if (!url || !title) continue;
 
     const raw = (entry.raw ?? {}) as Record<string, unknown>;
-    const html = stringField(raw["content:encoded"]) ?? stringField(raw.content) ?? null;
+    // YouTube (and other media feeds) put the description and thumbnail in <media:group>.
+    const media = (raw["media:group"] ?? {}) as Record<string, unknown>;
+    const mediaDescription = stringField(media["media:description"]);
+    const html =
+      stringField(raw["content:encoded"]) ?? stringField(raw.content) ?? (mediaDescription ? textToHtml(mediaDescription) : null);
     // The feed reader strips HTML from descriptions: images are looked for in the raw content.
     const richHtml = html ?? stringField(raw.description) ?? entry.description ?? "";
-    const imageUrl = findImage(raw, richHtml, feedUrl);
+    const imageUrl = findImage({ ...media, ...raw }, richHtml, feedUrl);
     posts.push({
       url,
       title,
-      excerpt: toExcerpt(entry.description ? htmlToText(entry.description) : null),
+      excerpt: toExcerpt(entry.description ? htmlToText(entry.description) : (mediaDescription ?? null)),
       imageUrl,
       images: findContentImages(richHtml, feedUrl, imageUrl),
-      publishedAt: toDate(entry.published),
+      // Atom feeds (YouTube…) also have an "updated" date: the publication date is the one that matters.
+      publishedAt: toDate(stringField(raw.published) ?? entry.published),
       content: html ? htmlToText(html) : null,
     });
   }
@@ -91,6 +96,15 @@ function findImage(raw: Record<string, unknown>, html: string, base: string): st
   }
   const src = load(html)("img").first().attr("src");
   return src ? absoluteUrl(src, base) : null;
+}
+
+/** Plain text (YouTube descriptions) as simple HTML paragraphs, to be read like any article content. */
+function textToHtml(text: string): string {
+  const escape = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return text
+    .split(/\n{2,}/)
+    .map((paragraph) => `<p>${escape(paragraph).replace(/\n/g, "<br>")}</p>`)
+    .join("");
 }
 
 function absoluteUrl(src: string, base: string): string | null {

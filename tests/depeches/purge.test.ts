@@ -39,4 +39,19 @@ describe("purgeOldPosts", () => {
 
     expect((await db.select().from(editions)).map((e) => e.day).sort()).toEqual(["2026-10-14", "2026-10-20"]);
   });
+
+  it("deletes the image copies of the deleted posts", async () => {
+    const { media } = await import("@/db/schema");
+    const db = await createTestDb();
+    const [{ id }] = await db
+      .insert(sources)
+      .values({ type: "instagram", displayName: "@s", url: "https://www.instagram.com/s", key: "instagram:s" })
+      .returning({ id: sources.id });
+    await db.insert(media).values({ name: "a".repeat(40) + ".jpg", contentType: "image/jpeg", data: Buffer.from([1]) });
+    await db.insert(posts).values({ sourceId: id, url: "https://www.instagram.com/p/old", title: "old", method: "social", publishedAt: daysAgo(9), images: [`/media/${"a".repeat(40)}.jpg`] });
+
+    await purgeOldPosts(db, now);
+
+    expect(await db.select().from(media)).toHaveLength(0);
+  });
 });

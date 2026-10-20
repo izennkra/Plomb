@@ -1,7 +1,7 @@
-import { and, asc, eq, isNull, lt, or, sql } from "drizzle-orm";
+import { and, asc, eq, inArray, isNull, lt, or, sql } from "drizzle-orm";
 import type { Db } from "@/db/client";
 import { editions, sources, users } from "@/db/schema";
-import { refreshSource } from "@/modules/aspiration-web/refresh-source";
+import { FEED_SOURCE_TYPES, refreshSource } from "@/modules/aspiration-web/refresh-source";
 import { purgeOldPosts } from "@/modules/depeches/purge";
 import { buildEdition } from "@/modules/edition/build";
 import { renderEditionEmail } from "@/modules/edition/email";
@@ -11,6 +11,9 @@ import type { Redacteur } from "@/modules/edition/redacteur/types";
 import { isEditionDay, toSchedule } from "@/modules/edition/schedule";
 import { mapInParallel } from "@/modules/edition/parallel";
 import type { PageFetcher } from "@/modules/fetching/polite-fetch";
+import type { ApifyClient } from "@/modules/social/apify";
+import type { MediaStore } from "@/modules/social/media-store";
+import { collectSocialRuns, forgetOldRuns, launchSocialRuns } from "@/modules/social/refresh-social";
 import { renderAlertEmail } from "./alert-email";
 import type { SendEmail } from "./email-sender";
 
@@ -41,6 +44,9 @@ export type ClockDeps = {
   budgetMs?: number;
   /** Real elapsed time since the start of the call (tests can fake it). */
   elapsedMs?: () => number;
+  /** Social networks through Apify (none when APIFY_TOKEN is not set). */
+  apify?: () => ApifyClient | null;
+  mediaStore?: MediaStore;
 };
 
 export type ClockReport = {
@@ -50,6 +56,8 @@ export type ClockReport = {
   /** E-mails that could not leave: retried at the next call. */
   emailErrors: string[];
   sourcesRefreshed: number;
+  socialLaunched: number;
+  socialAdded: number;
 };
 
 /**
@@ -62,10 +70,30 @@ export async function runClock(db: Db, deps: ClockDeps): Promise<ClockReport> {
   const elapsed = deps.elapsedMs ?? (() => Date.now() - started);
   const now = deps.now ?? (() => new Date());
   const budget = deps.budgetMs ?? 240_000;
-  const report: ClockReport = { edition: "none", emailsSent: 0, alertsSent: 0, emailErrors: [], sourcesRefreshed: 0 };
+  const report: ClockReport = {
+    edition: "none",
+    emailsSent: 0,
+    alertsSent: 0,
+    emailErrors: [],
+    sourcesRefreshed: 0,
+    socialLaunched: 0,
+    socialAdded: 0,
+  };
 
   for (const user of await db.select().from(users)) {
     await editionOfTheDay(db, user, deps, now(), report);
+  }
+
+  // Social networks: read the answers that came back, then send the requests due (7:30 and 17:30).
+  const apify = deps.apify?.() ?? null;
+  if (apify && deps.mediaStore) {
+    try {
+      report.socialAdded = (await collectSocialRuns(db, { apify, mediaStore: deps.mediaStore, now: now() })).added;
+      report.socialLaunched = (await launchSocialRuns(db, { apify, now: now() })).launched;
+      await forgetOldRuns(db, now());
+    } catch {
+      // Apify unreachable: the next call tries again; the rest of the clock goes on.
+    }
   }
 
   report.sourcesRefreshed = await refreshDueSources(db, {
@@ -180,7 +208,9 @@ async function refreshDueSources(
   const due = await db
     .select({ id: sources.id })
     .from(sources)
-    .where(and(eq(sources.type, "web"), or(isNull(sources.lastFetchedAt), lt(sources.lastFetchedAt, dueBefore))))
+    .where(
+      and(inArray(sources.type, FEED_SOURCE_TYPES), or(isNull(sources.lastFetchedAt), lt(sources.lastFetchedAt, dueBefore))),
+    )
     .orderBy(asc(sql`coalesce(${sources.lastFetchedAt}, 0)`));
 
   const fetcher = fetchPage?.();

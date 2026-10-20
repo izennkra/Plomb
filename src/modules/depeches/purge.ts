@@ -2,6 +2,7 @@ import { inArray, lt, sql } from "drizzle-orm";
 import type { Db } from "@/db/client";
 import { editions, posts, seenLinks } from "@/db/schema";
 import { parisDay } from "@/modules/edition/paris-time";
+import { createDbMediaStore } from "@/modules/social/media-store";
 import { DAY_MS, FEED_DAYS } from "./settings";
 
 /**
@@ -14,7 +15,7 @@ export async function purgeOldPosts(db: Db, now = new Date()): Promise<number> {
 
   const limit = Math.floor((now.getTime() - FEED_DAYS * DAY_MS) / 1000);
   const old = await db
-    .select({ id: posts.id, sourceId: posts.sourceId, url: posts.url })
+    .select({ id: posts.id, sourceId: posts.sourceId, url: posts.url, images: posts.images })
     .from(posts)
     .where(sql`coalesce(${posts.publishedAt}, ${posts.discoveredAt}) < ${limit}`);
   if (old.length === 0) return 0;
@@ -23,6 +24,8 @@ export async function purgeOldPosts(db: Db, now = new Date()): Promise<number> {
     .insert(seenLinks)
     .values(old.map(({ sourceId, url }) => ({ sourceId, url })))
     .onConflictDoNothing();
+  // Copies of social images go with their posts.
+  await createDbMediaStore(db).remove(old.flatMap((post) => post.images ?? []));
   await db.delete(posts).where(
     inArray(
       posts.id,

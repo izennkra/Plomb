@@ -18,6 +18,10 @@ const STALE_REFRESH_MS = 5 * 60_000;
 
 type Method = "rss" | "page";
 
+/** Sources read by Plomb itself (sites and YouTube channels); social networks go through Apify. */
+export const FEED_SOURCE_TYPES: Source["type"][] = ["web", "youtube"];
+export const isFeedSource = (type: Source["type"]) => FEED_SOURCE_TYPES.includes(type);
+
 export type RefreshResult = { ok: true; method: Method; added: number } | { ok: false; error: string };
 
 type Found =
@@ -48,7 +52,7 @@ export async function refreshSource(
 ): Promise<RefreshResult> {
   const source = await db.query.sources.findFirst({ where: eq(sources.id, sourceId) });
   if (!source) return { ok: false, error: "Source introuvable." };
-  if (source.type !== "web") {
+  if (!isFeedSource(source.type)) {
     return { ok: false, error: "Les comptes Instagram, X et LinkedIn ne sont pas encore relevés." };
   }
 
@@ -78,7 +82,9 @@ export async function refreshAllSources(
   db: Db,
   { fetchPage = createPoliteFetcher() }: { fetchPage?: PageFetcher } = {},
 ): Promise<{ sources: number; failed: number; added: number }> {
-  const queue = (await db.select({ id: sources.id }).from(sources).where(eq(sources.type, "web"))).map(({ id }) => id);
+  const queue = (await db.select({ id: sources.id }).from(sources).where(inArray(sources.type, FEED_SOURCE_TYPES))).map(
+    ({ id }) => id,
+  );
   const total = queue.length;
   let failed = 0;
   let added = 0;
@@ -134,7 +140,8 @@ async function findPosts(db: Db, source: Source, fetchPage: PageFetcher): Promis
     rss: () => readFromFeed(db, source, getPage, fetchPage),
     page: () => readFromPage(db, source, getPage, fetchPage),
   };
-  const order: Method[] = source.fetchMethod === "page" ? ["page", "rss"] : ["rss", "page"];
+  // A YouTube channel is only read through its feed.
+  const order: Method[] = source.type === "youtube" ? ["rss"] : source.fetchMethod === "page" ? ["page", "rss"] : ["rss", "page"];
 
   let pageError: string | undefined;
   for (const method of order) {
@@ -162,13 +169,14 @@ async function readFromFeed(
   }
 
   for (const feedUrl of candidates) {
-    const response = await fetchPage(feedUrl);
+    // A YouTube channel's feed is read like a feed reader does (YouTube's robots.txt targets crawlers).
+    const response = await fetchPage(feedUrl, { feedReader: source.type === "youtube" });
     if (!response.ok || response.status !== 200) continue;
     const feed = parseFeed(response.body, response.url);
     if (!feed.ok) continue;
 
     // A section (site.com/brandnew) may announce the feed of the whole site: keep only its own articles.
-    const inSection = feed.posts.filter((post) => isInSection(post.url, source.url));
+    const inSection = source.type === "youtube" ? feed.posts : feed.posts.filter((post) => isInSection(post.url, source.url));
     if (inSection.length === 0) continue;
 
     const listed = inSection.map((post) => post.url);
@@ -176,7 +184,7 @@ async function readFromFeed(
     const wanted = new Set(handled);
     const fresh = inSection.filter((post) => wanted.has(post.url));
     // Feeds with a single image or a short extract: the article page gives the gallery and the full text.
-    for (const post of fresh) Object.assign(post, await enrichFromPage(post, fetchPage));
+    if (source.type === "web") for (const post of fresh) Object.assign(post, await enrichFromPage(post, fetchPage));
     return { ok: true, method: "rss", feedUrl, listed, handled, posts: fresh, unreadable: 0 };
   }
   return { ok: false, error: UNREADABLE };
@@ -215,7 +223,7 @@ async function readFromPage(
 }
 
 /** Listed addresses never seen before, at most one relève's worth, in the source's order (newest first). */
-async function newOnes(db: Db, sourceId: number, listed: string[]): Promise<string[]> {
+export async function newOnes(db: Db, sourceId: number, listed: string[]): Promise<string[]> {
   if (listed.length === 0) return [];
   const [stored, seen] = await Promise.all([
     db.select({ url: posts.url }).from(posts).where(and(eq(posts.sourceId, sourceId), inArray(posts.url, listed))),
@@ -232,7 +240,11 @@ async function newOnes(db: Db, sourceId: number, listed: string[]): Promise<stri
  * Stores the new articles. The very first relève of a source is a starting point, not news:
  * its articles are marked as such, and everything it lists is remembered as already seen.
  */
-async function store(db: Db, sourceId: number, found: Extract<Found, { ok: true }>): Promise<number> {
+export async function store(
+  db: Db,
+  sourceId: number,
+  found: Pick<Extract<Found, { ok: true }>, "listed" | "handled" | "posts"> & { method: Method | "social" },
+): Promise<number> {
   const [[{ storedBefore }], [{ seenBefore }]] = await Promise.all([
     db.select({ storedBefore: count() }).from(posts).where(eq(posts.sourceId, sourceId)),
     db.select({ seenBefore: count() }).from(seenLinks).where(eq(seenLinks.sourceId, sourceId)),
@@ -257,7 +269,7 @@ async function store(db: Db, sourceId: number, found: Extract<Found, { ok: true 
   return inserted.length;
 }
 
-function newArticlesMessage(added: number): string {
+export function newArticlesMessage(added: number): string {
   if (added === 0) return "aucun nouvel article";
   return `${added} ${added > 1 ? "nouveaux articles" : "nouvel article"}`;
 }

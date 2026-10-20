@@ -1,4 +1,4 @@
-export type SourceType = "web" | "instagram" | "x" | "linkedin";
+export type SourceType = "web" | "youtube" | "instagram" | "x" | "linkedin";
 
 export type ParsedSource = {
   type: SourceType;
@@ -15,6 +15,7 @@ export type ParseResult = { ok: true; source: ParsedSource } | { ok: false; erro
 const ERRORS = {
   empty: "Collez l'adresse d'une source (site, Instagram, X ou LinkedIn).",
   invalid: "Ce n'est pas une adresse valide. Exemple : the-brandidentity.com ou instagram.com/mouthwash.studio",
+  youtubeVideo: "Ce lien YouTube pointe vers une vidéo, pas vers une chaîne. Collez l'adresse de la chaîne (youtube.com/@nom).",
   notAProfile: (network: string) =>
     `Ce lien ${network} ne pointe pas vers un profil. Collez le lien de la page du compte.`,
 };
@@ -47,6 +48,8 @@ export function parseSourceUrl(input: string): ParseResult {
   const host = url.hostname.toLowerCase().replace(/^www\./, "");
   const segments = url.pathname.split("/").filter(Boolean);
 
+  if (host === "youtu.be") return failure(ERRORS.youtubeVideo);
+  if (host === "youtube.com" || host.endsWith(".youtube.com")) return parseYoutube(segments);
   if (host === "instagram.com" || host.endsWith(".instagram.com")) return parseInstagram(segments);
   if (["x.com", "twitter.com", "mobile.twitter.com", "mobile.x.com"].includes(host)) return parseX(segments);
   if (host === "linkedin.com" || host.endsWith(".linkedin.com")) return parseLinkedIn(segments);
@@ -64,6 +67,33 @@ function toUrl(input: string): URL | null {
   } catch {
     return null;
   }
+}
+
+/** youtube.com/@name, /channel/UC…, /c/name, /user/name (+ sub-pages like /videos). */
+function parseYoutube(segments: string[]): ParseResult {
+  const [first, second] = segments;
+  if (first?.startsWith("@") && /^@[\w.-]{2,}$/.test(first)) {
+    const handle = first.toLowerCase();
+    return success({ type: "youtube", displayName: handle, url: `https://www.youtube.com/${handle}`, key: `youtube:${handle}` });
+  }
+  if (first === "channel" && second && /^UC[\w-]{10,}$/.test(second)) {
+    return success({
+      type: "youtube",
+      displayName: second,
+      url: `https://www.youtube.com/channel/${second}`,
+      key: `youtube:channel/${second}`,
+    });
+  }
+  if ((first === "c" || first === "user") && second) {
+    const name = second.toLowerCase();
+    return success({
+      type: "youtube",
+      displayName: second,
+      url: `https://www.youtube.com/${first}/${second}`,
+      key: `youtube:${first}/${name}`,
+    });
+  }
+  return failure(ERRORS.youtubeVideo);
 }
 
 function parseInstagram(segments: string[]): ParseResult {
