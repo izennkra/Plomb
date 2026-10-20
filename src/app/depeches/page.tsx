@@ -45,7 +45,7 @@ export default async function DepechesPage({ searchParams }: { searchParams: Sea
           )}
         </p>
       ) : (
-        <Stream>
+        <Stream discovered={items.map((item) => item.discoveredAt.getTime())}>
           {items.map((item) => (
             <PostCard key={item.id} item={item} now={now} />
           ))}

@@ -6,10 +6,22 @@ import { Children, useEffect, useRef, useState, type ReactNode } from "react";
  * The column of dispatches: scrolling stops on each card, the card in the middle is sharp, its neighbours fade.
  * Keyboard: ↑ ↓ previous / next card, ← → its images, Entrée opens it.
  */
-export function Stream({ children }: { children: ReactNode }) {
+export function Stream({ children, discovered }: { children: ReactNode; discovered: number[] }) {
   const cards = Children.toArray(children);
   const scroller = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const [lastVisit, setLastVisit] = useState<number | null>(null);
+
+  // "Nouveau" on what arrived since the previous visit (remembered by this browser only).
+  useEffect(() => {
+    try {
+      const previous = Number(localStorage.getItem("plomb:last-visit")) || null;
+      setLastVisit(previous);
+      localStorage.setItem("plomb:last-visit", String(Date.now()));
+    } catch {
+      // Private browsing: no marker, nothing else changes.
+    }
+  }, []);
 
   // The card crossing the middle line of the column is the active one.
   useEffect(() => {
@@ -73,6 +85,7 @@ export function Stream({ children }: { children: ReactNode }) {
                   }
             }
           >
+            {lastVisit !== null && discovered[index] > lastVisit && <span className="stream__new">Nouveau</span>}
             {card}
           </div>
         ))}

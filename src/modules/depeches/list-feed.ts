@@ -12,6 +12,8 @@ export type FeedItem = {
   /** Publication date, or the day Plomb discovered the article when the site gives none. */
   date: Date;
   dateIsPublication: boolean;
+  /** When Plomb found it (to mark what arrived since the last visit). */
+  discoveredAt: Date;
   source: Pick<Source, "id" | "displayName" | "type">;
 };
 
@@ -78,6 +80,7 @@ export async function listFeed(
       images: row.images?.length ? row.images : row.imageUrl ? [row.imageUrl] : [],
       date: row.publishedAt ?? row.discoveredAt,
       dateIsPublication: row.publishedAt !== null,
+      discoveredAt: row.discoveredAt,
       source: row.source,
     });
   }

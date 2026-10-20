@@ -1,6 +1,6 @@
 # Spec : interface (design V1 de Plomb)
 
-Brique 7 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md), sur le moteur terminé. Statut : **en attente de validation**.
+Brique 7 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md), sur le moteur terminé. Statut : **validée le 2026-10-20**, construite (V1).
 Maquettes d'Izenn (2026-10-20) : [Journal](docs/design/maquette-journal.png) · [Dépêches](docs/design/maquette-depeches.png) ·
 [Sources](docs/design/maquette-sources.png) · logo [logo-plomb.svg](docs/design/logo-plomb.svg).
 
@@ -98,13 +98,13 @@ le texte continue), contrastes francs, survol = inversion de couleurs **instanta
 - Jamais : modifier les couleurs des maquettes (gris exact conservé, décision d'Izenn).
 
 ## Success Criteria
-- [ ] Les trois écrans reprennent les maquettes (couleurs, police, logo, barre d'onglets)
-- [ ] Dépêches : défilement aimanté, carte centrale nette, carrousel, clavier
-- [ ] Journal : Une orange dépliable, fenêtres secondaires et suite, navigation entre éditions
-- [ ] Sources : tuiles avec images, ajout par la tuile « + », panneau de source
-- [ ] Animations légères, coupées si « réduire les animations »
-- [ ] Ordinateur et téléphone
-- [ ] `npm test`, `npm run lint`, `npm run typecheck` passent
+- [x] Les trois écrans reprennent les maquettes (couleurs, police, logo, barre d'onglets)
+- [x] Dépêches : défilement aimanté, carte centrale nette, carrousel, clavier
+- [x] Journal : Une orange dépliable, fenêtres secondaires et suite, navigation entre éditions
+- [x] Sources : tuiles avec images, ajout par la tuile « + », panneau de source
+- [x] Animations légères, coupées si « réduire les animations »
+- [x] Ordinateur et téléphone
+- [x] `npm test`, `npm run lint`, `npm run typecheck` passent
 
 ## Décisions (Izenn, 2026-10-20)
 1. **Police : ABC Diatype Compressed.** Izenn a acheté la licence (le créateur est un ami) ; les fichiers installés
@@ -112,5 +112,11 @@ le texte continue), contrastes francs, survol = inversion de couleurs **instanta
 2. **Journal : grille de journal**, tailles selon l'importance, alignées à la grille ; référence complémentaire à venir.
 3. **Gris exact des maquettes** conservé (texte blanc sur `#A8A8A8`).
 
+## Constats de la construction (2026-10-20)
+- Photos de profil Instagram : unavatar.io les réserve à son offre payante → tuiles Instagram avec les initiales
+  (option possible : un passage unique du « profile scraper » d'Apify, ~0,02 $ dans le crédit gratuit).
+- La police n'est pas envoyée sur GitHub tant que le dépôt est public : en ligne, elle s'affiche sur le Mac d'Izenn
+  (installée) ; ailleurs (téléphone), police de secours jusqu'au passage du dépôt en privé.
+
 ## Open Questions
-- Référence de grille du Journal (pièce jointe annoncée par Izenn).
+- Aucune.

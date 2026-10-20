@@ -22,6 +22,6 @@ Images des sources (moteur : colonne `image_url`, icône des sites, photo YouTub
 tuile « + » qui devient un champ, panneau de source (état, favori, dépêches, retirer), « Relever maintenant ».
 **Vérification :** tests moteur + navigateur · **Taille :** L
 
-## Tâche 5 : Finitions
+## Tâche 5 : Finitions ✓
 Repère « Nouveau », e-mail aux couleurs de Plomb, favicon, « réduire les animations », relecture, pull request.
 **Vérification :** `npm test`, `lint`, `typecheck`, build · **Taille :** M

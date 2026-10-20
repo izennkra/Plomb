@@ -48,35 +48,37 @@ export function renderEditionEmail(edition: Edition, items: EditionItem[], { jou
 
   // Copies of social images are served by Plomb (/media/…): the e-mail needs their full address.
   const image = une?.images[0] ? new URL(une.images[0], journalUrl).toString() : undefined;
+  // Plomb's look (grey, orange Une, black blocks), with e-mail-safe fonts when Diatype is not installed.
+  const font = "'ABC Diatype Compressed','ABC Diatype Compressed Trial','Arial Narrow','Helvetica Neue',Arial,sans-serif";
+  const logo = [..."Plomb"]
+    .map((letter) => `<td style="padding:0 2px 0 0"><span style="display:block;padding:3px 4px 2px;background:#000;color:#eaeaea;font:500 20px/1 ${font}">${letter}</span></td>`)
+    .join("");
   const html = `<!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>${escape(subject)}</title></head>
-<body style="margin:0;padding:24px 12px;background:#fafaf7;font-family:Georgia,'Times New Roman',serif;color:#111">
+<body style="margin:0;padding:28px 12px;background:#eaeaea;font-family:${font};color:#000">
   <table role="presentation" width="100%" style="max-width:600px;margin:0 auto;border-collapse:collapse">
-    <tr><td style="padding:0 0 16px;border-bottom:2px solid #111">
-      <p style="margin:0;font:700 28px/1 Georgia,serif;letter-spacing:-0.5px">Plomb</p>
-      <p style="margin:6px 0 0;font:14px/1.4 Helvetica,Arial,sans-serif;color:#6b6b6b">Votre journal du ${escape(date)}</p>
-    </td></tr>
+    <tr><td align="center" style="padding:0 0 22px"><table role="presentation" style="border-collapse:collapse"><tr>${logo}</tr></table></td></tr>
     ${
       une
-        ? `<tr><td style="padding:24px 0 8px">
-      <p style="margin:0 0 8px;font:700 11px/1 Helvetica,Arial,sans-serif;letter-spacing:1px;text-transform:uppercase">À la Une · ${escape(une.sourceName)}</p>
-      ${image ? `<img src="${escape(image)}" alt="" width="600" style="display:block;width:100%;height:auto;margin:0 0 12px">` : ""}
-      <h1 style="margin:0 0 8px;font:700 24px/1.25 Georgia,serif">${escape(une.title)}</h1>
-      <p style="margin:0;font:16px/1.55 Georgia,serif">${escape(uneText)}</p>
+        ? `<tr><td style="padding:24px 24px 20px;background:#f08f35;border-radius:6px">
+      <p style="margin:0 0 14px;font:400 30px/1.04 ${font}">${escape(une.title)}</p>
+      ${image ? `<img src="${escape(image)}" alt="" width="552" style="display:block;width:100%;height:auto;margin:0 0 14px;border-radius:4px">` : ""}
+      <p style="margin:0 0 18px;font:400 16px/1.25 ${font}">${escape(uneText)}</p>
+      <span style="display:inline-block;padding:3px 6px 2px;background:#000;color:#f08f35;border-radius:3px;font:400 13px/1 ${font}">Édition N°${edition.id} · ${escape(date)}</span>
     </td></tr>
     ${secondary
       .map(
-        (item) => `<tr><td style="padding:16px 0 0;border-top:1px solid #e2e2e2">
-      <p style="margin:0 0 4px;font:12px/1 Helvetica,Arial,sans-serif;color:#6b6b6b">${escape(item.sourceName)}</p>
-      <p style="margin:0;font:700 17px/1.3 Georgia,serif">${escape(item.title)}</p>
-    </td></tr>`,
+        (item) => `<tr><td style="padding:8px 0 0"><table role="presentation" width="100%" style="border-collapse:collapse;background:#a8a8a8;border-radius:6px"><tr><td style="padding:10px 12px 12px;color:#fff">
+      <p style="margin:0 0 6px;font:400 11px/1 ${font}">${escape(item.sourceName)}</p>
+      <p style="margin:0;font:400 20px/1.08 ${font}">${escape(item.title)}</p>
+    </td></tr></table></td></tr>`,
       )
       .join("")}
-    ${others > 0 ? `<tr><td style="padding:16px 0 0;font:14px/1.4 Helvetica,Arial,sans-serif;color:#6b6b6b">… et ${others} autre${others > 1 ? "s" : ""} article${others > 1 ? "s" : ""} dans votre édition.</td></tr>` : ""}`
-        : `<tr><td style="padding:24px 0;font:16px/1.5 Georgia,serif">${escape(edition.message ?? "Pas de nouvelles de vos sources depuis la dernière édition.")}</td></tr>`
+    ${others > 0 ? `<tr><td style="padding:12px 0 0;font:400 14px/1.3 ${font}">… et ${others} autre${others > 1 ? "s" : ""} article${others > 1 ? "s" : ""} dans ton édition.</td></tr>` : ""}`
+        : `<tr><td style="padding:24px;background:#f08f35;border-radius:6px;font:400 24px/1.1 ${font}">${escape(edition.message ?? "Pas de nouvelles de tes sources depuis la dernière édition.")}</td></tr>`
     }
-    <tr><td style="padding:28px 0">
-      <a href="${escape(journalUrl)}" style="display:inline-block;padding:12px 20px;background:#111;color:#fff;text-decoration:none;font:700 15px/1 Helvetica,Arial,sans-serif">Lire le journal</a>
+    <tr><td style="padding:24px 0">
+      <a href="${escape(journalUrl)}" style="display:inline-block;padding:7px 14px 6px;background:#000;color:#fff;border-radius:4px;text-decoration:none;font:400 16px/1 ${font}">Lire le journal</a>
     </td></tr>
   </table>
 </body></html>`;
