@@ -1,6 +1,6 @@
 # Spec : depeches (Salle de Dépêches)
 
-Brique 3 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [aspiration-web](SPEC-aspiration-web.md). Statut : **en attente de validation**.
+Brique 3 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [aspiration-web](SPEC-aspiration-web.md). Statut : **validée le 2026-10-20**.
 
 ## Objectif
 Un **flux unique**, trié par date (le plus récent en haut), où arrivent les publications de toutes les sources suivies.
@@ -33,8 +33,8 @@ Les images des autres articles de la page (« à lire aussi ») sont **exclues**
 ## Fonctionnement
 - **Galerie d'images** : à la lecture d'un article (brique 2), Plomb garde l'image principale + les images de la même famille
   (même dossier propre à l'article, ou même nom de base), sans doublons de taille. Pour un flux RSS : les images du contenu
-  (hors pictos / boutons / pixels de suivi). Les articles déjà relevés n'ont qu'une image : une commande permet de
-  **compléter leurs galeries** (relecture polie des pages).
+  (hors pictos / boutons / pixels de suivi). Les articles déjà relevés n'ont qu'une image : un bouton temporaire sur la page
+  Sources permet de **compléter leurs galeries** (relecture polie des pages).
 - **Flux** : toutes les publications des sources suivies des **7 derniers jours**, dédoublonnées par adresse, triées par date
   (date de publication, sinon date de découverte). Chaque carte affiche sa date (« il y a 2 h », « lundi 19 octobre »).
 - **Articles d'avant l'abonnement** (trouvés au premier relevé d'une source) : affichés seulement s'ils sont récents —
@@ -50,7 +50,7 @@ Inchangée. Aucune nouvelle dépendance prévue : carrousel et affichage en gran
 le vrai design viendra de Figma.
 
 ## Commands
-Inchangées, plus : `npm run posts:galleries` (compléter les galeries des articles déjà relevés).
+Inchangées. Compléter les galeries des articles déjà relevés : bouton temporaire sur la page Sources.
 
 ## Project Structure
 ```
@@ -59,7 +59,7 @@ src/modules/depeches/                  → requête du flux (tri, jours, filtres
 src/app/page.tsx                       → Salle de Dépêches
 src/app/sources/page.tsx               → gestion des sources
 src/app/components/                    → carte, carrousel, affichage en grand
-scripts/complete-galleries.ts          → compléter les galeries existantes
+src/modules/depeches/complete-galleries.ts → compléter les galeries existantes (bouton temporaire)
 ```
 
 ## Modèle de données
