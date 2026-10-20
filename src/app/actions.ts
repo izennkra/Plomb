@@ -9,6 +9,7 @@ import { sources } from "@/db/schema";
 import { markRefreshing, refreshAllSources, refreshSource } from "@/modules/aspiration-web/refresh-source";
 import { completeGalleries } from "@/modules/depeches/complete-galleries";
 import { addSource } from "@/modules/sources/add-source";
+import { setFavorite } from "@/modules/sources/favorite";
 import { unsubscribe } from "@/modules/sources/unsubscribe";
 
 export type AddSourceState = {
@@ -80,5 +81,13 @@ export async function completeGalleriesAction(): Promise<void> {
       galleryJob.plombGalleriesRunning = false;
     }
   });
+  revalidatePath("/", "layout");
+}
+
+export async function toggleFavoriteAction(formData: FormData): Promise<void> {
+  const sourceId = Number(formData.get("sourceId"));
+  if (!Number.isInteger(sourceId)) return;
+
+  await setFavorite(await getDb(), DEFAULT_USER_ID, sourceId, formData.get("favorite") === "true");
   revalidatePath("/", "layout");
 }

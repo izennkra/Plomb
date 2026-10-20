@@ -34,7 +34,7 @@ la fabrication de l'édition (sélection, notation, Une, rédaction), et enfin l
 - [ ] Une vraie édition fabriquée sur les données d'Izenn — point avec Izenn
 
 ### Phase 3 : Lecture
-- [ ] Tâche 6 : Favoris (étoile sur la page Sources)
+- [x] Tâche 6 : Favoris (étoile sur la page Sources)
 - [ ] Tâche 7 : Page Journal (édition du jour, 7 précédentes, bouton « Préparer l'édition »)
 - [ ] Tâche 8 : E-mail de l'édition (contenu + aperçu ; envoi réel : brique `planification`)
 

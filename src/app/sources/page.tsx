@@ -5,7 +5,7 @@ import { listRecentPosts, type PostSummary } from "@/modules/aspiration-web/list
 import { isRefreshing } from "@/modules/aspiration-web/refresh-source";
 import { listSources } from "@/modules/sources/list-sources";
 import { countMissingGalleries } from "@/modules/depeches/complete-galleries";
-import { completeGalleriesAction, isCompletingGalleries, refreshAllAction, unsubscribeAction } from "../actions";
+import { completeGalleriesAction, isCompletingGalleries, refreshAllAction, toggleFavoriteAction, unsubscribeAction } from "../actions";
 import { AddSourceForm } from "./add-source-form";
 import { AutoRefresh } from "../auto-refresh";
 
@@ -69,6 +69,18 @@ export default async function SourcesPage() {
                 <a href={source.url} target="_blank" rel="noreferrer">
                   {source.displayName}
                 </a>{" "}
+                <form action={toggleFavoriteAction} style={{ display: "inline" }}>
+                  <input type="hidden" name="sourceId" value={source.id} />
+                  <input type="hidden" name="favorite" value={String(!source.favorite)} />
+                  <button
+                    type="submit"
+                    aria-pressed={source.favorite}
+                    aria-label={source.favorite ? `Retirer ${source.displayName} des favoris` : `Mettre ${source.displayName} en favori`}
+                    title="Les sources favorites passent en priorité dans le journal"
+                  >
+                    {source.favorite ? "★ Favori" : "☆ Favori"}
+                  </button>
+                </form>{" "}
                 <form action={unsubscribeAction} style={{ display: "inline" }}>
                   <input type="hidden" name="sourceId" value={source.id} />
                   <button type="submit" aria-label={`Retirer ${source.displayName}`}>

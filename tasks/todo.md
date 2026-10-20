@@ -50,7 +50,7 @@
 ## Tâche 6 : Favoris
 **Description :** Étoile « favori » par source sur la page Sources (par utilisateur).
 **Critères :**
-- [ ] Marquer / démarquer une source ; l'état est gardé
+- [x] Marquer / démarquer une source ; l'état est gardé
 **Vérification :** test manuel + `npm test` · **Dépendances :** 3 · **Taille :** S
 **Fichiers :** `src/modules/sources/favorite.ts`, `src/app/sources/page.tsx`, `src/app/actions.ts`
 
