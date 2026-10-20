@@ -1,5 +1,6 @@
 import { extractFromXml } from "@extractus/feed-extractor";
 import { load } from "cheerio";
+import { findContentImages } from "./images";
 import { cleanPostUrl, htmlToText, toDate, toExcerpt, type PostCandidate } from "./post";
 
 const FEED_TYPES = ["application/rss+xml", "application/atom+xml", "application/feed+json", "application/json"];
@@ -59,12 +60,13 @@ export function parseFeed(xml: string, feedUrl: string): FeedResult {
 
     const raw = (entry.raw ?? {}) as Record<string, unknown>;
     const html = stringField(raw["content:encoded"]) ?? stringField(raw.content) ?? null;
+    const imageUrl = findImage(raw, html ?? entry.description ?? "", feedUrl);
     posts.push({
       url,
       title,
       excerpt: toExcerpt(entry.description ? htmlToText(entry.description) : null),
-      imageUrl: findImage(raw, html ?? entry.description ?? "", feedUrl),
-      images: [],
+      imageUrl,
+      images: findContentImages(html ?? entry.description ?? "", feedUrl, imageUrl),
       publishedAt: toDate(entry.published),
       content: html ? htmlToText(html) : null,
     });

@@ -51,6 +51,27 @@ describe("parseFeed", () => {
     expect(first.content).not.toMatch(/<\w+/); // plain text, no HTML
   });
 
+  it("collects the images of the article content (Findings)", () => {
+    const result = parseFeed(fixture("findings", "feed.xml"), "https://findings.mouthwash.studio/feed");
+    if (!result.ok) throw new Error(result.error);
+    const [first] = result.posts;
+    expect(first.images[0]).toBe(first.imageUrl);
+    expect(first.images.length).toBeGreaterThanOrEqual(10);
+    expect(first.images.length).toBeLessThanOrEqual(12);
+    expect(new Set(first.images).size).toBe(first.images.length);
+  });
+
+  it("skips tiny images and icons in the content", () => {
+    const rss = `<?xml version="1.0"?><rss version="2.0"><channel><title>T</title><item>
+      <title>Post</title><link>https://blog.example/post</link>
+      <content:encoded xmlns:content="http://purl.org/rss/1.0/modules/content/"><![CDATA[
+        <img src="https://blog.example/photo-1.jpg"><img src="https://blog.example/pixel.gif" width="1" height="1">
+        <img src="https://blog.example/icon-twitter.png"><img src="https://blog.example/photo-2.jpg">
+      ]]></content:encoded></item></channel></rss>`;
+    const result = parseFeed(rss, "https://blog.example/feed");
+    expect(result.ok && result.posts[0].images).toEqual(["https://blog.example/photo-1.jpg", "https://blog.example/photo-2.jpg"]);
+  });
+
   it("does not take an audio file as image (OFF Brand)", () => {
     const result = parseFeed(fixture("offbrand", "feed.xml"), "https://offbrandkoto.substack.com/feed");
     if (!result.ok) throw new Error(result.error);
@@ -58,6 +79,7 @@ describe("parseFeed", () => {
     expect(result.posts).toHaveLength(17);
     for (const post of result.posts) {
       expect(post.imageUrl ?? "").not.toMatch(/\.mp3/);
+      for (const image of post.images) expect(image).not.toMatch(/\.mp3/);
     }
     expect(result.posts.filter((post) => post.imageUrl).length).toBeGreaterThan(10);
   });

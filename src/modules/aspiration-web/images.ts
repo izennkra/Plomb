@@ -41,6 +41,27 @@ export function findArticleImages(html: string, pageUrl: string, mainImage: stri
   return [mainUrl, ...others.map((picture) => picture.url)].slice(0, MAX_GALLERY_IMAGES);
 }
 
+/**
+ * Gallery of an article from an RSS feed: the feed's image, then the images of the article content
+ * (without icons, buttons or tiny tracking images).
+ */
+export function findContentImages(html: string, base: string, mainImage: string | null): string[] {
+  const $ = load(html);
+  const urls = mainImage ? [mainImage] : [];
+  $("img").each((_, element) => {
+    const node = $(element);
+    const tiny = [node.attr("width"), node.attr("height")].some((value) => value !== undefined && Number(value) < 100);
+    const src = node.attr("src");
+    if (!src || src.startsWith("data:") || tiny || NOT_CONTENT.test(src)) return;
+    try {
+      urls.push(new URL(src, base).toString());
+    } catch {
+      // not an address
+    }
+  });
+  return [...new Set(urls)].slice(0, MAX_GALLERY_IMAGES);
+}
+
 type Candidate = {
   url: string;
   /** Same key = same picture, maybe in another size. */

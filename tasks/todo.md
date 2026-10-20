@@ -20,7 +20,7 @@ gardées si même dossier propre à l'article ou même nom de base que l'image p
 ## Tâche 3 : Galerie d'un article de flux RSS
 **Description :** `parseFeed` renvoie `images` : image du flux + images du contenu, sans pictos ni pixels de suivi.
 **Critères :**
-- [ ] Findings → plusieurs images pour le 1er article ; aucun fichier audio
+- [x] Findings → plusieurs images pour le 1er article ; aucun fichier audio
 **Vérification :** `npm test` · **Dépendances :** 1 · **Taille :** S
 **Fichiers :** `src/modules/aspiration-web/feed.ts`, `tests/aspiration-web/feed.test.ts`
 
