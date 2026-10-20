@@ -90,7 +90,7 @@ describe("the clock", () => {
 
   it("retries a failed preparation, then sends an alert once at 9:30", async () => {
     const broken = () => {
-      throw new Error("Clé Mistral manquante (réglage MISTRAL_API_KEY).");
+      throw new Error("Clé Claude manquante (réglage ANTHROPIC_API_KEY).");
     };
     await runClock(db, deps(paris("08:00"), { redacteur: broken }));
     await runClock(db, deps(paris("08:15"), { redacteur: broken }));
@@ -104,7 +104,7 @@ describe("the clock", () => {
 
     expect(sent).toHaveLength(1);
     expect(sent[0].subject).toMatch(/n'a pas pu être préparé/);
-    expect(sent[0].text).toContain("Clé Mistral manquante");
+    expect(sent[0].text).toContain("Clé Claude manquante");
   });
 
   it("reads the sources not read for 30 minutes, the oldest first, within the time left", async () => {

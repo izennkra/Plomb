@@ -76,13 +76,12 @@ src/modules/edition/redacteur/   → interface unique + Ollama : prompts, lectur
 src/modules/edition/             → sélection des articles, notation, Une, fabrication et stockage de l'édition
 src/modules/edition/email.ts     → contenu de l'e-mail (HTML + texte)
 src/app/journal/                 → page Journal (édition du jour + 7 précédentes)
-scripts/compare-ai.ts            → comparatif des IA sur 5 articles (résultats dans docs/)
 ```
 
 ## Testing Strategy
 - La logique (sélection 8h00, bonus favoris, Une 1+2, journée vide) testée avec un **faux rédacteur** (réponses fixes) : rapide, sans IA.
 - Lecture des réponses de l'IA : réponses mal formées gérées (nouvel essai, puis résumé d'origine du média en secours).
-- Comparatif réel des IA documenté dans `docs/comparatif-ia.md`.
+- Comparatif réel des IA locales fait le 2026-10-20 (document retiré depuis, avec l'IA locale).
 - Page Journal et aperçu e-mail : test manuel.
 
 ## Boundaries
@@ -119,7 +118,8 @@ scripts/compare-ai.ts            → comparatif des IA sur 5 articles (résultat
 12. **Journal automatique même Mac fermé** : nécessite la mise en ligne (serveur + base Supabase + **Mistral en ligne**)
     → brique `planification`, juste après celle-ci.
 10. Première édition test jugée très satisfaisante (texte, rythme du Mac) : **pas d'API pour l'instant**.
-8. **IA retenue : Mistral (Ministral 3 14B), en local** — voir [docs/comparatif-ia.md](docs/comparatif-ia.md).
+8. ~~IA retenue : Mistral (Ministral 3 14B), en local~~ → remplacée par **Claude Haiku 5.5 en ligne** (brique planification) ;
+   IA locale, Mistral et le comparatif **supprimés du projet et du Mac** (grand ménage, Izenn, 2026-10-20).
    Si le Mac rame à chaque journal du matin → **IA en ligne** (API payante, choisie selon le prix).
    Protections du Mac : modèle déchargé 30 s après la rédaction ; en mode test, 10 articles maximum.
 
