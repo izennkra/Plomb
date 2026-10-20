@@ -31,7 +31,12 @@ la fabrication de l'édition (sélection, notation, Une, rédaction), et enfin l
 - [x] Tâche 5 : Fabrication (notation + bonus favoris, Une 1 + 2, rédaction, thème, journée vide)
 
 ### Checkpoint 2
-- [ ] Une vraie édition fabriquée sur les données d'Izenn — point avec Izenn
+- [x] Une vraie édition fabriquée sur les données d'Izenn — très satisfait ; demande : mieux hiérarchiser la Une
+
+### Phase 2 bis : Hiérarchie éditoriale (ajout après la 1re édition)
+- [ ] Tâche 9 : Grille de critères + sujet principal (consigne calibrée, note calculée, favoris sans bonus)
+- [ ] Tâche 10 : Écho médiatique (même sujet chez plusieurs sources → un seul article, « couvert par N médias », bonus)
+- [ ] Tâche 11 : Conférence de rédaction (l'IA choisit la Une parmi les ~8 meilleurs, secours = ordre des notes)
 
 ### Phase 3 : Lecture
 - [x] Tâche 6 : Favoris (étoile sur la page Sources)

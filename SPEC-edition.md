@@ -15,16 +15,26 @@ Cette brique fabrique l'édition (à la demande, via un bouton) et prépare l'e-
 - J'ouvre la page **Journal** : en haut la **Une** (1 article majeur, texte plus développé, grande image) et **2 articles
   secondaires** ; ensuite le reste de l'actualité, du plus important au moins important.
 - Chaque article : un titre et un résumé **rédigés par l'IA en français**, ses images, la source, « En savoir plus » → l'article original.
-- Je marque une source comme **favorite** (page Sources) → ses articles passent en priorité dans le journal et sont
-  **mis en valeur** (repère visuel provisoire, le vrai design viendra de Figma).
+- Je marque une source comme **favorite** (page Sources) → ses articles sont **mis en valeur** visuellement
+  (surlignage ou couleur de carte ; repère provisoire, le vrai design viendra de Figma). Ils n'ont **aucun avantage
+  de classement** : un article favori peut faire la Une si le sujet est fort, ou se retrouver en bas du journal.
 - Je retrouve les éditions des 7 derniers jours.
 - J'ai un aperçu de l'**e-mail** de l'édition (« Votre journal du 21 octobre est prêt » + un extrait de la Une + lien vers le journal).
 
 ## Contenu d'une édition
 - **Articles retenus** : tous les articles **nouveaux** (jamais ceux d'avant l'abonnement) arrivés depuis l'édition
   précédente, jusqu'à **8h00** (1 h avant la publication de 9h00). Première édition : les dernières 24 h.
-- **Importance** : l'IA note chaque article (intérêt pour un designer, ampleur du projet, qualité visuelle) ;
-  les articles des **sources favorites** reçoivent un bonus. La Une = les 3 plus importants (1 majeur + 2 secondaires).
+- **Hiérarchie éditoriale** (ce qui fait qu'un article atterrit en Une) :
+  1. **Grille de critères** notée par l'IA de 1 à 5 : **notoriété du sujet** (marque mondiale vs commerce local),
+     **ampleur du projet** (refonte complète vs détail), **renommée des auteurs** (studio/agence reconnu),
+     **portée culturelle** (fait débat, change les pratiques), **qualité / originalité**. La note finale est calculée
+     par Plomb avec des poids (notoriété et ampleur pèsent le plus). Consigne calibrée par des exemples
+     (« refonte de Coca-Cola : notoriété 5 » ; « café de quartier : notoriété 1 »).
+  2. **Écho médiatique** : un même sujet couvert par plusieurs sources dans la période = gros sujet → bonus ;
+     il n'apparaît **qu'une fois**, avec la mention « couvert par N médias ».
+  3. **Conférence de rédaction** : l'IA compare côte à côte les ~8 meilleurs candidats et choisit la Une (1 + 2) ;
+     le reste suit par note. Si sa réponse est inutilisable, on garde l'ordre des notes.
+  4. **Sources favorites** : aucun bonus de classement, seulement une mise en valeur visuelle.
 - **Rédaction** : pour chaque article, un titre et un résumé de 2–3 phrases (Une : un texte plus développé, ~120 mots),
   à partir du texte complet de l'article (si le flux RSS n'en donne qu'un extrait, la page de l'article est lue). Ton : journal, factuel, sans inventer. Langue : français par défaut.
 - **Thème** : l'IA attribue aussi une étiquette de thème provisoire (Identité, Typographie, Packaging, Édition,
@@ -44,7 +54,8 @@ sans toucher au reste (par ex. IA locale sur le Mac, autre solution une fois Plo
 
 ## Modèle de données
 - `editions` : date, période couverte, statut (en préparation / prête / erreur), IA utilisée, langue.
-- `edition_items` : édition, article, rang, place (une / secondaire / suite), titre et résumé rédigés, thème, note d'importance.
+- `edition_items` : édition, article, rang, place (une / secondaire / suite), titre et résumé rédigés, thème, note d'importance,
+  notes par critère, sujet principal, autres médias qui couvrent le sujet.
 - `subscriptions.favorite` : source favorite (par utilisateur).
 
 ## Tech Stack
@@ -75,7 +86,9 @@ scripts/compare-ai.ts            → comparatif des IA sur 5 articles (résultat
 - [ ] Comparatif des IA réalisé sur 5 vrais articles, choix d'Izenn noté
 - [ ] « Préparer l'édition » produit une édition : Une (1 + 2), suite classée par importance, résumés en français
 - [ ] Seuls les articles nouveaux arrivés jusqu'à 8h00 depuis l'édition précédente sont retenus
-- [ ] Les sources favorites passent en priorité et sont mises en valeur
+- [ ] La Une revient aux sujets forts : un grand sujet passe devant un petit, quelle que soit la source
+- [ ] Un sujet couvert par plusieurs sources n'apparaît qu'une fois, avec « couvert par N médias », et gagne en importance
+- [ ] Les sources favorites sont mises en valeur, sans avantage de classement
 - [ ] Les 7 dernières éditions restent consultables
 - [ ] Aperçu de l'e-mail de l'édition
 - [ ] Si l'IA échoue sur un article, l'édition se fait quand même (résumé du média en secours)
@@ -84,13 +97,16 @@ scripts/compare-ai.ts            → comparatif des IA sur 5 articles (résultat
 ## Décisions (Izenn, 2026-10-20)
 1. Articles : tout ce qui est nouveau jusqu'à 1 h avant le journal de 9h00.
 2. La Une : 1 article majeur + 2 secondaires.
-3. Importance : les gros sujets prennent plus de place ; **sources favorites** prioritaires et mises en valeur.
+3. Importance : les gros sujets prennent plus de place (ex. refonte de Coca-Cola en Une, pas le café matcha du coin) :
+   grille de critères + écho médiatique + conférence de rédaction (2026-10-20, après la 1re édition test).
 4. Rubriques : à décider au moment de l'UX (étiquette de thème préparée en attendant).
 5. Emplacement du journal dans l'app (page principale ou notification + page dédiée) : à décider au moment de l'UX ;
    page `/journal` en attendant.
 6. Un **e-mail** est envoyé à 9h00 avec un extrait du journal (envoi : brique `planification`).
 
 7. Comparatif : **IA locales uniquement** (pas de Claude) ; téléchargement de 2–3 modèles accepté.
+9. **Favoris** : mise en valeur visuelle uniquement, **aucun bonus de classement** (Izenn, 2026-10-20).
+10. Première édition test jugée très satisfaisante (texte, rythme du Mac) : **pas d'API pour l'instant**.
 8. **IA retenue : Mistral (Ministral 3 14B), en local** — voir [docs/comparatif-ia.md](docs/comparatif-ia.md).
    Si le Mac rame à chaque journal du matin → **IA en ligne** (API payante, choisie selon le prix).
    Protections du Mac : modèle déchargé 30 s après la rédaction ; en mode test, 10 articles maximum.

@@ -45,7 +45,7 @@
 **Fichiers :** `src/modules/edition/build.ts`, `tests/edition/build.test.ts`
 
 ## Checkpoint 2
-- [ ] Vraie édition sur les données d'Izenn — point avec Izenn
+- [x] Vraie édition sur les données d'Izenn — très satisfait ; demande : mieux hiérarchiser la Une
 
 ## Tâche 6 : Favoris
 **Description :** Étoile « favori » par source sur la page Sources (par utilisateur).
@@ -68,6 +68,30 @@
 - [ ] Aperçu lisible ; extrait de la Une ; lien vers le journal
 **Vérification :** `npm test` + aperçu manuel · **Dépendances :** 5 · **Taille :** S
 **Fichiers :** `src/modules/edition/email.ts`, `src/app/journal/[id]/email/route.ts`, `tests/edition/email.test.ts`
+
+## Tâche 9 : Grille de critères
+**Description :** Le rédacteur note 5 critères (notoriété, ampleur, auteurs, portée, qualité, de 1 à 5) et nomme le sujet principal ; Plomb calcule la note sur 10 avec des poids. Consigne calibrée par des exemples. Favoris : plus de bonus.
+**Critères :**
+- [ ] Note calculée correctement à partir des critères ; notoriété et ampleur pèsent le plus
+- [ ] Un article favori n'est pas avantagé dans le classement, mais reste marqué
+**Vérification :** `npm test` · **Dépendances :** 5 · **Taille :** M
+**Fichiers :** `src/modules/edition/redacteur/*`, `src/modules/edition/scoring.ts`, `src/modules/edition/build.ts`, `src/db/schema.ts`, tests
+
+## Tâche 10 : Écho médiatique
+**Description :** Articles au même sujet principal venant de sources différentes → regroupés en un seul (le plus riche), mention des autres médias, bonus d'importance.
+**Critères :**
+- [ ] « Coca-Cola » chez 3 sources → 1 article, couvert par 3 médias, mieux classé
+- [ ] Sujets différents jamais fusionnés par erreur (noms trop courts ou génériques ignorés)
+**Vérification :** `npm test` · **Dépendances :** 9 · **Taille :** M
+**Fichiers :** `src/modules/edition/echo.ts`, `src/modules/edition/build.ts`, tests
+
+## Tâche 11 : Conférence de rédaction
+**Description :** Une demande de plus à l'IA : elle compare les ~8 meilleurs candidats et choisit la Une (1 + 2). Réponse invalide → ordre des notes.
+**Critères :**
+- [ ] La Une suit le choix de l'IA quand il est valide
+- [ ] Réponse invalide ou erreur → la Une suit les notes
+**Vérification :** `npm test` + vraie édition · **Dépendances :** 9, 10 · **Taille :** M
+**Fichiers :** `src/modules/edition/redacteur/*`, `src/modules/edition/build.ts`, tests
 
 ## Checkpoint final
 - [ ] Critères de succès de SPEC-edition.md cochés
