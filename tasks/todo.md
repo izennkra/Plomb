@@ -44,9 +44,9 @@
 ## Tâche 5 : Ajouter une source
 **Description :** Service `addSource(userId, input)` : reconnaît l'URL, vérifie le site si c'est du web, enregistre la source si elle n'existe pas encore, puis abonne l'utilisateur.
 **Critères :**
-- [ ] Même source écrite de 2 façons → 1 seule ligne en base
-- [ ] Deux utilisateurs suivent la même source → 1 source, 2 abonnements
-- [ ] Erreurs de reconnaissance et de vérification remontées telles quelles
+- [x] Même source écrite de 2 façons → 1 seule ligne en base
+- [x] Deux utilisateurs suivent la même source → 1 source, 2 abonnements
+- [x] Erreurs de reconnaissance et de vérification remontées telles quelles
 **Vérification :** `npm test`
 **Dépendances :** 2, 3, 4 · **Taille :** M
 **Fichiers :** `src/modules/sources/add-source.ts`, `tests/sources/add-source.test.ts`
