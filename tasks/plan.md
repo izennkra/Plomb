@@ -25,7 +25,7 @@ la fabrication de l'édition (sélection, notation, Une, rédaction), et enfin l
 - [ ] Izenn choisit l'IA
 
 ### Phase 2 : Le rédacteur et l'édition
-- [ ] Tâche 2 : Rédacteur Ollama (JSON, essais, secours) + faux rédacteur de test
+- [x] Tâche 2 : Rédacteur Ollama (JSON, essais, secours) + faux rédacteur de test
 - [x] Tâche 3 : Base de données (`editions`, `edition_items`, sources favorites)
 - [x] Tâche 4 : Sélection des articles d'une édition (nouveaux, jusqu'à 8h00, depuis l'édition précédente)
 - [ ] Tâche 5 : Fabrication (notation + bonus favoris, Une 1 + 2, rédaction, thème, journée vide)

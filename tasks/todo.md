@@ -14,8 +14,8 @@
 ## Tâche 2 : Rédacteur Ollama
 **Description :** Interface `Redacteur` (`summarize(article)`, `writeLead(article)`), implémentation Ollama (JSON imposé, délai max, 2 essais), faux rédacteur pour les tests.
 **Critères :**
-- [ ] Réponse valide → titre, résumé, thème (liste fermée), note 1–10
-- [ ] Réponse invalide ou IA injoignable → erreur claire après 2 essais
+- [x] Réponse valide → titre, résumé, thème (liste fermée), note 1–10
+- [x] Réponse invalide ou IA injoignable → erreur claire après 2 essais
 **Vérification :** `npm test` (faux serveur Ollama local) · **Dépendances :** 1 · **Taille :** M
 **Fichiers :** `src/modules/edition/redacteur/*.ts`, `tests/edition/redacteur.test.ts`
 
