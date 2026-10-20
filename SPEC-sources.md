@@ -1,6 +1,6 @@
 # Spec : sources
 
-Brique 1 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Statut : **en attente de validation**.
+Brique 1 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Statut : **validée le 2026-10-20**.
 
 ## Objectif
 Permettre à l'utilisateur de s'abonner à une source en collant simplement son URL, sans rien configurer.
@@ -16,6 +16,7 @@ Cette brique ne récupère **pas encore** les publications (c'est la brique `asp
 - Je colle deux fois la même source écrite différemment (`https://www.instagram.com/mouthwash.studio/?hl=fr` et `instagram.com/mouthwash.studio`) → Plomb comprend que c'est la même et ne crée pas de doublon.
 - Je vois la liste de mes sources et je peux me désabonner d'une source.
 - Si je colle n'importe quoi (`bonjour`), Plomb affiche un message clair au lieu de planter.
+- Si je colle l'adresse d'un site qui n'existe pas ou ne répond pas, Plomb me le dit et ne l'ajoute pas.
 
 ### Règles de reconnaissance
 | URL collée | Type | Nom affiché | Clé unique |
@@ -28,6 +29,14 @@ Cette brique ne récupère **pas encore** les publications (c'est la brique `asp
 - `https://` est ajouté si absent ; `www.` et la casse du domaine sont ignorés.
 - Les paramètres de suivi (`utm_*`, `hl`, `igsh`, `s`, `ref`, etc.) sont retirés.
 - Les pages qui ne sont pas un profil (ex. `instagram.com/p/xyz`, `x.com/home`) sont refusées avec un message clair.
+
+### Vérification à l'ajout
+- **Sites web** : Plomb contacte le site au moment de l'ajout (10 secondes maximum, redirections suivies).
+  S'il ne répond pas ou renvoie une erreur (404, 500…), la source est refusée avec un message clair.
+  Si le site redirige vers une autre adresse (ex. `http` → `https`, ancien domaine → nouveau), c'est l'adresse finale qui sert de clé unique.
+- **Instagram / X / LinkedIn** : ces plateformes bloquent les robots, on ne peut donc pas vérifier de façon fiable
+  qu'un compte existe sans service payant. Pour l'instant on vérifie seulement le format ; la vraie vérification
+  arrivera avec la brique `aspiration-sociale`.
 
 ## Tech Stack
 - Next.js 15 (App Router) + TypeScript
@@ -70,6 +79,7 @@ export function parseSourceUrl(input: string): ParsedSource | ParseError {
 
 ## Testing Strategy
 - Tests unitaires sur la reconnaissance d'URL : tous les exemples de ce document + cas pièges (majuscules, www, paramètres, slash final, URL invalide, page non-profil).
+- Tests de la vérification des sites avec un faux serveur local (jamais le vrai internet) : site OK, 404, délai dépassé, redirection.
 - Tests d'intégration sur l'enregistrement : ajouter deux fois la même source ne crée qu'une ligne ; se désabonner ne supprime pas la source si un autre utilisateur la suit.
 
 ## Boundaries
@@ -81,9 +91,10 @@ export function parseSourceUrl(input: string): ParsedSource | ParseError {
 - [ ] Les 4 types d'URL du tableau sont reconnus, avec le bon nom et la bonne clé
 - [ ] Une même source écrite de 2 façons différentes ne crée qu'une seule ligne en base
 - [ ] Une URL invalide ou une page non-profil affiche un message clair en français
+- [ ] Un site web qui ne répond pas ou renvoie une erreur est refusé avec un message clair
 - [ ] Sur la page, je peux ajouter, voir et retirer mes sources
 - [ ] `npm test`, `npm run lint` et `npm run typecheck` passent
 
-## Open Questions
-1. Faut-il vérifier dès maintenant qu'un site web existe vraiment (le contacter au moment de l'ajout), ou attendre la brique `aspiration-web` ? Proposition : attendre.
-2. Autres réseaux à reconnaître dès maintenant (Behance, Dribbble, Pinterest, YouTube, Substack…) ? Proposition : Substack est un site web classique (RSS) ; Behance/Dribbble/Pinterest pourront être ajoutés plus tard.
+## Décisions
+1. Vérifier qu'un site web existe dès l'ajout : **oui** (voir « Vérification à l'ajout »).
+2. Behance, Dribbble, Pinterest, YouTube : **plus tard**. Substack est traité comme un site web.
