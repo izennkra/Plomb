@@ -1,0 +1,69 @@
+PLOMB — SPECIFICATION &
+ARCHITECTURE
+Le Journal de Veille Créative • Document de Cadrage Technique & Produit
+
+
+ Auteur / Créateur : Izenn Drouka                                 Cible : Designers, Créatifs, Marketeux
+
+ Modèle Économique : 5 € / mois                                   Statut : Phase de Cadrage Moteur (Data-First)
+
+
+
+1. Vision Produit & Problématique
+Dans un monde submergé de sources d'information et de flux continus sur les réseaux sociaux, les créatifs et designers
+passent un temps fou à faire leur veille. Voulant vérifier si un studio aimé a posté un nouveau projet, on se retrouve
+happé par l'algorithme des Reels et du fil infini (Instagram, X), générant fatigue et dispersion.
+
+La Promesse de Plomb : Ressusciter le journal papier d'antan avec ses codes visuels, sa Une et ses rubriques. Un
+objet numérique qui se lit puis se referme comme un rituel. Chaque matin à 9h00, l'utilisateur reçoit son édition
+personnelle de veille, triée et hiérarchisée par une IA agissant comme un Rédacteur en Chef.
+
+
+2. Fonctionnalités Clés (Scope Produit)
+  • L'Édition du Matin (9h00) : Un journal structuré (La Une avec article majeur + Rubriques thématiques condensées)
+  généré par IA à partir des publications de la veille.
+  • Le Feed Temps Réel (Salle de Dépêches) : Un flux en continu où s'ajoutent les nouveaux posts au fil de la journée,
+  filtrable par source (médias, Instagram, X).
+  • Connexion par URL simple : L'utilisateur colle simplement un lien (ex: instagram.com/mouthwash.studio,
+  the-brandidentity.com/features, x.com/studiobakers) pour s'abonner à une source.
+  • Design Éditorial & Minimaliste : Grilles strictes, typographies soignées, focus total sur le visuel (images haute définition,
+  carrousels).
+
+
+3. Architecture Technique (Approche Data-First)
+Le projet adopte une architecture hybride intelligente pour garantir un coût proche de zéro tout en assurant une
+scalabilité industrielle :
+
+A. Le Moteur Maison (0 € / Gratuit)
+  • Cible : Sites médias, blogs, Substack, magazines de design (ex: The Brand Identity).
+  • Fonctionnement (Cascade à 3 niveaux) :
+  1. Niveau 1 : Détection automatique du flux RSS / Atom caché dans le HTML.
+  2. Niveau 2 : Analyse des balises OpenGraph et extraction propre du texte via Mozilla Readability.
+  3. Niveau 3 : Filet de sécurité IA (petit modèle) pour les sites atypiques.
+
+B. La Passerelle API Tiers (Réseaux Sociaux)
+  • Cible : Instagram, X (Twitter), LinkedIn (forteresses anti-bot).
+  • Fonctionnement : Utilisation de services managés (ex: Apify, SocialData) qui gèrent la rotation d'IPs résidentielles et les
+  sessions pour récupérer les posts sans blocage.
+  • Optimisation & Mutualisation : Les sources sont stockées en base de données de manière centralisée (Supabase). Si
+  500 utilisateurs suivent le même studio, le scraping n'est effectué qu'une seule fois.
+4. Méthodologie de Développement
+Étape 1 : Le Moteur d'abord (En cours) : Développement de la 'salle des machines' avec Claude Code (Next.js,
+SQLite/Supabase local) pour valider l'aspiration des URLs, la déduplication et le prompt du Rédacteur en Chef IA.
+Étape 2 : Design Figma & Framer : Création du Design System complet sur Figma (grilles papier, typographies) et test
+des animations sur Framer (dont la physique est exportable via Motion).
+Étape 3 : Assemblage UI : Intégration des maquettes Figma sur le moteur fonctionnel.
+
+
+5. Points d'Attention & Challenges Techniques
+   • Le Cache des Médias : Sauvegarde systématique des images Instagram/X sur le stockage interne (Supabase Storage /
+   Cloudflare R2) car les liens d'origine expirent au bout de 48h.
+   • Équilibre Éditorial : Ne pas se limiter à du texte brut généré par IA ; le designer doit pouvoir inspecter les images en
+   grand et les carrousels originaux.
+   • Gestion de Fréquence (Polling) : Interrogation des sources par lots (toutes les 30 à 60 min) pour préserver les
+   performances et les quotas.
+
+
+
+Document de spécification initiale — Plomb Project 2026 — Base de travail pour Claude Code et agents IA.
+
