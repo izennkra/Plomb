@@ -3,9 +3,9 @@
 ## Tâche 1 : Accès réseau sécurisé
 **Description :** Fonction `safeFetch(url)` utilisée par tout Plomb : résout l'adresse et refuse les adresses internes (loopback, réseaux privés, link-local, adresses du cloud), suit les redirections une par une en revérifiant chacune (5 max), 10 s max, 5 Mo max. `checkWebsite` (brique 1) l'utilise.
 **Critères :**
-- [ ] 127.0.0.1, localhost, 10.x, 192.168.x, 169.254.169.254, ::1 refusés avec un message clair
-- [ ] Une redirection vers une adresse interne est refusée
-- [ ] Réponse trop grosse ou trop lente → erreur claire
+- [x] 127.0.0.1, localhost, 10.x, 192.168.x, 169.254.169.254, ::1 refusés avec un message clair
+- [x] Une redirection vers une adresse interne est refusée
+- [x] Réponse trop grosse ou trop lente → erreur claire
 **Vérification :** `npm test`
 **Dépendances :** aucune · **Taille :** M
 **Fichiers :** `src/modules/fetching/safe-fetch.ts`, `src/modules/fetching/ip.ts`, `src/modules/sources/check-website.ts`, `tests/fetching/*.test.ts`

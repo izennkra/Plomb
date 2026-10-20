@@ -18,7 +18,7 @@ figées des vrais sites d'Izenn : flux RSS → repérage des liens d'articles �
 ## Liste des tâches
 
 ### Phase 1 : Fondations
-- [ ] Tâche 1 : Accès réseau sécurisé (adresses internes bloquées, taille, délai, redirections vérifiées)
+- [x] Tâche 1 : Accès réseau sécurisé (adresses internes bloquées, taille, délai, redirections vérifiées)
 - [ ] Tâche 2 : Politesse (robots.txt + pause entre deux pages d'un même site)
 - [ ] Tâche 3 : Base de données (table `posts` + infos de relevé sur `sources`)
 
