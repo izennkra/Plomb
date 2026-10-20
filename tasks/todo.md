@@ -80,8 +80,8 @@
 ## Tâche 10 : Écho médiatique
 **Description :** Articles au même sujet principal venant de sources différentes → regroupés en un seul (le plus riche), mention des autres médias, bonus d'importance.
 **Critères :**
-- [ ] « Coca-Cola » chez 3 sources → 1 article, couvert par 3 médias, mieux classé
-- [ ] Sujets différents jamais fusionnés par erreur (noms trop courts ou génériques ignorés)
+- [x] « Coca-Cola » chez 3 sources → 1 article, couvert par 3 médias, mieux classé
+- [x] Sujets différents jamais fusionnés par erreur (noms trop courts ou génériques ignorés)
 **Vérification :** `npm test` · **Dépendances :** 9 · **Taille :** M
 **Fichiers :** `src/modules/edition/echo.ts`, `src/modules/edition/build.ts`, tests
 

@@ -15,6 +15,11 @@ export function EditionArticle({ item }: { item: EditionItem }) {
         </p>
         {item.placement === "une" ? <h2 className="edition-article__title">{item.title}</h2> : <h3 className="edition-article__title">{item.title}</h3>}
         {text && <p className="edition-article__text">{text}</p>}
+        {item.coveredBy.length > 0 && (
+          <p className="card__meta">
+            Couvert par {item.coveredBy.length + 1} médias · aussi chez {item.coveredBy.join(", ")}
+          </p>
+        )}
         <a className="card__more" href={item.url} target="_blank" rel="noreferrer noopener">
           En savoir plus <span aria-hidden="true">↗</span>
         </a>

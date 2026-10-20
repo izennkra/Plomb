@@ -84,6 +84,29 @@ describe("buildEdition", () => {
     expect(last).toMatchObject({ title: "FR local-cafe", favorite: true, sourceName: "fav.studio" });
   });
 
+  it("merges the same story covered by several media, and ranks it higher", async () => {
+    const [{ id: third }] = await db
+      .insert(sources)
+      .values({ type: "web", displayName: "brandnew", url: "https://b.com", key: "web:b" })
+      .returning({ id: sources.id });
+    await db.insert(subscriptions).values({ userId: DEFAULT_USER_ID, sourceId: third });
+    await add(ordinary, "int-coca");
+    await add(favorite, "fav-coca", { images: ["https://img/1.jpg", "https://img/2.jpg"] });
+    await add(third, "bn-coca");
+    await add(ordinary, "strong-single-story");
+    const { redacteur } = createFakeRedacteur({
+      importance: { "int-coca": 4, "fav-coca": 4, "bn-coca": 4, "strong-single-story": 4 },
+      subjects: { "int-coca": "Coca-Cola", "fav-coca": "The Coca-Cola Company", "bn-coca": "Coca Cola" },
+    });
+
+    const edition = await buildEdition(db, DEFAULT_USER_ID, { redacteur, now });
+
+    const items = await itemsOf(edition.id);
+    expect(items).toHaveLength(2);
+    expect(items[0]).toMatchObject({ title: "FR fav-coca", coveredBy: expect.arrayContaining(["itsnicethat.com", "brandnew"]) });
+    expect(items[0].importance).toBeGreaterThan(items[1].importance!);
+  });
+
   it("still comes out when the AI fails on an article (media's own title and summary)", async () => {
     await add(ordinary, "fine");
     await add(ordinary, "broken");

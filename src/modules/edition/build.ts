@@ -2,6 +2,7 @@ import { and, eq } from "drizzle-orm";
 import type { Db } from "@/db/client";
 import { editionItems, editions, type Edition, type EditionItem } from "@/db/schema";
 import type { ArticleSummary, Redacteur } from "./redacteur/types";
+import { groupEchoes } from "./echo";
 import { importanceOf, type Criteria } from "./scoring";
 import { selectEditionPosts, type EditionPost } from "./select";
 
@@ -10,7 +11,7 @@ const UNE_SIZE = 3;
 /** Criteria given when the AI could not judge an article: an average story. */
 const DEFAULT_CRITERIA: Criteria = { notoriety: 3, scale: 3, authors: 3, reach: 3, quality: 3 };
 
-type Written = { post: EditionPost; summary: ArticleSummary; fallback: boolean; score: number };
+type Written = { post: EditionPost; summary: ArticleSummary; fallback: boolean; score: number; coveredBy: string[] };
 
 /**
  * Prepares the user's edition of the day: the editor writes and judges every new article, the most important ones make
@@ -31,13 +32,25 @@ export async function buildEdition(
       const article = { title: post.title, content: post.content, excerpt: post.excerpt, sourceName: post.sourceName };
       const summary = await redacteur.summarize(article).catch(() => null);
       const final = summary ?? fallbackSummary(post);
-      written.push({ post, summary: final, fallback: !summary, score: final.importance });
+      written.push({ post, summary: final, fallback: !summary, score: final.importance, coveredBy: [] });
     }
+
+    // The same story covered by several media appears once (the best article), and counts as a bigger story.
+    const isBetter = (a: Written, b: Written) => a.score > b.score || (a.score === b.score && a.post.images.length > b.post.images.length);
+    const stories = groupEchoes(
+      written.map((entry) => ({ item: entry, subject: entry.fallback ? null : entry.summary.subject, source: entry.post.sourceName })),
+      isBetter,
+    ).map(({ item, coveredBy }) => ({
+      ...item,
+      coveredBy,
+      score: item.fallback ? item.score : importanceOf(item.summary.criteria, coveredBy.length),
+    }));
+
     // Most important first; on a tie, the richer gallery.
-    written.sort((a, b) => b.score - a.score || b.post.images.length - a.post.images.length);
+    stories.sort((a, b) => b.score - a.score || b.post.images.length - a.post.images.length);
 
     const items: (typeof editionItems.$inferInsert)[] = [];
-    for (const [index, entry] of written.entries()) {
+    for (const [index, entry] of stories.entries()) {
       const { post, summary, fallback } = entry;
       const placement: EditionItem["placement"] = index === 0 ? "une" : index < UNE_SIZE ? "secondaire" : "suite";
       const leadText =
@@ -58,7 +71,7 @@ export async function buildEdition(
         importance: fallback ? null : Math.round(entry.score),
         subject: fallback ? null : summary.subject || null,
         criteria: fallback ? null : summary.criteria,
-        coveredBy: [],
+        coveredBy: entry.coveredBy,
         url: post.url,
         images: post.images,
         sourceName: post.sourceName,
