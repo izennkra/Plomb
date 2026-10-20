@@ -331,3 +331,9 @@ main {
   gap: 10px;
   padding-left: 22px;
 }
+
+.sign-in {
+  display: grid;
+  gap: 8px;
+  max-width: 320px;
+}

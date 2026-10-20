@@ -23,7 +23,7 @@
 ## Tâche 4 : Mot de passe
 **Description :** Middleware : toutes les pages et actions demandent le mot de passe (cookie de session signé) ; l'horloge passe avec son propre jeton.
 **Critères :**
-- [ ] Sans mot de passe : page de connexion ; avec : accès ; l'horloge fonctionne sans mot de passe mais avec jeton
+- [x] Sans mot de passe : page de connexion ; avec : accès ; l'horloge fonctionne sans mot de passe mais avec jeton
 **Vérification :** `npm test` + essai manuel · **Dépendances :** aucune · **Taille :** S
 
 ## Tâche 5 : Base Turso
