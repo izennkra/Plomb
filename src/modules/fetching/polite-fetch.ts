@@ -39,12 +39,13 @@ export function createPoliteFetcher({
 
   async function throttled(url: string, delayMs: number): Promise<FetchResult> {
     const { origin } = new URL(url);
+    const current = now();
     const last = lastRequestAt.get(origin);
-    if (last !== undefined) {
-      const wait = last + delayMs - now();
-      if (wait > 0) await sleep(wait);
-    }
-    lastRequestAt.set(origin, now());
+    const slot = last === undefined ? current : Math.max(current, last + delayMs);
+    // The slot is booked before waiting: requests to the same site made at the same time (two sources of one site)
+    // queue up one after the other instead of leaving together.
+    lastRequestAt.set(origin, slot);
+    if (slot > current) await sleep(slot - current);
     return fetch(url);
   }
 
