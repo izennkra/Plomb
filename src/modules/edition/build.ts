@@ -26,12 +26,29 @@ type Written = { post: EditionPost; summary: ArticleSummary; fallback: boolean; 
 export async function buildEdition(
   db: Db,
   userId: string,
-  { redacteur, now = new Date(), testMode = false }: { redacteur: Redacteur; now?: Date; testMode?: boolean },
+  {
+    redacteur,
+    now = new Date(),
+    testMode = false,
+    publishAt = null,
+  }: {
+    redacteur: Redacteur;
+    now?: Date;
+    testMode?: boolean;
+    /** Automatic edition: shown (and e-mailed) from 9:00. None (by hand): shown at once, no e-mail. */
+    publishAt?: Date | null;
+  },
 ): Promise<Edition> {
   const user = await db.query.users.findFirst({ where: eq(users.id, userId) });
   const schedule = toSchedule(user?.editionFrequency, user?.editionWeekdays);
   const selection = await selectEditionPosts(db, userId, { now, testMode, coverageDays: coverageDays(schedule, parisDay(now)) });
-  const edition = await startEdition(db, userId, selection.day, selection.periodStart, selection.periodEnd, redacteur.model);
+  const edition = await startEdition(db, userId, {
+    day: selection.day,
+    periodStart: selection.periodStart,
+    periodEnd: selection.periodEnd,
+    model: redacteur.model,
+    publishAt,
+  });
 
   try {
     // Several articles are written at the same time when the editor allows it (online AI).
@@ -103,7 +120,8 @@ export async function buildEdition(
         : `${items.length} article${items.length > 1 ? "s" : ""}`;
     return await finish(db, edition.id, { status: "ready", message });
   } catch (error) {
-    await finish(db, edition.id, { status: "error", message: "La préparation de l'édition a échoué." });
+    const reason = error instanceof Error ? ` (${error.message})` : "";
+    await finish(db, edition.id, { status: "error", message: `La préparation de l'édition a échoué${reason}.` });
     throw error;
   }
 }
@@ -135,18 +153,24 @@ async function editorialMeeting<T extends Written>(stories: T[], redacteur: Reda
 }
 
 /** Creates the edition of the day, or resets it when it is prepared again. */
-async function startEdition(db: Db, userId: string, day: string, periodStart: Date, periodEnd: Date, model: string) {
-  const existing = await db.query.editions.findFirst({ where: and(eq(editions.userId, userId), eq(editions.day, day)) });
+async function startEdition(
+  db: Db,
+  userId: string,
+  values: Pick<Edition, "day" | "periodStart" | "periodEnd" | "model" | "publishAt">,
+) {
+  const existing = await db.query.editions.findFirst({
+    where: and(eq(editions.userId, userId), eq(editions.day, values.day)),
+  });
   if (existing) {
     await db.delete(editionItems).where(eq(editionItems.editionId, existing.id));
     const [edition] = await db
       .update(editions)
-      .set({ status: "building", periodStart, periodEnd, model, message: null, createdAt: new Date() })
+      .set({ ...values, status: "building", message: null, createdAt: new Date(), attempts: existing.attempts + 1 })
       .where(eq(editions.id, existing.id))
       .returning();
     return edition;
   }
-  const [edition] = await db.insert(editions).values({ userId, day, periodStart, periodEnd, model }).returning();
+  const [edition] = await db.insert(editions).values({ ...values, userId, attempts: 1 }).returning();
   return edition;
 }
 

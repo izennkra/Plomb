@@ -10,14 +10,14 @@
 ## Tâche 2 : Horloge
 **Description :** `/api/horloge` (jeton secret) : relève les sources dues (les plus anciennes d'abord, budget ~4 min), prépare l'édition à 8h00 les jours de parution, la publie et envoie l'e-mail à 9h00 ; rattrapage ; ne refait jamais deux fois.
 **Critères :**
-- [ ] Fausse heure : rien avant 8h00 ; édition à 8h00 ; publication + e-mail à 9h00 ; rattrapage à 10h si manqué
-- [ ] Jour sans parution : pas d'édition ; jeton absent ou faux : refusé
+- [x] Fausse heure : rien avant 8h00 ; édition à 8h00 ; publication + e-mail à 9h00 ; rattrapage à 10h si manqué
+- [x] Jour sans parution : pas d'édition ; jeton absent ou faux : refusé
 **Vérification :** `npm test` · **Dépendances :** 1 · **Taille :** L → découpée (relevé par tranches / planning du journal)
 
 ## Tâche 3 : E-mail
 **Description :** Envoi via Resend (date d'envoi enregistrée, jamais deux fois) ; e-mail d'alerte si la préparation échoue.
 **Critères :**
-- [ ] Un seul envoi par édition ; alerte en cas d'échec
+- [x] Un seul envoi par édition ; alerte en cas d'échec
 **Vérification :** `npm test` (faux envoyeur) + vrai e-mail reçu · **Dépendances :** 2 · **Taille :** S
 
 ## Tâche 4 : Mot de passe
