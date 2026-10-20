@@ -1,0 +1,46 @@
+# Tâches : brique `aspiration-sociale`
+
+## Tâche 1 : Chaîne YouTube
+**Description :** `parseSourceUrl` reconnaît youtube.com/@nom, /channel/UC…, /c/nom, /user/nom (et youtu.be ? non : vidéo, refusée) ; à l'ajout, Plomb lit la page de la chaîne pour trouver son identifiant et son flux.
+**Critères :** [ ] @itsnicethat → type youtube, nom @itsnicethat, flux trouvé · [ ] lien de vidéo → message clair
+**Vérification :** `npm test` (copie figée de la page) · **Taille :** S
+
+## Tâche 2 : Vidéos YouTube
+**Description :** Lecture du flux YouTube (titre, lien, date, miniature en grand, description) ; relève comme les sites (horloge, doublons, 7 jours).
+**Critères :** [ ] vidéos avec miniature et description · [ ] nouvelle vidéo = nouveauté
+**Vérification :** `npm test` + essai réel · **Taille :** M
+
+## Checkpoint 1
+- [ ] @itsnicethat dans Plomb — point avec Izenn
+
+## Tâche 3 : Socle Apify
+**Description :** Client HTTP Apify (lancer un « acteur », lire son statut et ses résultats, consommation du mois) ; table `social_runs`.
+**Critères :** [ ] faux serveur Apify : lancer → en cours → résultats · [ ] garde-fou : refus au-delà de ~4 $
+**Vérification :** `npm test` · **Taille :** M
+
+## Tâche 4 : Copie des images
+**Description :** Stockage (Vercel Blob en ligne, `data/media/` en local) ; images des posts sociaux copiées à l'arrivée ; supprimées avec les posts.
+**Critères :** [ ] adresse d'image stable après copie · [ ] suppression au bout de 7 jours
+**Vérification :** `npm test` · **Taille :** M
+
+## Tâche 5 : Instagram
+**Description :** Lecteur Instagram : légende → texte, images du carrousel, date, lien du post.
+**Critères :** [ ] copie figée d'une réponse Apify → posts corrects, carrousels complets
+**Vérification :** `npm test` + essai réel @mouthwash.studio · **Taille :** M
+
+## Tâche 6 : X
+**Description :** Lecteur X : texte, images, date, lien ; retweets ignorés.
+**Critères :** [ ] copie figée → posts corrects · **Vérification :** `npm test` + essai réel · **Taille :** S
+
+## Tâche 7 : LinkedIn
+**Description :** Lecteur LinkedIn : texte, images, date, lien (page entreprise et profil).
+**Critères :** [ ] copie figée → posts corrects · **Vérification :** `npm test` + essai réel · **Taille :** S
+
+## Tâche 8 : Horloge sociale
+**Description :** 7h30 et 17h30 : lancer les demandes des sources sociales dues ; passage suivant : récupérer, enregistrer, copier les images ; garde-fou de crédit.
+**Critères :** [ ] fausse heure : lancement à 7h30, récupération à 7h45 · [ ] pas de doublon · [ ] crédit dépassé → rien de lancé, statut clair
+**Vérification :** `npm test` · **Taille :** M
+
+## Checkpoint final
+- [ ] Essai réel sur chaque plateforme ; 0 € facturé
+- [ ] `/review`, push, proposition de pull request

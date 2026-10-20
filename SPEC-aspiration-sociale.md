@@ -1,0 +1,80 @@
+# Spec : aspiration-sociale (YouTube, Instagram, X, LinkedIn)
+
+Brique 6 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md), faite **avant la mise en ligne** (demande d'Izenn, 2026-10-20).
+Dépend de [sources](SPEC-sources.md) et [aspiration-web](SPEC-aspiration-web.md). Statut : **en attente de validation**.
+
+## Objectif
+Suivre aussi des **chaînes YouTube** et des **comptes Instagram, X et LinkedIn** : leurs nouvelles publications arrivent
+dans la Salle de Dépêches et le journal, comme les articles des sites. Objectif de coût : **0 €**.
+
+### Récits utilisateur
+- Je colle `https://www.youtube.com/@itsnicethat` → chaque nouvelle vidéo apparaît (miniature, titre, description, lien).
+- Je colle `instagram.com/mouthwash.studio` → chaque nouveau post apparaît, avec **toutes les images du carrousel**.
+- Je colle `x.com/studiobakers` ou `linkedin.com/company/pentagram` → leurs nouveaux posts apparaissent.
+- Dans le journal, l'IA rédige un titre et un résumé à partir de la légende du post ; « En savoir plus » ouvre le post.
+- Les images restent visibles même après expiration des liens d'Instagram/LinkedIn (copie dans le stockage de Plomb).
+
+## Méthodes retenues (comparatif du 2026-10-20)
+| Plateforme | Méthode | Coût | Notes |
+|---|---|---|---|
+| YouTube | **Flux RSS officiel** de la chaîne (`feeds/videos.xml?channel_id=…`) | 0 € | Testé sur @itsnicethat (vidéo du jour, date, miniature) |
+| Instagram | **Apify** — `apify/instagram-post-scraper` | 0 € dans le crédit gratuit (5 $/mois) | ~2,70 $ / 1 000 posts ; filtre « posts plus récents que » |
+| X | **Apify** (scraper de tweets) | 0 € dans le crédit gratuit | L'API officielle n'a plus d'offre gratuite en lecture |
+| LinkedIn | **Apify** (scraper de posts de page / profil) | 0 € dans le crédit gratuit | ~2–4 $ / 1 000 posts ; 50 posts max par passage en gratuit |
+
+Écartés : API officielle d'Instagram (Business Discovery — gratuite mais longue à mettre en place, possible plus tard),
+lecture directe d'Instagram/X/LinkedIn depuis le serveur (bloquée), API X (payante), API LinkedIn (réservée aux partenaires).
+
+**Crédit gratuit Apify** : 5 $/mois, **sans carte bancaire** ; une fois épuisé, Apify est bloqué jusqu'au mois suivant —
+**aucune facture possible**. Garde-fou Plomb : plus de demande à Apify quand ~4 $ ont été utilisés dans le mois.
+Les conditions d'utilisation d'Instagram/X/LinkedIn interdisent en principe la récupération automatique : zone grise assumée
+pour un usage personnel ; à revoir avant les abonnés payants.
+
+## Fonctionnement
+- **YouTube** : traité comme un site à flux RSS (relevé à chaque passage de l'horloge, toutes les 30 min au plus) ;
+  la chaîne est reconnue à l'ajout (adresse `@nom`, `/channel/…`, `/c/…`, `/user/…`) et son flux mémorisé.
+- **Instagram / X / LinkedIn** : relevés **2 fois par jour, à 7h30 et 17h30** (Paris) — 7h30 pour être dans le journal de 8h00.
+  Plomb lance les demandes à Apify, puis récupère les résultats au passage suivant de l'horloge (15 min plus tard) :
+  aucune attente dans la limite de 5 minutes.
+- Seuls les posts **plus récents que le dernier relevé** sont demandés (premier relevé : 3 derniers posts, marqués
+  « avant l'abonnement » comme pour les sites).
+- **Images** : copiées dans **Vercel Blob** (gratuit jusqu'à 1 Go) en ligne, dans `data/media/` sur le Mac ;
+  supprimées avec les posts au bout de 7 jours.
+- Les règles existantes s'appliquent : doublons, 7 jours, date de publication, journal, écho médiatique, favoris.
+
+## Modèle de données
+- `sources.type` : + `youtube`.
+- Table `social_runs` : demande Apify en cours par source (identifiant, lancée à, statut) — pour récupérer les résultats au passage suivant.
+- Suivi de la consommation Apify du mois (garde-fou).
+
+## Tech Stack (ajouts)
+- Apify par son API HTTP (clé `APIFY_TOKEN`), sans bibliothèque si possible.
+- `@vercel/blob` pour la copie des images en ligne.
+
+## Testing Strategy
+- Copies figées d'un flux YouTube et de réponses Apify (Instagram, X, LinkedIn) ; faux serveur Apify (lancer / statut / résultats).
+- Horloge : 7h30 et 17h30 lancent, le passage suivant récupère ; garde-fou de crédit ; pas de doublon.
+- Essai réel : @itsnicethat (YouTube), @mouthwash.studio (Instagram), un compte X, une page LinkedIn.
+
+## Boundaries
+- Toujours : ne demander que les posts récents ; s'arrêter avant d'épuiser le crédit gratuit.
+- Demander d'abord : toute option payante (Apify payant, API X…).
+- Jamais : se connecter aux comptes d'Izenn sur ces réseaux ; contourner les protections des plateformes depuis le serveur.
+
+## Success Criteria
+- [ ] Une chaîne YouTube s'ajoute par son adresse `@nom` et ses nouvelles vidéos apparaissent
+- [ ] Instagram : nouveaux posts avec toutes les images du carrousel, images toujours visibles après 48 h
+- [ ] X et LinkedIn : nouveaux posts
+- [ ] Relevés sociaux à 7h30 et 17h30, résultats récupérés au passage suivant, jamais de doublon
+- [ ] Consommation Apify suivie ; arrêt avant ~4 $ dans le mois ; 0 € facturé
+- [ ] Les posts sociaux entrent dans la Salle de Dépêches et le journal (titre et résumé rédigés par l'IA)
+- [ ] `npm test`, `npm run lint`, `npm run typecheck` passent
+
+## Décisions (Izenn, 2026-10-20)
+1. Faire fonctionner YouTube, Instagram, X, LinkedIn **avant** la mise en ligne, à **0 €** si possible.
+2. Instagram : **Apify** pour commencer (API officielle Meta possible plus tard).
+3. X et LinkedIn : **Apify**, dans le même crédit gratuit, avec garde-fou.
+4. Réseaux sociaux vérifiés **2 fois par jour** (7h30 et 17h30) ; YouTube comme les sites.
+
+## Open Questions
+- Aucune.
