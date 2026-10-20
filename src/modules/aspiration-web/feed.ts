@@ -64,6 +64,7 @@ export function parseFeed(xml: string, feedUrl: string): FeedResult {
       title,
       excerpt: toExcerpt(entry.description ? htmlToText(entry.description) : null),
       imageUrl: findImage(raw, html ?? entry.description ?? "", feedUrl),
+      images: [],
       publishedAt: toDate(entry.published),
       content: html ? htmlToText(html) : null,
     });

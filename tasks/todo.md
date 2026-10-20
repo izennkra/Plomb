@@ -12,8 +12,8 @@
 **Description :** `findArticleImages(html, pageUrl, mainImage)` : toutes les adresses d'images de la page (balises et données),
 gardées si même dossier propre à l'article ou même nom de base que l'image principale ; doublons de taille retirés ; 12 max. `readArticle` renvoie `images`.
 **Critères :**
-- [ ] The Brand Identity → 8, It's Nice That → 12, Brand New → 2, D&AD → 1
-- [ ] Aucune image d'un autre article
+- [x] The Brand Identity → 8, It's Nice That → 12, Brand New → 2, D&AD → 1
+- [x] Aucune image d'un autre article
 **Vérification :** `npm test` sur copies figées · **Dépendances :** 1 · **Taille :** M
 **Fichiers :** `src/modules/aspiration-web/images.ts`, `src/modules/aspiration-web/article.ts`, `tests/aspiration-web/images.test.ts`
 
