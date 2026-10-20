@@ -140,7 +140,19 @@ export async function collectSocialRuns(
       continue;
     }
 
-    const items = await apify.getItems(rows[0].datasetId);
+    let items;
+    try {
+      items = await apify.getItems(rows[0].datasetId);
+    } catch {
+      // Results not readable: the other requests go on; this one is tried again, then given up after the time limit.
+      if (now.getTime() - rows[0].startedAt.getTime() > RUN_TIMEOUT_MS) {
+        for (const run of rows) {
+          await finish(db, run.id, "failed", "résultats illisibles", now);
+          await setStatus(db, run.sourceId, "error", "Les résultats d'Apify n'ont pas pu être lus. Nouvel essai au prochain relevé.", now);
+        }
+      }
+      continue;
+    }
     for (const run of rows) {
       const source = await db.query.sources.findFirst({ where: eq(sources.id, run.sourceId) });
       const platform = source ? platformOf(source) : null;
@@ -170,7 +182,7 @@ export async function collectSocialRuns(
 
 /** Requests finished more than 2 days ago are forgotten. */
 export async function forgetOldRuns(db: Db, now = new Date()): Promise<void> {
-  await db.delete(socialRuns).where(and(lt(socialRuns.startedAt, new Date(now.getTime() - 2 * 86_400_000))));
+  await db.delete(socialRuns).where(lt(socialRuns.startedAt, new Date(now.getTime() - 2 * 86_400_000)));
 }
 
 /** Posts are asked "newer than" the start of the last request that worked. */

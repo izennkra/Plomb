@@ -108,6 +108,23 @@ describe("social relève", () => {
     expect((await db.query.sources.findFirst())?.lastFetchMessage).toBe("3 nouveaux articles");
   });
 
+  it("unreadable results do not stop the collection: tried again, then given up after the time limit", async () => {
+    const apify = fakeApify();
+    await launchSocialRuns(db, { apify: apify.client, now: paris("07:31") });
+    apify.finish();
+    apify.client.getItems = async () => {
+      throw new Error("Apify 500");
+    };
+    const mediaStore = createDbMediaStore(db);
+
+    expect(await collectSocialRuns(db, { apify: apify.client, mediaStore, now: paris("07:46") })).toEqual({ collected: 0, added: 0 });
+    expect((await db.select().from(socialRuns))[0].status).toBe("running");
+
+    await collectSocialRuns(db, { apify: apify.client, mediaStore, now: paris("09:46") });
+    expect((await db.select().from(socialRuns))[0].status).toBe("failed");
+    expect((await db.query.sources.findFirst())?.lastFetchStatus).toBe("error");
+  });
+
   it("Instagram is checked twice a day only (7:30 and 15:30)", async () => {
     const apify = fakeApify();
     await launchSocialRuns(db, { apify: apify.client, now: paris("07:31") });
