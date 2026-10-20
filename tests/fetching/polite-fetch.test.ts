@@ -105,4 +105,14 @@ describe("politeFetcher", () => {
 
     expect(clock.sleeps).toEqual([3000, 10000]);
   });
+
+  it("as a feed reader (a feed the reader subscribed to), robots.txt is not applied but the pace is kept", async () => {
+    const network = fakeNetwork({ "https://www.youtube.com": "User-agent: *\nDisallow: /feeds/videos.xml" });
+    const clock = fakeClock();
+    const fetchPage = createPoliteFetcher({ fetch: network.fetch, ...clock });
+
+    expect(await fetchPage("https://www.youtube.com/feeds/videos.xml?channel_id=UC1")).toMatchObject({ ok: false, reason: "robots" });
+    expect(await fetchPage("https://www.youtube.com/feeds/videos.xml?channel_id=UC1", { feedReader: true })).toMatchObject({ ok: true });
+    expect(clock.sleeps.length).toBeGreaterThan(0);
+  });
 });

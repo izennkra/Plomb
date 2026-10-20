@@ -169,7 +169,8 @@ async function readFromFeed(
   }
 
   for (const feedUrl of candidates) {
-    const response = await fetchPage(feedUrl);
+    // A YouTube channel's feed is read like a feed reader does (YouTube's robots.txt targets crawlers).
+    const response = await fetchPage(feedUrl, { feedReader: source.type === "youtube" });
     if (!response.ok || response.status !== 200) continue;
     const feed = parseFeed(response.body, response.url);
     if (!feed.ok) continue;

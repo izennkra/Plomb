@@ -3,7 +3,16 @@ import { safeFetch, type FetchResult } from "./safe-fetch";
 
 export type PoliteResult = FetchResult | { ok: false; reason: "robots"; error: string };
 
-export type PageFetcher = (url: string) => Promise<PoliteResult>;
+export type PageFetcher = (
+  url: string,
+  options?: {
+    /**
+     * A feed the reader subscribed to (YouTube channel…): read like a feed reader does, without the robots.txt rules
+     * meant for crawlers — the polite pace still applies. Decided by Izenn (2026-10-20).
+     */
+    feedReader?: boolean;
+  },
+) => Promise<PoliteResult>;
 
 /** Name used to match robots.txt rules. */
 const ROBOT_NAME = "PlombBot";
@@ -51,8 +60,9 @@ export function createPoliteFetcher({
     return robots;
   }
 
-  return async (url) => {
+  return async (url, { feedReader = false } = {}) => {
     const { origin } = new URL(url);
+    if (feedReader) return throttled(url, MIN_DELAY_MS);
     const robots = await robotsFor(origin);
     if (robots?.isDisallowed(url, ROBOT_NAME)) {
       return { ok: false, reason: "robots", error: "Ce site interdit aux robots l'accès à cette page." };

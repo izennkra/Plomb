@@ -75,6 +75,9 @@ pour un usage personnel ; à revoir avant les abonnés payants.
 2. Instagram : **Apify** pour commencer (API officielle Meta possible plus tard).
 3. X et LinkedIn : **Apify**, dans le même crédit gratuit, avec garde-fou.
 4. Réseaux sociaux vérifiés **2 fois par jour** (7h30 et 17h30) ; YouTube comme les sites.
+5. Le `robots.txt` de YouTube interdit `/feeds/videos.xml` aux robots : pour le flux d'une chaîne suivie, Plomb se
+   comporte en **lecteur de flux** (règle robots.txt non appliquée, rythme poli conservé). Ailleurs, robots.txt reste respecté.
+   (Alternative non retenue : API officielle YouTube, gratuite, avec une clé Google Cloud.)
 
 ## Open Questions
 - Aucune.
