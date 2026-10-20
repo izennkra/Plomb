@@ -28,7 +28,7 @@ lecture directe d'Instagram/X/LinkedIn depuis le serveur (bloquée), API X (paya
 **Crédit gratuit Apify** : 5 $/mois, **sans carte bancaire** ; une fois épuisé, Apify est bloqué jusqu'au mois suivant —
 **aucune facture possible**. Garde-fou Plomb : plus de demande à Apify quand ~4 $ ont été utilisés dans le mois.
 Les conditions d'utilisation d'Instagram/X/LinkedIn interdisent en principe la récupération automatique : zone grise assumée
-pour un usage personnel ; à revoir avant les abonnés payants.
+pour un usage **strictement personnel** (Plomb ne sera jamais vendu : Izenn, 2026-10-20).
 
 ## Fonctionnement
 - **YouTube** : traité comme un site à flux RSS (relevé à chaque passage de l'horloge, toutes les 30 min au plus) ;
