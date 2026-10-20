@@ -1,6 +1,7 @@
-import { inArray, sql } from "drizzle-orm";
+import { inArray, lt, sql } from "drizzle-orm";
 import type { Db } from "@/db/client";
-import { posts, seenLinks } from "@/db/schema";
+import { editions, posts, seenLinks } from "@/db/schema";
+import { parisDay } from "@/modules/edition/paris-time";
 import { DAY_MS, FEED_DAYS } from "./settings";
 
 /**
@@ -8,6 +9,9 @@ import { DAY_MS, FEED_DAYS } from "./settings";
  * so they never come back as news. (Later: saved articles will be kept.)
  */
 export async function purgeOldPosts(db: Db, now = new Date()): Promise<number> {
+  // Editions of more than a week ago go too (their articles keep a copy, but nobody reads them anymore).
+  await db.delete(editions).where(lt(editions.day, parisDay(new Date(now.getTime() - FEED_DAYS * DAY_MS))));
+
   const limit = Math.floor((now.getTime() - FEED_DAYS * DAY_MS) / 1000);
   const old = await db
     .select({ id: posts.id, sourceId: posts.sourceId, url: posts.url })

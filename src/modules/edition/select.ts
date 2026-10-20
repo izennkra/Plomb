@@ -20,14 +20,22 @@ export type EditionPost = {
 
 export type EditionSelection = { day: string; periodStart: Date; periodEnd: Date; posts: EditionPost[] };
 
+/** Test phase (PLOMB_EDITION_TEST=1 in .env.local): see `selectEditionPosts`. */
+export const editionTestMode = () => process.env.PLOMB_EDITION_TEST === "1";
+
 /**
  * Articles of the next edition: new ones (never those already there before the subscription) from the user's sources,
  * found since the previous edition and until 8:00 (Paris). First edition: the last 24 hours.
  */
-export async function selectEditionPosts(db: Db, userId: string, { now = new Date() } = {}): Promise<EditionSelection> {
+export async function selectEditionPosts(
+  db: Db,
+  userId: string,
+  { now = new Date(), testMode = false }: { now?: Date; testMode?: boolean } = {},
+): Promise<EditionSelection> {
   const day = parisDay(now);
   const cutoff = parisTime(day, EDITION_CUTOFF_HOUR);
-  const periodEnd = now < cutoff ? now : cutoff;
+  // Test mode: everything until now, including articles from before the subscription (to have material).
+  const periodEnd = testMode || now < cutoff ? now : cutoff;
 
   const previous = await db.query.editions.findFirst({
     where: and(eq(editions.userId, userId), eq(editions.status, "ready"), lt(editions.day, day)),
@@ -53,7 +61,7 @@ export async function selectEditionPosts(db: Db, userId: string, { now = new Dat
     .where(
       and(
         eq(subscriptions.userId, userId),
-        eq(posts.beforeSubscription, false),
+        testMode ? undefined : eq(posts.beforeSubscription, false),
         gte(posts.discoveredAt, periodStart),
         lt(posts.discoveredAt, periodEnd),
       ),

@@ -17,6 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             Plomb
           </Link>
           <nav aria-label="Navigation principale">
+            <Link href="/journal">Journal</Link>
             <Link href="/">Dépêches</Link>
             <Link href="/sources">Sources</Link>
           </nav>

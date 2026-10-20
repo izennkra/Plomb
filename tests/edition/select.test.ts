@@ -99,4 +99,13 @@ describe("selectEditionPosts", () => {
 
     expect(await titles()).toEqual(["shared"]);
   });
+
+  it("test mode: everything until now, including articles from before the subscription", async () => {
+    await add("backfill-this-afternoon", at("2026-10-21T06:20:00Z"), { beforeSubscription: true });
+
+    const selection = await selectEditionPosts(db, DEFAULT_USER_ID, { now, testMode: true });
+
+    expect(selection.periodEnd).toEqual(now);
+    expect(selection.posts.map((post) => post.title)).toEqual(["backfill-this-afternoon"]);
+  });
 });

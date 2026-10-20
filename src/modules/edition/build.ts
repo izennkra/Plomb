@@ -20,9 +20,9 @@ type Written = { post: EditionPost; summary: ArticleSummary; fallback: boolean; 
 export async function buildEdition(
   db: Db,
   userId: string,
-  { redacteur, now = new Date() }: { redacteur: Redacteur; now?: Date },
+  { redacteur, now = new Date(), testMode = false }: { redacteur: Redacteur; now?: Date; testMode?: boolean },
 ): Promise<Edition> {
-  const selection = await selectEditionPosts(db, userId, { now });
+  const selection = await selectEditionPosts(db, userId, { now, testMode });
   const edition = await startEdition(db, userId, selection.day, selection.periodStart, selection.periodEnd, redacteur.model);
 
   try {

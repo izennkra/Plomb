@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { posts, seenLinks, sources } from "@/db/schema";
+import { DEFAULT_USER_ID } from "@/db/client";
+import { editions, posts, seenLinks, sources } from "@/db/schema";
 import { purgeOldPosts } from "@/modules/depeches/purge";
 import { DAY_MS } from "@/modules/depeches/settings";
 import { createTestDb } from "../helpers/test-db";
@@ -27,5 +28,15 @@ describe("purgeOldPosts", () => {
       "https://s.example/old",
       "https://s.example/undated",
     ]);
+  });
+
+  it("deletes editions of more than a week ago", async () => {
+    const db = await createTestDb();
+    const edition = (day: string) => ({ userId: DEFAULT_USER_ID, day, periodStart: now, periodEnd: now, status: "ready" as const });
+    await db.insert(editions).values([edition("2026-10-12"), edition("2026-10-14"), edition("2026-10-20")]);
+
+    await purgeOldPosts(db, now);
+
+    expect((await db.select().from(editions)).map((e) => e.day).sort()).toEqual(["2026-10-14", "2026-10-20"]);
   });
 });
