@@ -1,6 +1,7 @@
 import { Readability } from "@mozilla/readability";
 import { load, type CheerioAPI } from "cheerio";
 import { parseHTML } from "linkedom";
+import { findArticleImages } from "./images";
 import { cleanPostUrl, toDate, toExcerpt, type PostCandidate } from "./post";
 
 export type ArticleResult = { ok: true; post: PostCandidate } | { ok: false; error: string };
@@ -20,6 +21,8 @@ export function readArticle(html: string, url: string): ArticleResult {
 
   const content = extractText(html, url);
   const image = meta("og:image") ?? meta("twitter:image");
+  const imageUrl = image ? absolute(image, url) : null;
+  const images = findArticleImages(html, url, imageUrl);
 
   return {
     ok: true,
@@ -27,7 +30,9 @@ export function readArticle(html: string, url: string): ArticleResult {
       url: cleanPostUrl(url, url) ?? url,
       title,
       excerpt: toExcerpt(meta("og:description") ?? meta("description") ?? content),
-      imageUrl: image ? absolute(image, url) : null,
+      // The largest size of the main image, when the page offers several.
+      imageUrl: images[0] ?? imageUrl,
+      images,
       publishedAt: findDate($, meta),
       content,
     },

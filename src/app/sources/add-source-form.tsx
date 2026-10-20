@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { addSourceAction, type AddSourceState } from "./actions";
+import { addSourceAction, type AddSourceState } from "../actions";
 
 const initialState: AddSourceState = { status: "idle", message: "", input: "" };
 

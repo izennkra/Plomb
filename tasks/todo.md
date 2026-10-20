@@ -1,99 +1,81 @@
-# Tâches : brique `aspiration-web`
+# Tâches : brique `depeches`
 
-## Tâche 1 : Accès réseau sécurisé
-**Description :** Fonction `safeFetch(url)` utilisée par tout Plomb : résout l'adresse et refuse les adresses internes (loopback, réseaux privés, link-local, adresses du cloud), suit les redirections une par une en revérifiant chacune (5 max), 10 s max, 5 Mo max. `checkWebsite` (brique 1) l'utilise.
+## Tâche 1 : Colonne `posts.images`
+**Description :** Liste JSON des adresses d'images de l'article (image principale en premier). Migration.
 **Critères :**
-- [x] 127.0.0.1, localhost, 10.x, 192.168.x, 169.254.169.254, ::1 refusés avec un message clair
-- [x] Une redirection vers une adresse interne est refusée
-- [x] Réponse trop grosse ou trop lente → erreur claire
-**Vérification :** `npm test`
-**Dépendances :** aucune · **Taille :** M
-**Fichiers :** `src/modules/fetching/safe-fetch.ts`, `src/modules/fetching/ip.ts`, `src/modules/sources/check-website.ts`, `tests/fetching/*.test.ts`
-
-## Tâche 2 : Politesse
-**Description :** Lire et mettre en cache le robots.txt de chaque site ; refuser une page interdite. Pause d'au moins 1 s entre deux requêtes vers un même site.
-**Critères :**
-- [x] Une page interdite par robots.txt n'est pas demandée
-- [x] robots.txt absent ou en erreur → tout est autorisé
-- [x] Deux requêtes vers un même site sont espacées d'au moins 1 s
-**Vérification :** `npm test`
-**Dépendances :** 1 · **Taille :** S
-**Fichiers :** `src/modules/fetching/robots.ts`, `src/modules/fetching/polite-fetch.ts`, `tests/fetching/robots.test.ts`
-
-## Tâche 3 : Base de données
-**Description :** Table `posts` (source, adresse unique, titre, résumé, image, date de publication, date de découverte, texte complet, méthode, marqueur « antérieur ») et colonnes de relevé sur `sources` (méthode, flux, date/statut/message du dernier relevé). Migration.
-**Critères :**
-- [x] Une même adresse d'article ne peut pas être enregistrée deux fois
-- [x] Supprimer une source supprime ses articles
-**Vérification :** `npm test` + `npm run db:migrate`
-**Dépendances :** aucune · **Taille :** S
+- [x] Une galerie s'enregistre et se relit telle quelle
+- [x] Les anciens articles (sans galerie) restent valides
+**Vérification :** `npm test` + `npm run db:migrate` · **Dépendances :** aucune · **Taille :** XS
 **Fichiers :** `src/db/schema.ts`, `drizzle/*`, `tests/db/schema.test.ts`
 
-## Checkpoint 1
-- [x] Tests OK ; ajout d'une source toujours fonctionnel dans le navigateur
-
-## Tâche 4 : Copies figées des sites
-**Description :** Script qui télécharge la page de chaque site de test et un article de chacun dans `tests/fixtures/`, plus les flux RSS de Findings et OFF Brand.
+## Tâche 2 : Galerie d'un article (page)
+**Description :** `findArticleImages(html, pageUrl, mainImage)` : toutes les adresses d'images de la page (balises et données),
+gardées si même dossier propre à l'article ou même nom de base que l'image principale ; doublons de taille retirés ; 12 max. `readArticle` renvoie `images`.
 **Critères :**
-- [x] 6 pages de liste + articles + 2 flux enregistrés
-- [x] Le script peut être relancé pour rafraîchir les copies
-**Vérification :** fichiers présents, taille raisonnable
-**Dépendances :** aucune · **Taille :** S
-**Fichiers :** `scripts/capture-fixtures.ts`, `tests/fixtures/*`
+- [x] The Brand Identity → 8, It's Nice That → 12, Brand New → 2, D&AD → 1
+- [x] Aucune image d'un autre article
+**Vérification :** `npm test` sur copies figées · **Dépendances :** 1 · **Taille :** M
+**Fichiers :** `src/modules/aspiration-web/images.ts`, `src/modules/aspiration-web/article.ts`, `tests/aspiration-web/images.test.ts`
 
-## Tâche 5 : Niveau 1 — flux RSS/Atom
-**Description :** `discoverFeed(html, pageUrl)` (balises `<link rel="alternate">` puis adresses courantes) et `readFeed(xml)` → articles candidats. Ignorer les flux de podcast et les « faux flux » HTML.
+## Tâche 3 : Galerie d'un article de flux RSS
+**Description :** `parseFeed` renvoie `images` : image du flux + images du contenu, sans pictos ni pixels de suivi.
 **Critères :**
-- [x] Findings et OFF Brand → flux trouvé, articles avec titre, lien, date, image si présente
-- [x] Brand New → le flux podcast est ignoré
-- [x] the-brandidentity.com/feed (page HTML) → pas considéré comme un flux
-**Vérification :** `npm test` sur copies figées
-**Dépendances :** 4 · **Taille :** M
+- [x] Findings → plusieurs images pour le 1er article ; aucun fichier audio
+**Vérification :** `npm test` · **Dépendances :** 1 · **Taille :** S
 **Fichiers :** `src/modules/aspiration-web/feed.ts`, `tests/aspiration-web/feed.test.ts`
 
-## Tâche 6 : Niveau 2a — liens d'articles
-**Description :** `findArticleLinks(html, pageUrl)` : liens du même site, regroupés par famille d'adresse, en écartant catégories, tags, auteurs, pages de menu ; renvoie les liens dans l'ordre de la page.
+## Tâche 4 : Enregistrer les galeries + compléter les anciennes
+**Description :** Le relevé enregistre `images`. Bouton temporaire « Compléter les galeries » sur la page Sources : relit poliment les articles sans galerie.
 **Critères :**
-- [x] the-brandidentity.com/features → ≥ 10 liens `/project/…`
-- [x] itsnicethat.com → ≥ 10 liens `/articles/…`
-- [x] Brand New → ≥ 10 liens d'articles, **aucun** lien `/category/…`
-- [x] D&AD → entrées de l'archive reconnues
-**Vérification :** `npm test` sur copies figées
-**Dépendances :** 4 · **Taille :** M
-**Fichiers :** `src/modules/aspiration-web/article-links.ts`, `tests/aspiration-web/article-links.test.ts`
+- [x] Un nouvel article relevé a sa galerie
+- [x] Après le bouton, les articles existants ont leur galerie
+**Vérification :** `npm test` + essai réel · **Dépendances :** 2, 3 · **Taille :** M
+**Fichiers :** `src/modules/aspiration-web/refresh-source.ts`, `src/modules/depeches/complete-galleries.ts`, `src/app/actions.ts`, `src/app/page.tsx`, tests
 
-## Tâche 7 : Niveau 2b — lire un article
-**Description :** `readArticle(html, url)` : titre (sans le suffixe « — Nom du site »), résumé, image OpenGraph, date (`article:published_time` ou JSON-LD), texte complet via Readability.
+## Checkpoint 1
+- [x] Galeries réelles vérifiées — point avec Izenn
+
+## Tâche 5 : Requête du flux
+**Description :** `listFeed(db, userId, { type?, sourceId?, now })` : publications des sources suivies, 7 derniers jours (date de publication sinon découverte), tri du plus récent, dédoublonnées par adresse ; « avant l'abonnement » seulement si date de publication connue et récente (réglage) ; filtres.
 **Critères :**
-- [x] Article The Brand Identity → titre propre, résumé, image HD, pas de date (null)
-- [x] Article avec date → date lue correctement
-- [x] Page sans titre exploitable → rejetée
-**Vérification :** `npm test` sur copies figées
-**Dépendances :** 4 · **Taille :** M
-**Fichiers :** `src/modules/aspiration-web/article.ts`, `tests/aspiration-web/article.test.ts`
+- [x] Tri et fenêtre de 7 jours corrects ; un article de deux sources n'apparaît qu'une fois
+- [x] Règle « avant l'abonnement » respectée (dont : sans date → caché)
+- [x] Filtres par type et par source
+**Vérification :** `npm test` · **Dépendances :** 1 · **Taille :** M
+**Fichiers :** `src/modules/depeches/settings.ts`, `src/modules/depeches/list-feed.ts`, `tests/depeches/list-feed.test.ts`
 
-## Checkpoint 2
-- [x] Les 6 sites donnent des articles corrects sur leurs copies figées — point avec Izenn
-
-## Tâche 8 : Relever une source
-**Description :** `refreshSource(db, sourceId)` : méthode mémorisée d'abord, sinon cascade ; n'ouvre que les articles inconnus ; 20 max ; premier relevé marqué « antérieur » ; enregistre méthode, flux et statut sur la source. Relevé de toutes les sources web (une erreur n'arrête pas les autres).
+## Tâche 6 : Conservation 7 jours
+**Description :** `purgeOldPosts(db, now)` supprime les publications de plus de 7 jours ; appelée à chaque relevé. Les adresses restent « déjà vues ».
 **Critères :**
-- [x] Premier relevé → articles marqués « antérieurs » ; deuxième relevé → seuls les nouveaux, non marqués
-- [x] Aucun doublon
-- [x] Site en erreur → statut d'erreur clair, les autres sources sont relevées
-**Vérification :** `npm test` (faux site local qui publie un nouvel article entre deux relevés)
-**Dépendances :** 1, 2, 3, 5, 6, 7 · **Taille :** M
-**Fichiers :** `src/modules/aspiration-web/refresh-source.ts`, `tests/aspiration-web/refresh-source.test.ts`
+- [x] Publication de 8 jours supprimée, de 6 jours gardée
+- [x] Une publication supprimée ne revient pas au relevé suivant
+**Vérification :** `npm test` · **Dépendances :** 5 · **Taille :** S
+**Fichiers :** `src/modules/depeches/purge.ts`, `src/modules/aspiration-web/refresh-source.ts`, `tests/depeches/purge.test.ts`
 
-## Tâche 9 : Interface
-**Description :** Relevé lancé juste après l'ajout d'une source web ; bouton « Relever maintenant » ; pour chaque source : statut du dernier relevé et ses derniers articles (vignette, titre, lien). Instagram/X/LinkedIn affichés « en attente ».
+## Tâche 7 : Page Sources sur `/sources`
+**Description :** La page actuelle déplacée sur `/sources` ; navigation « Dépêches · Sources ».
 **Critères :**
-- [x] Ajouter the-brandidentity.com/features → ses articles apparaissent
-- [x] « Relever maintenant » fonctionne et met à jour les statuts
-**Vérification :** test manuel sur les 6 vrais sites
-**Dépendances :** 8 · **Taille :** M
-**Fichiers :** `src/app/page.tsx`, `src/app/actions.ts`, `src/modules/aspiration-web/list-posts.ts`
+- [x] Ajouter / retirer / relever fonctionne sur `/sources`
+**Vérification :** test manuel · **Dépendances :** aucune · **Taille :** S
+**Fichiers :** `src/app/sources/page.tsx`, `src/app/layout.tsx`, `src/app/actions.ts`
+
+## Tâche 8 : Cartes de la Salle de Dépêches
+**Description :** Page `/` : une carte par publication — carrousel d'images (flèches, clavier), titre, résumé, date relative, source, « En savoir plus » (nouvel onglet vers le média).
+**Critères :**
+- [x] Les cartes s'affichent triées par date
+- [x] Le carrousel fait défiler les images de l'article
+- [x] « En savoir plus » ouvre l'article
+**Vérification :** test manuel · **Dépendances :** 5, 7 · **Taille :** M
+**Fichiers :** `src/app/page.tsx`, `src/app/components/post-card.tsx`, `src/app/components/carousel.tsx`, `src/app/globals.css`
+
+## Tâche 9 : Image en grand + filtres
+**Description :** Clic sur une image → affichage plein écran (flèches, Échap pour fermer). Filtres par type et par source, gardés dans l'adresse.
+**Critères :**
+- [x] Image en grand utilisable à la souris et au clavier
+- [x] Filtres fonctionnels, adresse partageable
+**Vérification :** test manuel · **Dépendances :** 8 · **Taille :** M
+**Fichiers :** `src/app/components/lightbox.tsx`, `src/app/components/filters.tsx`, `src/app/page.tsx`
 
 ## Checkpoint final
-- [x] Tous les critères de succès de SPEC-aspiration-web.md cochés
-- [x] `/review`, push de la branche, proposition de pull request
+- [x] Critères de succès de SPEC-depeches.md cochés
+- [x] `/review`, push, proposition de pull request

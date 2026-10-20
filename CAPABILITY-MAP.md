@@ -30,3 +30,7 @@ Ordre de construction : sources → aspiration-web → depeches → edition → 
 - À prévoir : Plomb ne garde aujourd'hui qu'**une** image par article → la brique `depeches` devra récupérer
   toutes les images d'un article (galerie) pour alimenter le carrousel.
 - Un même article suivi via deux sources (ex. the-brandidentity.com et /features) n'apparaît qu'une fois.
+- « En savoir plus » = lien direct vers la source. Publications gardées 7 jours.
+
+## Idées pour plus tard
+- **Enregistrer un article** (favoris) : un article enregistré n'est jamais supprimé au bout de 7 jours (Izenn, 2026-10-20).

@@ -7,6 +7,8 @@ export type PostCandidate = {
   title: string;
   excerpt: string | null;
   imageUrl: string | null;
+  /** Gallery of the article, main image first (empty when unknown). */
+  images: string[];
   publishedAt: Date | null;
   /** Full text for the AI editor (never displayed). */
   content: string | null;

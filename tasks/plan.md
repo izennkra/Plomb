@@ -1,67 +1,63 @@
-# Plan d'implémentation : brique `aspiration-web`
+# Plan d'implémentation : brique `depeches` (Salle de Dépêches)
 
-Spec : [SPEC-aspiration-web.md](../SPEC-aspiration-web.md) · Tâches détaillées : [todo.md](todo.md)
-Plan précédent (brique `sources`) : terminé et fusionné (pull request #1).
+Spec : [SPEC-depeches.md](../SPEC-depeches.md) · Tâches détaillées : [todo.md](todo.md)
+Plans précédents (`sources`, `aspiration-web`) : terminés et fusionnés (pull requests #1 et #2).
 
 ## Vue d'ensemble
-On sécurise d'abord l'accès réseau, puis on construit la cascade pièce par pièce, chacune testée sur des copies
-figées des vrais sites d'Izenn : flux RSS → repérage des liens d'articles → lecture d'un article → relevé complet d'une source → interface.
+D'abord les **galeries d'images** (c'est la donnée qui manque), puis la **requête du flux** (règles de date, filtres,
+dédoublonnage, conservation 7 jours), enfin l'**interface** : page Sources déplacée, cartes avec carrousel, image en grand, filtres.
 
 ## Décisions d'architecture
-- **Un seul point d'accès réseau** (`src/modules/fetching/`) : toutes les requêtes passent par lui (blocage des adresses
-  internes, taille max, délai, robots.txt, pause entre deux pages d'un même site). La vérification de la brique 1 l'utilise aussi.
-- **Copies figées des vrais sites** dans `tests/fixtures/` : les tests ne dépendent pas d'internet et restent reproductibles.
-  Un script permet de les rafraîchir quand un site change de structure.
-- **Chaque niveau de la cascade renvoie le même format** (« article candidat ») : le relevé ne sait pas d'où vient l'article.
-- **Méthode mémorisée par source** : on retente d'abord la méthode qui a marché la dernière fois.
+- **Galerie = liste d'adresses** dans `posts.images` (JSON), image principale en premier. Les images restent sur le site du média.
+- **Règle de famille d'images** (même dossier propre à l'article, ou même nom de base que l'image principale) :
+  site-agnostique, testée sur les copies figées.
+- **Requête du flux en SQL** (fenêtre, tri, filtres) + dédoublonnage par adresse : rapide et testable sans navigateur.
+- **Réglages** regroupés dans un seul fichier (`FEED_DAYS = 7`, `BACKFILL_MAX_AGE_DAYS = 7` en test → 3 ensuite).
+- **Carrousel et image en grand faits maison** (pas de librairie) ; le design viendra de Figma.
 
 ## Liste des tâches
 
-### Phase 1 : Fondations
-- [x] Tâche 1 : Accès réseau sécurisé (adresses internes bloquées, taille, délai, redirections vérifiées)
-- [x] Tâche 2 : Politesse (robots.txt + pause entre deux pages d'un même site)
-- [x] Tâche 3 : Base de données (table `posts` + infos de relevé sur `sources`)
+### Phase 1 : Galeries d'images
+- [x] Tâche 1 : Colonne `posts.images` (migration)
+- [x] Tâche 2 : Galerie d'un article lu sur sa page (règle de famille)
+- [x] Tâche 3 : Galerie d'un article de flux RSS
+- [x] Tâche 4 : Enregistrer les galeries au relevé + bouton « Compléter les galeries »
 
 ### Checkpoint 1
-- [x] Tests OK ; la brique 1 marche toujours (ajout d'une source dans le navigateur)
+- [x] Galeries réelles vérifiées sur les 6 sources — point avec Izenn
 
-### Phase 2 : La cascade
-- [x] Tâche 4 : Copies figées des 6 sites (+ un article de chacun)
-- [x] Tâche 5 : Niveau 1 — trouver et lire un flux RSS/Atom
-- [x] Tâche 6 : Niveau 2a — repérer les liens d'articles dans une page (piège Brand New inclus)
-- [x] Tâche 7 : Niveau 2b — lire un article (OpenGraph, date, texte complet)
+### Phase 2 : Le flux
+- [x] Tâche 5 : Requête du flux (7 jours, tri, dédoublonnage, règle « avant l'abonnement », filtres)
+- [x] Tâche 6 : Suppression des publications de plus de 7 jours à chaque relevé
 
-### Checkpoint 2
-- [x] Les 6 sites donnent des articles corrects sur leurs copies figées — point avec Izenn
-
-### Phase 3 : Relevé et interface
-- [x] Tâche 8 : Relever une source (cascade, doublons, limite de 20, marqueur « antérieur », statut)
-- [x] Tâche 9 : Interface — relevé après l'ajout, bouton « Relever maintenant », statut et derniers articles
+### Phase 3 : Interface
+- [x] Tâche 7 : Page Sources déplacée sur `/sources` + navigation
+- [x] Tâche 8 : Salle de Dépêches — cartes (carrousel, titre, résumé, date, source, « En savoir plus »)
+- [x] Tâche 9 : Image en grand + filtres par type et par source
 
 ### Checkpoint final
-- [x] Tous les critères de succès de la spec cochés, testés sur les vrais sites
-- [x] `/review`, push de la branche, proposition de pull request
+- [x] Critères de succès de la spec cochés, testés dans le navigateur
+- [x] `/review`, push, proposition de pull request
 
 ## Risques
 | Risque | Impact | Parade |
 |---|---|---|
-| Le repérage des liens d'articles se trompe sur un site (catégories, menus) | Élevé | Règles testées sur les 6 vrais sites ; un site raté est marqué « illisible » plutôt que de produire des faux articles |
-| Un site change de structure | Moyen | Copies figées rafraîchissables par script ; statut d'erreur visible par source |
-| Un site bloque Plomb (anti-robot) | Moyen | Statut « bloqué » visible ; ces sites seront candidats au niveau 3 / service tiers |
-| Relevé lent (20 articles × 1 s de pause) | Faible | Normal pour un premier relevé ; ensuite seuls les nouveaux articles sont ouverts |
+| La règle de famille rate des images ou en prend d'un autre article | Moyen | Tests sur 4 sites réels ; au pire la galerie se réduit à l'image principale |
+| Un média bloque l'affichage de ses images depuis un autre site | Moyen | `referrerPolicy="no-referrer"` ; sinon carte sans image (titre et résumé restent) |
+| Compléter 131 galeries = ~131 pages relues | Faible | Bouton temporaire, relecture polie (1 s/page), une seule fois |
 
 ## Review (fin de brique)
-- Trouvé et corrigé pendant les tests sur vrais sites : flux global hors rubrique (Brand New), anciens articles
-  comptés comme nouveautés au 2e relevé (D&AD), port oublié dans les adresses, noms de sources ambigus.
-- **Suivis à prévoir :**
-  - Sécurité : la vérification des adresses internes se fait avant la connexion ; un site malveillant pourrait
-    changer son adresse IP entre les deux (« DNS rebinding »). Risque faible en local ; à verrouiller avant la mise en ligne
-    (forcer la connexion sur l'IP vérifiée).
-  - Transparence : Plomb respecte les règles robots.txt sous le nom « PlombBot », mais se présente aux sites comme un
-    navigateur. Avant la mise en ligne, décider s'il s'identifie clairement (certains sites risquent alors de le bloquer).
-  - Un même article peut appartenir à deux sources (the-brandidentity.com et /features) : la brique `depeches`
-    devra l'afficher une seule fois.
-  - Relevé de The Brand Identity lent (pages de 3 Mo) : acceptable, à surveiller avec la `planification`.
+- Corrigé : dans l'image en grand, les touches ← → étaient traitées deux fois (image en grand + carte) ;
+  clic sur le fond sombre pour fermer.
+- Corrigé pendant les tests réels : logos écartés à tort (c'est le sujet sur un média design), articles commençant
+  par une vidéo, flux RSS à une seule image (It's Nice That), copies en cache comptées en double.
+- **Suivis :**
+  - Passer `BACKFILL_MAX_AGE_DAYS` de 7 à 3 jours à la fin de la phase de test (`src/modules/depeches/settings.ts`).
+  - Retirer le bouton temporaire « Compléter les galeries » une fois les galeries existantes complétées.
+  - Galeries d'It's Nice That incomplètes sur certains articles (images sans nom commun) — à revoir si gênant.
+  - Les filtres par source sont une liste de pastilles : à repenser (menu, recherche) quand il y aura beaucoup de sources ;
+    le design viendra de Figma.
+  - Images affichées depuis le site du média : si un média les bloque, la carte reste lisible (titre, résumé) sans image.
 
 ## Questions ouvertes
 - Aucune.
