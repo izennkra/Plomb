@@ -73,6 +73,10 @@ export const seenLinks = sqliteTable(
 export const users = sqliteTable("users", {
   id: text("id").primaryKey(),
   createdAt: createdAt(),
+  /** How often the journal comes out (always at 9:00): daily, every 3 days, or chosen weekdays. */
+  editionFrequency: text("edition_frequency", { enum: ["daily", "every3days", "weekdays"] }).notNull().default("daily"),
+  /** Chosen weekdays, 1 (Monday) to 7 (Sunday). */
+  editionWeekdays: text("edition_weekdays", { mode: "json" }).$type<number[]>().notNull().default([1, 2, 3, 4, 5]),
 });
 
 export const subscriptions = sqliteTable(
@@ -85,9 +89,82 @@ export const subscriptions = sqliteTable(
       .notNull()
       .references(() => sources.id, { onDelete: "cascade" }),
     createdAt: createdAt(),
+    /** Favourite sources come first in the edition and are highlighted. */
+    favorite: integer("favorite", { mode: "boolean" }).notNull().default(false),
   },
   (table) => [primaryKey({ columns: [table.userId, table.sourceId] })],
 );
 
 export type Source = typeof sources.$inferSelect;
 export type Post = typeof posts.$inferSelect;
+
+export const THEMES = [
+  "Identité",
+  "Typographie",
+  "Packaging",
+  "Édition",
+  "Digital & motion",
+  "Illustration & photo",
+  "Culture & métier",
+] as const;
+
+/** The morning edition of one user's journal. */
+export const editions = sqliteTable(
+  "editions",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    /** Day of the edition (Paris), e.g. "2026-10-21". */
+    day: text("day").notNull(),
+    /** Articles discovered in [periodStart, periodEnd) are in this edition. */
+    periodStart: integer("period_start", { mode: "timestamp" }).notNull(),
+    periodEnd: integer("period_end", { mode: "timestamp" }).notNull(),
+    status: text("status", { enum: ["building", "ready", "error"] }).notNull().default("building"),
+    model: text("model"),
+    language: text("language").notNull().default("fr"),
+    message: text("message"),
+    createdAt: createdAt(),
+  },
+  (table) => [uniqueIndex("editions_user_day_unique").on(table.userId, table.day)],
+);
+
+/**
+ * An article of an edition. Keeps its own copy of what is shown (texts written by the AI, images, link),
+ * so an edition stays readable after its articles are deleted (one week of publications is kept).
+ */
+export const editionItems = sqliteTable(
+  "edition_items",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    editionId: integer("edition_id")
+      .notNull()
+      .references(() => editions.id, { onDelete: "cascade" }),
+    postId: integer("post_id").references(() => posts.id, { onDelete: "set null" }),
+    position: integer("position").notNull(),
+    placement: text("placement", { enum: ["une", "secondaire", "suite"] }).notNull(),
+    title: text("title").notNull(),
+    summary: text("summary"),
+    /** Longer text, for the 3 articles of the Une. */
+    leadText: text("lead_text"),
+    theme: text("theme", { enum: THEMES }),
+    importance: integer("importance"),
+    /** Main subject named by the editor ("Coca-Cola"). */
+    subject: text("subject"),
+    /** Notes behind the importance (notoriety, scale, authors, reach, quality — 1 to 5). */
+    criteria: text("criteria", { mode: "json" }).$type<Record<string, number>>(),
+    /** Other media that covered the same subject: a sign of a big story. */
+    coveredBy: text("covered_by", { mode: "json" }).$type<string[]>().notNull().default([]),
+    url: text("url").notNull(),
+    images: text("images", { mode: "json" }).$type<string[]>().notNull(),
+    sourceName: text("source_name").notNull(),
+    favorite: integer("favorite", { mode: "boolean" }).notNull().default(false),
+    /** The AI could not write this article: the media's own title and summary are shown. */
+    fallback: integer("fallback", { mode: "boolean" }).notNull().default(false),
+  },
+  (table) => [index("edition_items_edition_idx").on(table.editionId, table.position)],
+);
+
+export type Edition = typeof editions.$inferSelect;
+export type EditionItem = typeof editionItems.$inferSelect;

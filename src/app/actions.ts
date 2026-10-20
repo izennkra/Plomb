@@ -8,7 +8,12 @@ import { getDb } from "@/db";
 import { sources } from "@/db/schema";
 import { markRefreshing, refreshAllSources, refreshSource } from "@/modules/aspiration-web/refresh-source";
 import { completeGalleries } from "@/modules/depeches/complete-galleries";
+import { buildEdition } from "@/modules/edition/build";
+import { editionTestMode } from "@/modules/edition/select";
+import { saveSchedule } from "@/modules/edition/settings";
+import { getRedacteur } from "@/modules/edition/redacteur";
 import { addSource } from "@/modules/sources/add-source";
+import { setFavorite } from "@/modules/sources/favorite";
 import { unsubscribe } from "@/modules/sources/unsubscribe";
 
 export type AddSourceState = {
@@ -81,4 +86,44 @@ export async function completeGalleriesAction(): Promise<void> {
     }
   });
   revalidatePath("/", "layout");
+}
+
+export async function toggleFavoriteAction(formData: FormData): Promise<void> {
+  const sourceId = Number(formData.get("sourceId"));
+  if (!Number.isInteger(sourceId)) return;
+
+  await setFavorite(await getDb(), DEFAULT_USER_ID, sourceId, formData.get("favorite") === "true");
+  revalidatePath("/", "layout");
+}
+
+// One preparation at a time; it runs after the answer (several minutes with a local AI).
+const editionJob = globalThis as unknown as { plombEditionBuilding?: boolean };
+
+export async function isPreparingEdition(): Promise<boolean> {
+  return editionJob.plombEditionBuilding === true;
+}
+
+export async function prepareEditionAction(): Promise<void> {
+  if (editionJob.plombEditionBuilding) return;
+  editionJob.plombEditionBuilding = true;
+  const db = await getDb();
+  after(async () => {
+    try {
+      await buildEdition(db, DEFAULT_USER_ID, { redacteur: getRedacteur(), testMode: editionTestMode() });
+    } catch (error) {
+      console.error("Edition failed", error);
+    } finally {
+      editionJob.plombEditionBuilding = false;
+    }
+  });
+  revalidatePath("/", "layout");
+}
+
+export async function saveScheduleAction(formData: FormData): Promise<void> {
+  const frequency = String(formData.get("frequency"));
+  const weekdays = formData.getAll("weekdays").map(Number);
+  if (frequency !== "daily" && frequency !== "every3days" && frequency !== "weekdays") return;
+
+  await saveSchedule(await getDb(), DEFAULT_USER_ID, { frequency, weekdays });
+  revalidatePath("/journal");
 }

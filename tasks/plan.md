@@ -1,63 +1,74 @@
-# Plan d'implémentation : brique `depeches` (Salle de Dépêches)
+# Plan d'implémentation : brique `edition` (IA Rédacteur en Chef)
 
-Spec : [SPEC-depeches.md](../SPEC-depeches.md) · Tâches détaillées : [todo.md](todo.md)
-Plans précédents (`sources`, `aspiration-web`) : terminés et fusionnés (pull requests #1 et #2).
+Spec : [SPEC-edition.md](../SPEC-edition.md) · Tâches détaillées : [todo.md](todo.md)
+Plans précédents (`sources`, `aspiration-web`, `depeches`) : terminés et fusionnés (pull requests #1 à #3).
 
 ## Vue d'ensemble
-D'abord les **galeries d'images** (c'est la donnée qui manque), puis la **requête du flux** (règles de date, filtres,
-dédoublonnage, conservation 7 jours), enfin l'**interface** : page Sources déplacée, cartes avec carrousel, image en grand, filtres.
+D'abord **choisir l'IA** sur de vrais articles (Izenn décide), puis construire le « rédacteur » (l'appel à l'IA),
+la fabrication de l'édition (sélection, notation, Une, rédaction), et enfin la page Journal, les favoris et l'e-mail.
 
 ## Décisions d'architecture
-- **Galerie = liste d'adresses** dans `posts.images` (JSON), image principale en premier. Les images restent sur le site du média.
-- **Règle de famille d'images** (même dossier propre à l'article, ou même nom de base que l'image principale) :
-  site-agnostique, testée sur les copies figées.
-- **Requête du flux en SQL** (fenêtre, tri, filtres) + dédoublonnage par adresse : rapide et testable sans navigateur.
-- **Réglages** regroupés dans un seul fichier (`FEED_DAYS = 7`, `BACKFILL_MAX_AGE_DAYS = 7` en test → 3 ensuite).
-- **Carrousel et image en grand faits maison** (pas de librairie) ; le design viendra de Figma.
+- **IA locale via Ollama** (serveur sur le Mac, `http://127.0.0.1:11434`). Réponses demandées **au format JSON**
+  (titre, résumé, thème, note d'importance) pour être lues de façon fiable.
+- **Interface unique `Redacteur`** : l'IA est interchangeable ; les tests utilisent un faux rédacteur (pas d'IA, rapides).
+- **Une demande par article** (résumé + thème + note), puis une demande supplémentaire pour les 3 articles de la Une
+  (texte développé). Une édition de 50 articles ≈ 10–15 min sur le Mac : acceptable pour une préparation à 8h00.
+- **Secours** : si l'IA échoue sur un article (2 essais), on garde le titre et le résumé du média ; l'édition se fait quand même.
+- **Fabrication en arrière-plan** avec un statut (« en préparation… »), comme les relevés.
 
 ## Liste des tâches
 
-### Phase 1 : Galeries d'images
-- [x] Tâche 1 : Colonne `posts.images` (migration)
-- [x] Tâche 2 : Galerie d'un article lu sur sa page (règle de famille)
-- [x] Tâche 3 : Galerie d'un article de flux RSS
-- [x] Tâche 4 : Enregistrer les galeries au relevé + bouton « Compléter les galeries »
+### Phase 1 : Choisir l'IA
+- [x] Tâche 1 : Comparatif de 3 IA locales sur 5 vrais articles → `docs/comparatif-ia.md`
 
 ### Checkpoint 1
-- [x] Galeries réelles vérifiées sur les 6 sources — point avec Izenn
+- [x] Izenn choisit l'IA → Mistral (Ministral 3 14B), API en ligne si le Mac rame
 
-### Phase 2 : Le flux
-- [x] Tâche 5 : Requête du flux (7 jours, tri, dédoublonnage, règle « avant l'abonnement », filtres)
-- [x] Tâche 6 : Suppression des publications de plus de 7 jours à chaque relevé
+### Phase 2 : Le rédacteur et l'édition
+- [x] Tâche 2 : Rédacteur Ollama (JSON, essais, secours) + faux rédacteur de test
+- [x] Tâche 3 : Base de données (`editions`, `edition_items`, sources favorites)
+- [x] Tâche 4 : Sélection des articles d'une édition (nouveaux, jusqu'à 8h00, depuis l'édition précédente)
+- [x] Tâche 5 : Fabrication (notation + bonus favoris, Une 1 + 2, rédaction, thème, journée vide)
 
-### Phase 3 : Interface
-- [x] Tâche 7 : Page Sources déplacée sur `/sources` + navigation
-- [x] Tâche 8 : Salle de Dépêches — cartes (carrousel, titre, résumé, date, source, « En savoir plus »)
-- [x] Tâche 9 : Image en grand + filtres par type et par source
+### Checkpoint 2
+- [x] Une vraie édition fabriquée sur les données d'Izenn — très satisfait ; demande : mieux hiérarchiser la Une
+
+### Phase 2 bis : Hiérarchie éditoriale (ajout après la 1re édition)
+- [x] Tâche 9 : Grille de critères + sujet principal (consigne calibrée, note calculée, favoris sans bonus)
+- [x] Tâche 10 : Écho médiatique (même sujet chez plusieurs sources → un seul article, « couvert par N médias », bonus)
+- [x] Tâche 11 : Conférence de rédaction (l'IA choisit la Une parmi les ~8 meilleurs, secours = ordre des notes)
+
+### Phase 3 : Lecture
+- [x] Tâche 6 : Favoris (étoile sur la page Sources)
+- [x] Tâche 7 : Page Journal (édition du jour, 7 précédentes, bouton « Préparer l'édition »)
+- [x] Tâche 8 : E-mail de l'édition (contenu + aperçu ; envoi réel : brique `planification`)
+
+### Phase 4 : Fréquence (ajout du 20/10)
+- [x] Tâche 12 : Fréquence du journal (chaque jour / tous les 3 jours / jours choisis), prochaine parution affichée
 
 ### Checkpoint final
-- [x] Critères de succès de la spec cochés, testés dans le navigateur
+- [x] Critères de succès de la spec cochés
 - [x] `/review`, push, proposition de pull request
 
 ## Risques
 | Risque | Impact | Parade |
 |---|---|---|
-| La règle de famille rate des images ou en prend d'un autre article | Moyen | Tests sur 4 sites réels ; au pire la galerie se réduit à l'image principale |
-| Un média bloque l'affichage de ses images depuis un autre site | Moyen | `referrerPolicy="no-referrer"` ; sinon carte sans image (titre et résumé restent) |
-| Compléter 131 galeries = ~131 pages relues | Faible | Bouton temporaire, relecture polie (1 s/page), une seule fois |
+| Qualité du français ou invention de faits par une IA locale | Élevé | Comparatif sur vrais articles ; consignes strictes ; résumé basé uniquement sur le texte fourni |
+| Réponse de l'IA mal formée | Moyen | Format JSON imposé, 2 essais, puis secours (texte du média) |
+| Mac lent ou occupé pendant la fabrication | Moyen | Fabrication en arrière-plan ; une IA légère reste possible |
+| Peu d'articles nouveaux (sources qui publient peu) | Faible | Édition courte ou « pas de nouvelles » assumée |
 
 ## Review (fin de brique)
-- Corrigé : dans l'image en grand, les touches ← → étaient traitées deux fois (image en grand + carte) ;
-  clic sur le fond sombre pour fermer.
-- Corrigé pendant les tests réels : logos écartés à tort (c'est le sujet sur un média design), articles commençant
-  par une vidéo, flux RSS à une seule image (It's Nice That), copies en cache comptées en double.
+- Corrigés pendant les tests réels : vieux articles (14 juillet, 14 septembre) dans le journal → règle de date de
+  publication ; notes toutes à 9/10 → grille de critères + conférence de rédaction ; favoris trop avantagés → aucun bonus ;
+  mode test qui ne prenait qu'une source → tour de rôle.
+- Dernière édition test : Une = refonte de Fulham F.C. (Music × F37), notes étalées de 3 à 6, articles du 19–20 octobre.
 - **Suivis :**
-  - Passer `BACKFILL_MAX_AGE_DAYS` de 7 à 3 jours à la fin de la phase de test (`src/modules/depeches/settings.ts`).
-  - Retirer le bouton temporaire « Compléter les galeries » une fois les galeries existantes complétées.
-  - Galeries d'It's Nice That incomplètes sur certains articles (images sans nom commun) — à revoir si gênant.
-  - Les filtres par source sont une liste de pastilles : à repenser (menu, recherche) quand il y aura beaucoup de sources ;
-    le design viendra de Figma.
-  - Images affichées depuis le site du média : si un média les bloque, la carte reste lisible (titre, résumé) sans image.
+  - **Ollama doit tourner** pour préparer le journal en local (`ollama serve`) — disparaît avec la mise en ligne (Mistral en ligne).
+  - Mode test (`PLOMB_EDITION_TEST=1` dans `.env.local`) à désactiver à la fin des tests.
+  - `scripts/compare-ai.mjs` garde l'ancienne consigne (comparatif historique) : à mettre à jour si on refait un comparatif.
+  - En développement, redémarrer le serveur après une modification de la base (il garde l'ancienne description en mémoire).
+  - Le choix automatique de la parution (8h00 selon la fréquence) et l'envoi de l'e-mail : brique `planification`.
 
 ## Questions ouvertes
 - Aucune.

@@ -29,6 +29,27 @@
       "when": 1792491965269,
       "tag": "0003_post_images",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1792496185270,
+      "tag": "0004_editions",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1792498541325,
+      "tag": "0005_editorial_hierarchy",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1792501840729,
+      "tag": "0006_edition_frequency",
+      "breakpoints": true
     }
   ]
 }

@@ -2,7 +2,7 @@ import { eq, isNull } from "drizzle-orm";
 import type { Db } from "@/db/client";
 import { posts, sources } from "@/db/schema";
 import { readArticle } from "@/modules/aspiration-web/article";
-import { richerGallery } from "@/modules/aspiration-web/enrich-gallery";
+import { richerGallery } from "@/modules/aspiration-web/enrich-from-page";
 import { parseFeed } from "@/modules/aspiration-web/feed";
 import { createPoliteFetcher, type PageFetcher } from "@/modules/fetching/polite-fetch";
 

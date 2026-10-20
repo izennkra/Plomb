@@ -8,8 +8,8 @@ Validé le 2026-10-20.
 | sources | Ajouter une source par URL, reconnaître son type (média, Instagram, X, LinkedIn), la stocker une seule fois (mutualisation) | — |
 | aspiration-web | Récupérer les publications des sites/blogs : cascade RSS/Atom → OpenGraph + Readability → IA | sources |
 | depeches | Salle de Dépêches : flux chronologique des publications, filtrable par source | aspiration-web |
-| edition | IA Rédacteur en Chef : édition du matin (Une + rubriques), en français par défaut, langue réglable | depeches |
-| planification | Relève des sources par lots (30–60 min) et génération de l'édition à 9h00 (Europe/Paris) | aspiration-web, edition |
+| edition | IA Rédacteur en Chef : édition du matin (Une 1 + 2, suite par importance), sources favorites, page Journal, contenu de l'e-mail ; français par défaut, langue réglable | depeches |
+| planification | **Mise en ligne** (serveur toujours allumé, base Supabase, IA Mistral en ligne) ; relève des sources par lots (30–60 min), préparation de l'édition à 8h00 selon la fréquence choisie, publication + **envoi de l'e-mail** à 9h00 (Europe/Paris) — fonctionne Mac éteint | aspiration-web, edition |
 | aspiration-sociale | Instagram / X / LinkedIn via service tiers (Apify, SocialData…) + cache des médias (expirent sous 48h) | sources |
 | comptes-abonnement | Comptes utilisateurs et abonnement à 5 €/mois | — |
 | interface | Intégration du design system Figma / animations Framer sur le moteur | tous |
