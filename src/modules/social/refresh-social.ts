@@ -19,13 +19,13 @@ const RUN_TIMEOUT_MS = 2 * 60 * 60 * 1000;
 const COPY_IMAGES_FOR: Source["type"][] = ["instagram", "linkedin"];
 
 /** Start of the current window (the last check time passed, or yesterday's last one in the early morning). */
-export function socialWindowStart(now: Date): Date {
+export function socialWindowStart(now: Date, hours: number[] = SOCIAL_HOURS): Date {
   const today = parisDay(now);
   const at = (day: string, hour: number) => new Date(parisTime(day, Math.floor(hour)).getTime() + (hour % 1) * 3_600_000);
-  const candidates = SOCIAL_HOURS.map((hour) => at(today, hour)).filter((time) => time <= now);
+  const candidates = hours.map((hour) => at(today, hour)).filter((time) => time <= now);
   if (candidates.length > 0) return candidates[candidates.length - 1];
   const yesterday = parisDay(new Date(now.getTime() - 24 * 3_600_000));
-  return at(yesterday, SOCIAL_HOURS[SOCIAL_HOURS.length - 1]);
+  return at(yesterday, hours[hours.length - 1]);
 }
 
 /**
@@ -44,10 +44,12 @@ export async function launchSocialRuns(
       (run) => run.sourceId,
     ),
   );
-  const windowStart = socialWindowStart(now);
-  const due = social.filter(
-    (source) => !running.has(source.id) && (force || !source.lastFetchedAt || source.lastFetchedAt < windowStart),
-  );
+  // Each network has its own check times (Instagram twice a day, the others four times).
+  const due = social.filter((source) => {
+    if (running.has(source.id)) return false;
+    const windowStart = socialWindowStart(now, platformOf(source)?.hours);
+    return force || !source.lastFetchedAt || source.lastFetchedAt < windowStart;
+  });
   if (due.length === 0) return { launched: 0 };
 
   if ((await apify.monthlyUsageUsd()) >= MONTHLY_BUDGET_USD) {

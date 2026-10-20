@@ -58,6 +58,7 @@ describe("social windows", () => {
     expect(socialWindowStart(paris("12:00"))).toEqual(paris("11:30"));
     expect(socialWindowStart(paris("16:00"))).toEqual(paris("15:30"));
     expect(socialWindowStart(paris("23:00"))).toEqual(paris("19:30"));
+    expect(socialWindowStart(paris("12:00"), [7.5, 15.5])).toEqual(paris("07:30"));
   });
 });
 
@@ -107,13 +108,23 @@ describe("social relève", () => {
     expect((await db.query.sources.findFirst())?.lastFetchMessage).toBe("3 nouveaux articles");
   });
 
+  it("Instagram is checked twice a day only (7:30 and 15:30)", async () => {
+    const apify = fakeApify();
+    await launchSocialRuns(db, { apify: apify.client, now: paris("07:31") });
+    apify.finish();
+    await collectSocialRuns(db, { apify: apify.client, mediaStore: createDbMediaStore(db), now: paris("07:46"), fetchImage: fakeImage });
+
+    expect((await launchSocialRuns(db, { apify: apify.client, now: paris("11:31") })).launched).toBe(0);
+    expect((await launchSocialRuns(db, { apify: apify.client, now: paris("15:31") })).launched).toBe(1);
+  });
+
   it("the next window asks only for posts newer than the last request that worked", async () => {
     const apify = fakeApify();
     await launchSocialRuns(db, { apify: apify.client, now: paris("07:31") });
     apify.finish();
     await collectSocialRuns(db, { apify: apify.client, mediaStore: createDbMediaStore(db), now: paris("07:46"), fetchImage: fakeImage });
 
-    await launchSocialRuns(db, { apify: apify.client, now: paris("11:31") });
+    await launchSocialRuns(db, { apify: apify.client, now: paris("15:31") });
 
     expect(apify.started[1].input).toMatchObject({ onlyPostsNewerThan: paris("07:31").toISOString(), resultsLimit: 10 });
   });
@@ -135,6 +146,6 @@ describe("social relève", () => {
 
     expect((await db.select().from(socialRuns))[0].status).toBe("failed");
     expect((await db.query.sources.findFirst())?.lastFetchStatus).toBe("error");
-    expect((await launchSocialRuns(db, { apify: apify.client, now: paris("11:31") })).launched).toBe(1);
+    expect((await launchSocialRuns(db, { apify: apify.client, now: paris("15:31") })).launched).toBe(1);
   });
 });

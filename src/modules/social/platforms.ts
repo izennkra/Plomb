@@ -7,6 +7,8 @@ import { cleanPostUrl, toDate, toExcerpt, type PostCandidate } from "@/modules/a
  */
 export type Platform = {
   actor: string;
+  /** Check times (Paris, decimal hours); default: the four daily checks. */
+  hours?: number[];
   /** `since`: only posts published after this date; none = first relève (a few recent posts as a starting point). */
   input(sources: Source[], since: Date | null): object;
   /** The posts of the answer that belong to this account, read as Plomb articles. */
@@ -41,6 +43,9 @@ const same = (a: unknown, b: string) => str(a).toLowerCase() === b.toLowerCase()
 
 export const instagram: Platform = {
   actor: "apify/instagram-post-scraper",
+  // Instagram bills even an empty answer (~0.27 cent per account): twice a day keeps it within the free credit
+  // (Izenn, 2026-10-20). 7:30 is in time for the 8:00 edition.
+  hours: [7.5, 15.5],
   input: (sources, since) => ({
     username: sources.map(handleOf),
     resultsLimit: since ? MAX_POSTS : FIRST_POSTS,

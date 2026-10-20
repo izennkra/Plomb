@@ -80,6 +80,8 @@ pour un usage personnel ; à revoir avant les abonnés payants.
 3. X et LinkedIn : **Apify**, dans le même crédit gratuit, avec garde-fou.
 4. Réseaux sociaux vérifiés ~~2 fois~~ **4 fois par jour** (7h30, 11h30, 15h30, 19h30) — Izenn, 2026-10-20 ;
    YouTube comme les sites, **jamais via Apify** (son flux RSS est gratuit).
+6. **Instagram 2 fois par jour** (7h30, 15h30) : mesuré le 20/10, Apify facture même une réponse vide (~0,27 centime
+   par compte et par vérification) ; X et LinkedIn restent à 4 fois (vérification vide : 0 $ pour X).
 5. Le `robots.txt` de YouTube interdit `/feeds/videos.xml` aux robots : pour le flux d'une chaîne suivie, Plomb se
    comporte en **lecteur de flux** (règle robots.txt non appliquée, rythme poli conservé). Ailleurs, robots.txt reste respecté.
    (Alternative non retenue : API officielle YouTube, gratuite, avec une clé Google Cloud.)
