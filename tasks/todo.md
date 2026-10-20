@@ -29,7 +29,7 @@
 ## Tâche 5 : Base Turso
 **Description :** Connexion par adresse + jeton (`DATABASE_URL`, `DATABASE_AUTH_TOKEN`), migrations incluses dans l'app en ligne.
 **Critères :**
-- [ ] En local : fichier SQLite inchangé ; en ligne : Turso
+- [x] En local : fichier SQLite inchangé ; en ligne : Turso
 **Vérification :** `npm test` + connexion réelle à Turso · **Dépendances :** aucune · **Taille :** S
 
 ## Checkpoint 1

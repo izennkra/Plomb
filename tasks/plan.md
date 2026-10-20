@@ -22,7 +22,7 @@ guidée (comptes, réglages, horloge), et enfin la vérification en réel : un m
 - [x] Tâche 2 : Horloge `/api/horloge` (relevé par tranches, 8h00, 9h00, rattrapage, jeton secret)
 - [x] Tâche 3 : E-mail via Resend (envoi unique à 9h00, alerte en cas d'échec)
 - [x] Tâche 4 : Mot de passe sur toute l'app
-- [ ] Tâche 5 : Base Turso (adresse + jeton, migrations embarquées)
+- [x] Tâche 5 : Base Turso (adresse + jeton, migrations embarquées)
 
 ### Checkpoint 1
 - [ ] Tout fonctionne en local avec Mistral en ligne (clé dans `.env.local`) — point avec Izenn
