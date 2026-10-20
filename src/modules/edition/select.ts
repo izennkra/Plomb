@@ -1,11 +1,14 @@
 import { and, desc, eq, gte, lt } from "drizzle-orm";
 import type { Db } from "@/db/client";
 import { editions, posts, sources, subscriptions } from "@/db/schema";
+import { isDayOnly } from "@/modules/depeches/format-date";
 import { parisDay, parisTime } from "./paris-time";
 
 /** Articles arrived until 8:00 go into the 9:00 edition. */
 export const EDITION_CUTOFF_HOUR = 8;
 const DAY_MS = 24 * 60 * 60 * 1000;
+/** An article published just before the period but found a little late still makes it. */
+const LATE_DISCOVERY_MARGIN_MS = 12 * 60 * 60 * 1000;
 
 export type EditionPost = {
   postId: number;
@@ -54,6 +57,8 @@ export async function selectEditionPosts(
       content: posts.content,
       images: posts.images,
       imageUrl: posts.imageUrl,
+      publishedAt: posts.publishedAt,
+      beforeSubscription: posts.beforeSubscription,
       sourceName: sources.displayName,
       favorite: subscriptions.favorite,
     })
@@ -72,11 +77,24 @@ export async function selectEditionPosts(
 
   // One article followed through two sources counts once (the favourite source wins: rows are sorted that way).
   const byUrl = new Map<string, EditionPost>();
-  for (const { imageUrl, images, ...row } of rows) {
+  for (const { imageUrl, images, publishedAt, beforeSubscription, ...row } of rows) {
+    if (!isRecent(publishedAt, beforeSubscription, periodStart)) continue;
     if (!byUrl.has(row.url)) byUrl.set(row.url, { ...row, images: images?.length ? images : imageUrl ? [imageUrl] : [] });
   }
   const selected = [...byUrl.values()];
   return { day, periodStart, periodEnd, posts: testMode ? takeInTurns(selected, TEST_MODE_MAX_POSTS) : selected };
+}
+
+/**
+ * The journal is about what just happened. A dated article must have been published during the edition's period
+ * (12 h margin for late discoveries): an old article that reappears on a site ("most read"…) is not news.
+ * An undated article is only trusted when it appeared after the subscription.
+ */
+function isRecent(publishedAt: Date | null, beforeSubscription: boolean, periodStart: Date): boolean {
+  if (!publishedAt) return !beforeSubscription;
+  // Sites that only give the day (2026-10-20): the whole day counts.
+  const latest = isDayOnly(publishedAt) ? publishedAt.getTime() + DAY_MS - 1 : publishedAt.getTime();
+  return latest >= periodStart.getTime() - LATE_DISCOVERY_MARGIN_MS;
 }
 
 /** Test mode: one article of each source in turn, so a short test edition still mixes the media. */

@@ -62,6 +62,19 @@ describe("selectEditionPosts", () => {
     expect(await titles()).toEqual(["new"]);
   });
 
+  it("never takes an old article that reappears on a site, even if newly found", async () => {
+    await add("old-article-in-most-read", at("2026-10-20T18:00:00Z"), { publishedAt: at("2026-06-01T10:00:00Z") });
+    await add("published-yesterday", at("2026-10-20T18:00:00Z"), { publishedAt: at("2026-10-20T09:00:00Z") });
+    // Published just before the period and found a bit late: still taken (12 h margin).
+    await add("found-late", at("2026-10-20T18:00:00Z"), { publishedAt: at("2026-10-19T22:00:00Z") });
+    // Date without time (sites that give only the day): the whole day counts.
+    await add("dated-yesterday-day-only", at("2026-10-20T18:00:00Z"), { publishedAt: at("2026-10-20T00:00:00Z") });
+    // No date at all, but appeared after the subscription: new.
+    await add("undated-new", at("2026-10-20T18:00:00Z"));
+
+    expect((await titles()).sort()).toEqual(["dated-yesterday-day-only", "found-late", "published-yesterday", "undated-new"]);
+  });
+
   it("never takes articles already there before the subscription", async () => {
     await add("backfill", at("2026-10-20T18:00:00Z"), { beforeSubscription: true });
     expect(await titles()).toEqual([]);
@@ -100,17 +113,22 @@ describe("selectEditionPosts", () => {
     expect(await titles()).toEqual(["shared"]);
   });
 
-  it("test mode: everything until now, including articles from before the subscription", async () => {
-    await add("backfill-this-afternoon", at("2026-10-21T06:20:00Z"), { beforeSubscription: true });
+  it("test mode: until now, including articles from before the subscription — when recently published", async () => {
+    await add("backfill-published-yesterday", at("2026-10-21T06:20:00Z"), { beforeSubscription: true, publishedAt: at("2026-10-20T15:00:00Z") });
+    // Found today, but published on 14 July / 14 September: not news (Izenn's example).
+    await add("off-live-14-july", at("2026-10-21T06:20:00Z"), { beforeSubscription: true, publishedAt: at("2026-07-14T15:01:33Z") });
+    await add("findings-14-september", at("2026-10-21T06:20:00Z"), { beforeSubscription: true, publishedAt: at("2026-09-14T16:01:21Z") });
+    // No date and already there before the subscription: its age is unknown.
+    await add("undated-backfill", at("2026-10-21T06:20:00Z"), { beforeSubscription: true });
 
     const selection = await selectEditionPosts(db, DEFAULT_USER_ID, { now, testMode: true });
 
     expect(selection.periodEnd).toEqual(now);
-    expect(selection.posts.map((post) => post.title)).toEqual(["backfill-this-afternoon"]);
+    expect(selection.posts.map((post) => post.title)).toEqual(["backfill-published-yesterday"]);
   });
 
   it("test mode keeps at most 10 articles (the Mac stays usable)", async () => {
-    for (let i = 0; i < 15; i++) await add(`post-${i}`, at("2026-10-21T05:00:00Z"));
+    for (let i = 0; i < 15; i++) await add(`post-${i}`, at("2026-10-21T05:00:00Z"), { publishedAt: at("2026-10-21T04:00:00Z") });
     const selection = await selectEditionPosts(db, DEFAULT_USER_ID, { now, testMode: true });
     expect(selection.posts).toHaveLength(10);
   });
@@ -122,7 +140,7 @@ describe("selectEditionPosts", () => {
       .returning({ id: sources.id });
     await db.insert(subscriptions).values({ userId: DEFAULT_USER_ID, sourceId: otherId });
     for (let i = 0; i < 12; i++) await add(`main-${i}`, at("2026-10-21T05:00:00Z"));
-    await db.insert(posts).values({ sourceId: otherId, url: "https://o.com/x", title: "other-1", method: "rss", discoveredAt: at("2026-10-20T10:00:00Z") });
+    await db.insert(posts).values({ sourceId: otherId, url: "https://o.com/x", title: "other-1", method: "rss", discoveredAt: at("2026-10-20T10:00:00Z"), publishedAt: at("2026-10-20T09:00:00Z") });
 
     const selection = await selectEditionPosts(db, DEFAULT_USER_ID, { now, testMode: true });
     expect(selection.posts.map((post) => post.title)).toContain("other-1");

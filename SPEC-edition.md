@@ -24,6 +24,9 @@ Cette brique fabrique l'édition (à la demande, via un bouton) et prépare l'e-
 ## Contenu d'une édition
 - **Articles retenus** : tous les articles **nouveaux** (jamais ceux d'avant l'abonnement) arrivés depuis l'édition
   précédente, jusqu'à **8h00** (1 h avant la publication de 9h00). Première édition : les dernières 24 h.
+  Un article **daté** doit aussi avoir été **publié** dans cette période (marge de 12 h pour les découvertes tardives) :
+  un vieil article qui réapparaît sur un site n'est pas une nouveauté. Un article sans date n'est retenu que s'il est
+  apparu après l'abonnement. (Correction après l'édition test du 20/10 qui contenait des articles du 14 juillet et du 14 septembre.)
 - **Hiérarchie éditoriale** (ce qui fait qu'un article atterrit en Une) :
   1. **Grille de critères** notée par l'IA de 1 à 5 : **notoriété du sujet** (marque mondiale vs commerce local),
      **ampleur du projet** (refonte complète vs détail), **renommée des auteurs** (studio/agence reconnu),
