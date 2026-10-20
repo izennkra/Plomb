@@ -23,7 +23,7 @@ reconnaissance des URL → base de données → vérification des sites → ajou
 - [x] Tests, lint et typecheck passent ; la page d'accueil s'affiche
 
 ### Phase 2 : Moteur
-- [ ] Tâche 3 : Créer la base de données (sources, users, subscriptions)
+- [x] Tâche 3 : Créer la base de données (sources, users, subscriptions)
 - [ ] Tâche 4 : Vérifier qu'un site web répond
 - [ ] Tâche 5 : Ajouter une source (reconnaissance + vérification + enregistrement sans doublon)
 
@@ -41,7 +41,7 @@ reconnaissance des URL → base de données → vérification des sites → ajou
 ## Risques
 | Risque | Impact | Parade |
 |---|---|---|
-| `better-sqlite3` ne s'installe pas avec Node 26 (module compilé) | Moyen | Passer à `@libsql/client`, aussi supporté par Drizzle |
+| `better-sqlite3` ne s'installe pas avec Node 26 (module compilé) | Moyen | **Appliqué** : `@libsql/client` utilisé dès la tâche 3 |
 | Certains sites bloquent les robots (erreur 403) alors qu'ils existent | Moyen | Envoyer un en-tête navigateur classique ; traiter 403 comme « existe mais protégé » et accepter la source |
 | Règles d'URL des réseaux sociaux qui changent | Faible | Règles regroupées dans un seul fichier, couvertes par des tests |
 

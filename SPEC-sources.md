@@ -40,7 +40,7 @@ Cette brique ne récupère **pas encore** les publications (c'est la brique `asp
 
 ## Tech Stack
 - Next.js 15 (App Router) + TypeScript
-- Base de données locale SQLite via Drizzle ORM (better-sqlite3) — même code réutilisable avec Supabase/Postgres plus tard
+- Base de données locale SQLite via Drizzle ORM (`@libsql/client`, sans compilation à l'installation) — même code réutilisable avec Supabase/Postgres plus tard
 - Tests : Vitest
 - Interface : une page minimale (champ « Coller une URL » + liste), sans design — le design viendra de Figma
 

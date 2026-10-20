@@ -25,8 +25,8 @@
 ## Tâche 3 : Créer la base de données
 **Description :** Schéma Drizzle (`sources`, `users`, `subscriptions`), migration, connexion SQLite dans `data/plomb.db`, utilisateur par défaut.
 **Critères :**
-- [ ] `npm run db:migrate` crée la base
-- [ ] La clé unique d'une source est protégée par la base (pas de doublon possible)
+- [x] `npm run db:migrate` crée la base
+- [x] La clé unique d'une source est protégée par la base (pas de doublon possible)
 **Vérification :** `npm test` (test sur base en mémoire)
 **Dépendances :** 1 · **Taille :** M
 **Fichiers :** `src/db/schema.ts`, `src/db/client.ts`, `drizzle.config.ts`, `tests/db/schema.test.ts`
