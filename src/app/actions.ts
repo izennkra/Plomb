@@ -10,6 +10,7 @@ import { markRefreshing, refreshAllSources, refreshSource } from "@/modules/aspi
 import { completeGalleries } from "@/modules/depeches/complete-galleries";
 import { buildEdition } from "@/modules/edition/build";
 import { editionTestMode } from "@/modules/edition/select";
+import { saveSchedule } from "@/modules/edition/settings";
 import { getRedacteur } from "@/modules/edition/redacteur";
 import { addSource } from "@/modules/sources/add-source";
 import { setFavorite } from "@/modules/sources/favorite";
@@ -116,4 +117,13 @@ export async function prepareEditionAction(): Promise<void> {
     }
   });
   revalidatePath("/", "layout");
+}
+
+export async function saveScheduleAction(formData: FormData): Promise<void> {
+  const frequency = String(formData.get("frequency"));
+  const weekdays = formData.getAll("weekdays").map(Number);
+  if (frequency !== "daily" && frequency !== "every3days" && frequency !== "weekdays") return;
+
+  await saveSchedule(await getDb(), DEFAULT_USER_ID, { frequency, weekdays });
+  revalidatePath("/journal");
 }

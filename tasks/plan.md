@@ -40,11 +40,11 @@ la fabrication de l'édition (sélection, notation, Une, rédaction), et enfin l
 
 ### Phase 3 : Lecture
 - [x] Tâche 6 : Favoris (étoile sur la page Sources)
-- [ ] Tâche 7 : Page Journal (édition du jour, 7 précédentes, bouton « Préparer l'édition »)
-- [ ] Tâche 8 : E-mail de l'édition (contenu + aperçu ; envoi réel : brique `planification`)
+- [x] Tâche 7 : Page Journal (édition du jour, 7 précédentes, bouton « Préparer l'édition »)
+- [x] Tâche 8 : E-mail de l'édition (contenu + aperçu ; envoi réel : brique `planification`)
 
 ### Phase 4 : Fréquence (ajout du 20/10)
-- [ ] Tâche 12 : Fréquence du journal (chaque jour / tous les 3 jours / jours choisis), prochaine parution affichée
+- [x] Tâche 12 : Fréquence du journal (chaque jour / tous les 3 jours / jours choisis), prochaine parution affichée
 
 ### Checkpoint final
 - [ ] Critères de succès de la spec cochés

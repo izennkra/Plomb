@@ -2,9 +2,13 @@ import Link from "next/link";
 import { DEFAULT_USER_ID } from "@/db/client";
 import { getDb } from "@/db";
 import { getEditionItems, isBuilding, listEditions } from "@/modules/edition/list";
+import { parisDay, parisTime } from "@/modules/edition/paris-time";
+import { addDays, nextEditionDay } from "@/modules/edition/schedule";
+import { getSchedule } from "@/modules/edition/settings";
 import { isPreparingEdition, prepareEditionAction } from "../actions";
 import { AutoRefresh } from "../auto-refresh";
 import { EditionArticle } from "../components/edition-article";
+import { ScheduleForm } from "../components/schedule-form";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +30,14 @@ export default async function JournalPage({ searchParams }: { searchParams: Sear
   const secondary = items.filter((item) => item.placement === "secondaire");
   const rest = items.filter((item) => item.placement === "suite");
 
+  // Next publication: today if it is before 9:00 and not out yet, otherwise from tomorrow.
+  const schedule = await getSchedule(db, DEFAULT_USER_ID);
+  const now = new Date();
+  const today = parisDay(now);
+  const lastReady = editions.find((e) => e.status === "ready")?.day;
+  const fromDay = now < parisTime(today, 9) && lastReady !== today ? today : addDays(today, 1);
+  const nextDay = nextEditionDay(schedule, fromDay, lastReady);
+
   return (
     <main>
       <AutoRefresh active={preparing} intervalMs={5000} />
@@ -40,6 +52,8 @@ export default async function JournalPage({ searchParams }: { searchParams: Sear
           </button>
         </form>
       </div>
+
+      <ScheduleForm schedule={schedule} next={nextDay ? longDay(nextDay) : null} />
 
       {!edition ? (
         <p>Pas encore d&apos;édition. Cliquez sur « Préparer l&apos;édition » : l&apos;IA rédige le journal à partir des nouveaux articles de vos sources.</p>

@@ -73,6 +73,10 @@ export const seenLinks = sqliteTable(
 export const users = sqliteTable("users", {
   id: text("id").primaryKey(),
   createdAt: createdAt(),
+  /** How often the journal comes out (always at 9:00): daily, every 3 days, or chosen weekdays. */
+  editionFrequency: text("edition_frequency", { enum: ["daily", "every3days", "weekdays"] }).notNull().default("daily"),
+  /** Chosen weekdays, 1 (Monday) to 7 (Sunday). */
+  editionWeekdays: text("edition_weekdays", { mode: "json" }).$type<number[]>().notNull().default([1, 2, 3, 4, 5]),
 });
 
 export const subscriptions = sqliteTable(

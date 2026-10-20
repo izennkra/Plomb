@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { beforeEach, describe, expect, it } from "vitest";
 import { DEFAULT_USER_ID, type Db } from "@/db/client";
-import { editionItems, editions, posts, sources, subscriptions } from "@/db/schema";
+import { editionItems, editions, posts, sources, subscriptions, users } from "@/db/schema";
 import { buildEdition } from "@/modules/edition/build";
 import { createFakeRedacteur } from "../helpers/fake-redacteur";
 import { createTestDb } from "../helpers/test-db";
@@ -145,6 +145,17 @@ describe("buildEdition", () => {
     expect(edition.status).toBe("ready");
     const broken = (await itemsOf(edition.id)).find((item) => item.fallback);
     expect(broken).toMatchObject({ title: "broken", summary: "Excerpt broken", theme: null, leadText: null });
+  });
+
+  it("a first edition every 3 days covers 3 days", async () => {
+    await db.update(users).set({ editionFrequency: "every3days" });
+    await add(ordinary, "two-days-ago", { discoveredAt: new Date("2026-10-19T08:00:00Z") });
+    const { redacteur } = createFakeRedacteur();
+
+    const edition = await buildEdition(db, DEFAULT_USER_ID, { redacteur, now });
+
+    expect(edition.periodStart.toISOString()).toBe("2026-10-18T06:00:00.000Z");
+    expect((await itemsOf(edition.id)).map((item) => item.title)).toEqual(["FR two-days-ago"]);
   });
 
   it("says so when there is no news", async () => {

@@ -57,8 +57,26 @@
 ## Tâche 7 : Page Journal
 **Description :** `/journal` : édition du jour (Une majeure, 2 secondaires, suite), repère visuel des favoris, éditions des 7 derniers jours, bouton « Préparer l'édition » avec statut. Lien dans la navigation.
 **Critères :**
-- [ ] Lecture de l'édition complète ; navigation entre éditions
-- [ ] « Préparer l'édition » fonctionne en arrière-plan
+- [x] Lecture de l'édition complète ; navigation entre éditions
+- [x] « Préparer l'édition » fonctionne en arrière-plan
+**Vérification :** test manuel · **Dépendances :** 5, 6 · **Taille :** M
+**Fichiers :** `src/app/journal/page.tsx`, `src/app/components/edition-*.tsx`, `src/modules/edition/list.ts`
+
+## Checkpoint 2
+- [x] Vraie édition sur les données d'Izenn — très satisfait ; demande : mieux hiérarchiser la Une
+
+## Tâche 6 : Favoris
+**Description :** Étoile « favori » par source sur la page Sources (par utilisateur).
+**Critères :**
+- [x] Marquer / démarquer une source ; l'état est gardé
+**Vérification :** test manuel + `npm test` · **Dépendances :** 3 · **Taille :** S
+**Fichiers :** `src/modules/sources/favorite.ts`, `src/app/sources/page.tsx`, `src/app/actions.ts`
+
+## Tâche 7 : Page Journal
+**Description :** `/journal` : édition du jour (Une majeure, 2 secondaires, suite), repère visuel des favoris, éditions des 7 derniers jours, bouton « Préparer l'édition » avec statut. Lien dans la navigation.
+**Critères :**
+- [x] Lecture de l'édition complète ; navigation entre éditions
+- [x] « Préparer l'édition » fonctionne en arrière-plan
 **Vérification :** test manuel · **Dépendances :** 5, 6 · **Taille :** M
 **Fichiers :** `src/app/journal/page.tsx`, `src/app/components/edition-*.tsx`, `src/modules/edition/list.ts`
 
@@ -96,8 +114,8 @@
 ## Tâche 12 : Fréquence du journal
 **Description :** Réglage par utilisateur (chaque jour / tous les 3 jours / jours choisis), toujours à 9h00. Règles : jour de parution ou non, période couverte par une première édition, prochaine parution. Formulaire sur la page Journal.
 **Critères :**
-- [ ] Les 3 rythmes donnent les bons jours de parution et la bonne période couverte
-- [ ] Le réglage s'enregistre ; la page affiche la prochaine parution
+- [x] Les 3 rythmes donnent les bons jours de parution et la bonne période couverte
+- [x] Le réglage s'enregistre ; la page affiche la prochaine parution
 **Vérification :** `npm test` + test manuel · **Dépendances :** 3 · **Taille :** M
 **Fichiers :** `src/modules/edition/schedule.ts`, `src/db/schema.ts`, `src/app/journal/*`, `src/app/actions.ts`, tests
 

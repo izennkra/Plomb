@@ -30,12 +30,16 @@ export const editionTestMode = () => process.env.PLOMB_EDITION_TEST === "1";
 
 /**
  * Articles of the next edition: new ones (never those already there before the subscription) from the user's sources,
- * found since the previous edition and until 8:00 (Paris). First edition: the last 24 hours.
+ * found since the previous edition and until 8:00 (Paris). First edition: the last 24 hours (or 3 days… per frequency).
  */
 export async function selectEditionPosts(
   db: Db,
   userId: string,
-  { now = new Date(), testMode = false }: { now?: Date; testMode?: boolean } = {},
+  {
+    now = new Date(),
+    testMode = false,
+    coverageDays = 1,
+  }: { now?: Date; testMode?: boolean; /** First edition: how many days it covers (frequency). */ coverageDays?: number } = {},
 ): Promise<EditionSelection> {
   const day = parisDay(now);
   const cutoff = parisTime(day, EDITION_CUTOFF_HOUR);
@@ -46,7 +50,7 @@ export async function selectEditionPosts(
     where: and(eq(editions.userId, userId), eq(editions.status, "ready"), lt(editions.day, day)),
     orderBy: desc(editions.day),
   });
-  const periodStart = previous?.periodEnd ?? new Date(periodEnd.getTime() - DAY_MS);
+  const periodStart = previous?.periodEnd ?? new Date(periodEnd.getTime() - coverageDays * DAY_MS);
 
   const rows = await db
     .select({

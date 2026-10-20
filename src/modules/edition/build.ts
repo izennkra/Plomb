@@ -1,8 +1,10 @@
 import { and, eq } from "drizzle-orm";
 import type { Db } from "@/db/client";
-import { editionItems, editions, type Edition, type EditionItem } from "@/db/schema";
+import { editionItems, editions, users, type Edition, type EditionItem } from "@/db/schema";
 import type { ArticleSummary, Redacteur } from "./redacteur/types";
 import { groupEchoes } from "./echo";
+import { parisDay } from "./paris-time";
+import { coverageDays, toSchedule } from "./schedule";
 import { importanceOf, type Criteria } from "./scoring";
 import { selectEditionPosts, type EditionPost } from "./select";
 
@@ -25,7 +27,9 @@ export async function buildEdition(
   userId: string,
   { redacteur, now = new Date(), testMode = false }: { redacteur: Redacteur; now?: Date; testMode?: boolean },
 ): Promise<Edition> {
-  const selection = await selectEditionPosts(db, userId, { now, testMode });
+  const user = await db.query.users.findFirst({ where: eq(users.id, userId) });
+  const schedule = toSchedule(user?.editionFrequency, user?.editionWeekdays);
+  const selection = await selectEditionPosts(db, userId, { now, testMode, coverageDays: coverageDays(schedule, parisDay(now)) });
   const edition = await startEdition(db, userId, selection.day, selection.periodStart, selection.periodEnd, redacteur.model);
 
   try {
