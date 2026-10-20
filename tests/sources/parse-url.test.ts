@@ -33,7 +33,7 @@ describe("parseSourceUrl — exemples de la spec", () => {
   it("reconnaît un site web", () => {
     expect(ok(parseSourceUrl("the-brandidentity.com/features"))).toEqual({
       type: "web",
-      displayName: "the-brandidentity.com",
+      displayName: "the-brandidentity.com/features",
       url: "https://the-brandidentity.com/features",
       key: "web:the-brandidentity.com/features",
     });

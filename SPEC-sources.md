@@ -12,7 +12,7 @@ Cette brique ne récupère **pas encore** les publications (c'est la brique `asp
 ### Récits utilisateur
 - Je colle `instagram.com/mouthwash.studio` → Plomb l'ajoute comme source **Instagram**, nommée `@mouthwash.studio`.
 - Je colle `https://x.com/studiobakers` → source **X**, nommée `@studiobakers`.
-- Je colle `the-brandidentity.com/features` → source **Web**, nommée `the-brandidentity.com`.
+- Je colle `the-brandidentity.com/features` → source **Web**, nommée `the-brandidentity.com/features` (la rubrique fait partie du nom).
 - Je colle deux fois la même source écrite différemment (`https://www.instagram.com/mouthwash.studio/?hl=fr` et `instagram.com/mouthwash.studio`) → Plomb comprend que c'est la même et ne crée pas de doublon.
 - Je vois la liste de mes sources et je peux me désabonner d'une source. La source reste en base tant qu'un autre utilisateur la suit ; elle est supprimée quand plus personne ne la suit.
 - Si je colle n'importe quoi (`bonjour`), Plomb affiche un message clair au lieu de planter.
@@ -24,7 +24,7 @@ Cette brique ne récupère **pas encore** les publications (c'est la brique `asp
 | instagram.com/{compte} | instagram | @{compte} | instagram:{compte en minuscules} |
 | x.com/{compte} ou twitter.com/{compte} | x | @{compte} | x:{compte en minuscules} |
 | linkedin.com/company/{nom} ou /in/{nom} | linkedin | {nom} | linkedin:{company\|in}/{nom} |
-| tout autre site http(s) | web | domaine sans www | web:{domaine}{chemin} (sans paramètres de suivi, sans / final) |
+| tout autre site http(s) | web | domaine sans www + rubrique | web:{domaine}{chemin} (sans paramètres de suivi, sans / final) |
 
 - `https://` est ajouté si absent ; `www.` et la casse du domaine sont ignorés.
 - Les paramètres de suivi (`utm_*`, `hl`, `igsh`, `s`, `ref`, etc.) sont retirés.

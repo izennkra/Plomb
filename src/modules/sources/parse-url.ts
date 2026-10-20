@@ -2,7 +2,7 @@ export type SourceType = "web" | "instagram" | "x" | "linkedin";
 
 export type ParsedSource = {
   type: SourceType;
-  /** Name shown to the user, e.g. "@mouthwash.studio" or "the-brandidentity.com". */
+  /** Name shown to the user, e.g. "@mouthwash.studio" or "the-brandidentity.com/features". */
   displayName: string;
   /** Canonical address used to reach the source. */
   url: string;
@@ -117,7 +117,8 @@ function parseWeb(url: URL, host: string): ParseResult {
 
   return success({
     type: "web",
-    displayName: host,
+    // The section matters: dandad.org/insights and dandad.org/work are two different sources.
+    displayName: `${host}${path}`,
     url: `${url.protocol}//${location}`,
     key: `web:${location}`,
   });
