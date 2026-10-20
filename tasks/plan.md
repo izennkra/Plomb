@@ -39,8 +39,8 @@ figées des vrais sites d'Izenn : flux RSS → repérage des liens d'articles �
 - [x] Tâche 9 : Interface — relevé après l'ajout, bouton « Relever maintenant », statut et derniers articles
 
 ### Checkpoint final
-- [ ] Tous les critères de succès de la spec cochés, testés sur les vrais sites
-- [ ] `/review`, push de la branche, proposition de pull request
+- [x] Tous les critères de succès de la spec cochés, testés sur les vrais sites
+- [x] `/review`, push de la branche, proposition de pull request
 
 ## Risques
 | Risque | Impact | Parade |
@@ -49,6 +49,19 @@ figées des vrais sites d'Izenn : flux RSS → repérage des liens d'articles �
 | Un site change de structure | Moyen | Copies figées rafraîchissables par script ; statut d'erreur visible par source |
 | Un site bloque Plomb (anti-robot) | Moyen | Statut « bloqué » visible ; ces sites seront candidats au niveau 3 / service tiers |
 | Relevé lent (20 articles × 1 s de pause) | Faible | Normal pour un premier relevé ; ensuite seuls les nouveaux articles sont ouverts |
+
+## Review (fin de brique)
+- Trouvé et corrigé pendant les tests sur vrais sites : flux global hors rubrique (Brand New), anciens articles
+  comptés comme nouveautés au 2e relevé (D&AD), port oublié dans les adresses, noms de sources ambigus.
+- **Suivis à prévoir :**
+  - Sécurité : la vérification des adresses internes se fait avant la connexion ; un site malveillant pourrait
+    changer son adresse IP entre les deux (« DNS rebinding »). Risque faible en local ; à verrouiller avant la mise en ligne
+    (forcer la connexion sur l'IP vérifiée).
+  - Transparence : Plomb respecte les règles robots.txt sous le nom « PlombBot », mais se présente aux sites comme un
+    navigateur. Avant la mise en ligne, décider s'il s'identifie clairement (certains sites risquent alors de le bloquer).
+  - Un même article peut appartenir à deux sources (the-brandidentity.com et /features) : la brique `depeches`
+    devra l'afficher une seule fois.
+  - Relevé de The Brand Identity lent (pages de 3 Mo) : acceptable, à surveiller avec la `planification`.
 
 ## Questions ouvertes
 - Aucune.

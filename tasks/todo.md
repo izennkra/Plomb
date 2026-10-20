@@ -95,5 +95,5 @@
 **Fichiers :** `src/app/page.tsx`, `src/app/actions.ts`, `src/modules/aspiration-web/list-posts.ts`
 
 ## Checkpoint final
-- [ ] Tous les critères de succès de SPEC-aspiration-web.md cochés
-- [ ] `/review`, push de la branche, proposition de pull request
+- [x] Tous les critères de succès de SPEC-aspiration-web.md cochés
+- [x] `/review`, push de la branche, proposition de pull request

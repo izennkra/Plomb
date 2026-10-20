@@ -1,6 +1,6 @@
 # Spec : aspiration-web
 
-Brique 2 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [sources](SPEC-sources.md). Statut : **validée le 2026-10-20**.
+Brique 2 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [sources](SPEC-sources.md). Statut : **terminée le 2026-10-20** (testée sur les vrais sites).
 
 ## Objectif
 Pour chaque source de type **site web**, récupérer ses publications récentes (titre, lien, résumé, image, date)
@@ -15,7 +15,7 @@ Instagram, X et LinkedIn ne sont **pas** concernés (brique `aspiration-sociale`
 | findings.mouthwash.studio | 1 — RSS ✅ | flux `/feed` complet |
 | offbrandkoto.substack.com | 1 — RSS ✅ | flux `/feed` complet (Substack) |
 | the-brandidentity.com/features | 2 — page | ~20 liens `/project/…` ; chaque article a titre, résumé, image HD (OpenGraph) et date |
-| itsnicethat.com | 2 — page | flux RSS interdit aux robots ; ~60 liens `/articles/…` |
+| itsnicethat.com | 1 — RSS ✅ | flux Feedburner annoncé dans la page (le flux `/articles.rss` du site est interdit aux robots) ; lecture de page possible en secours (~34 articles) |
 | underconsideration.com/brandnew | 2 — page | seul flux annoncé = podcast (à ignorer) ; articles `/brandnew/archives/….php` **mélangés à 44 liens de catégories** (cas piège) ; pas de date dans l'article |
 | dandad.org/insights | 2 — page | rubrique éditoriale (articles, interviews) — remplace l'archive |
 | dandad.org/work | ❌ illisible | vitrine de 6 projets aux adresses courtes ; attendra le niveau 3 (IA) |
@@ -101,20 +101,31 @@ Comme la brique 1 : fonctions courtes, logique séparée de l'interface, réseau
 - Jamais : afficher le texte complet d'un article, contacter une adresse interne, relever Instagram/X/LinkedIn dans cette brique.
 
 ## Success Criteria
-- [ ] the-brandidentity.com/features, itsnicethat.com et underconsideration.com/brandnew → au moins 10 articles chacun, avec titre, image et lien, **sans pages de catégorie**
-- [ ] dandad.org/insights → articles reconnus ; dandad.org/work → marqué « illisible » (pas de faux articles)
-- [ ] findings.mouthwash.studio et offbrandkoto.substack.com → articles avec date de publication (via RSS)
-- [ ] Un deuxième relevé n'ajoute que les nouveaux articles (0 doublon), qui ne sont **pas** marqués « antérieurs »
-- [ ] Les articles du premier relevé sont marqués « antérieurs à l'abonnement »
-- [ ] Un site illisible ou injoignable affiche un statut d'erreur clair sans bloquer les autres sources
-- [ ] Les adresses internes sont refusées (ajout et relevé)
-- [ ] `npm test`, `npm run lint` et `npm run typecheck` passent
+- [x] the-brandidentity.com/features, itsnicethat.com et underconsideration.com/brandnew → au moins 10 articles chacun, avec titre, image et lien, **sans pages de catégorie**
+- [x] dandad.org/insights → articles reconnus ; dandad.org/work → marqué « illisible » (pas de faux articles)
+- [x] findings.mouthwash.studio et offbrandkoto.substack.com → articles avec date de publication (via RSS)
+- [x] Un deuxième relevé n'ajoute que les nouveaux articles (0 doublon), qui ne sont **pas** marqués « antérieurs »
+- [x] Les articles du premier relevé sont marqués « antérieurs à l'abonnement »
+- [x] Un site illisible ou injoignable affiche un statut d'erreur clair sans bloquer les autres sources
+- [x] Les adresses internes sont refusées (ajout et relevé)
+- [x] `npm test`, `npm run lint` et `npm run typecheck` passent
 
 ## Décisions
 1. Niveau 3 (IA) : **plus tard** — on mesure d'abord combien de sites restent illisibles, et on choisit l'IA (locale) avec la brique `edition`.
 2. Texte complet des articles : **stocké pour l'IA**, jamais affiché.
 3. Sites de test : ceux d'Izenn (tableau ci-dessus). D&AD : l'archive (classée par ordre alphabétique) est remplacée par `/insights` + `/work` (choix d'Izenn).
 4. Articles du premier relevé gardés comme matière de test et point de départ, mais marqués « antérieurs à l'abonnement ».
+
+## Résultat sur les vrais sites (2026-10-20)
+| Source | Méthode | 1er relevé | 2e relevé |
+|---|---|---|---|
+| findings.mouthwash.studio | RSS | 15 articles | aucun nouvel article |
+| offbrandkoto.substack.com | RSS | 17 | aucun |
+| itsnicethat.com | RSS (Feedburner) | 20 | aucun |
+| the-brandidentity.com/features | page | 20 | aucun |
+| underconsideration.com/brandnew | page | 20 (après correction : le flux global du site était hors rubrique) | aucun |
+| dandad.org/insights | page | 20 (45 liens mémorisés comme déjà vus) | aucun |
+| dandad.org/work | — | illisible (attendu) | illisible |
 
 ## Open Questions
 - Aucune.
