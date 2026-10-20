@@ -14,6 +14,11 @@ import { selectEditionPosts, type EditionPost } from "./select";
 const UNE_SIZE = 3;
 /** Stories compared side by side in the editorial meeting. */
 const MEETING_SIZE = 8;
+/**
+ * The meeting arbitrates between stories of similar weight: its Une may not be more than this below the
+ * best-noted story (a 4/10 story cannot take the Une from a 6/10 one).
+ */
+const UNE_MAX_GAP = 1.5;
 /** Criteria given when the AI could not judge an article: an average story. */
 const DEFAULT_CRITERIA: Criteria = { notoriety: 3, scale: 3, authors: 3, reach: 3, quality: 3 };
 
@@ -149,8 +154,13 @@ async function editorialMeeting<T extends Written>(stories: T[], redacteur: Reda
         importance: story.score,
       })),
     );
-    const front = [choice.une, ...choice.secondary].map((index) => candidates[index]);
+    let front = [choice.une, ...choice.secondary].map((index) => candidates[index]);
     if (front.some((story) => !story) || new Set(front).size !== front.length) return stories;
+    // The Une goes to a big story: if the meeting picked one far below the best, the best takes the Une.
+    const best = candidates[0];
+    if (front[0].score < best.score - UNE_MAX_GAP) {
+      front = [best, ...front.filter((story) => story !== best)].slice(0, front.length);
+    }
     return [...front, ...stories.filter((story) => !front.includes(story))];
   } catch {
     return stories;

@@ -107,10 +107,10 @@ describe("buildEdition", () => {
     expect(items[0].importance).toBeGreaterThan(items[1].importance!);
   });
 
-  it("the editorial meeting picks the Une among the best stories", async () => {
+  it("the editorial meeting picks the Une among stories of similar weight", async () => {
     for (const title of ["a", "b", "c", "d"]) await add(ordinary, title);
     const { redacteur, meetings } = createFakeRedacteur({
-      importance: { a: 5, b: 4, c: 3, d: 2 },
+      importance: { a: 4, b: 4, c: 4, d: 2 },
       frontPage: { une: "c", secondary: ["a", "d"] },
     });
 
@@ -124,6 +124,23 @@ describe("buildEdition", () => {
       ["suite", "FR b"],
     ]);
     expect(meetings[0].map((candidate) => candidate.title)).toEqual(["FR a", "FR b", "FR c", "FR d"]);
+  });
+
+  it("the meeting cannot give the Une to a story far below the best one", async () => {
+    for (const title of ["fulham", "laika", "grafik", "other"]) await add(ordinary, title);
+    const { redacteur } = createFakeRedacteur({
+      importance: { fulham: 5, laika: 4, grafik: 3, other: 2 },
+      frontPage: { une: "grafik", secondary: ["fulham", "laika"] },
+    });
+
+    const edition = await buildEdition(db, DEFAULT_USER_ID, { redacteur, now });
+
+    expect((await itemsOf(edition.id)).map((item) => [item.placement, item.title])).toEqual([
+      ["une", "FR fulham"],
+      ["secondaire", "FR grafik"],
+      ["secondaire", "FR laika"],
+      ["suite", "FR other"],
+    ]);
   });
 
   it("without a usable meeting answer, the Une follows the notes", async () => {
