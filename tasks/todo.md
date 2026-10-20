@@ -44,9 +44,9 @@
 ## Tâche 5 : Niveau 1 — flux RSS/Atom
 **Description :** `discoverFeed(html, pageUrl)` (balises `<link rel="alternate">` puis adresses courantes) et `readFeed(xml)` → articles candidats. Ignorer les flux de podcast et les « faux flux » HTML.
 **Critères :**
-- [ ] Findings et OFF Brand → flux trouvé, articles avec titre, lien, date, image si présente
-- [ ] Brand New → le flux podcast est ignoré
-- [ ] the-brandidentity.com/feed (page HTML) → pas considéré comme un flux
+- [x] Findings et OFF Brand → flux trouvé, articles avec titre, lien, date, image si présente
+- [x] Brand New → le flux podcast est ignoré
+- [x] the-brandidentity.com/feed (page HTML) → pas considéré comme un flux
 **Vérification :** `npm test` sur copies figées
 **Dépendances :** 4 · **Taille :** M
 **Fichiers :** `src/modules/aspiration-web/feed.ts`, `tests/aspiration-web/feed.test.ts`

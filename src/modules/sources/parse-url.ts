@@ -20,7 +20,7 @@ const ERRORS = {
 };
 
 /** Query parameters that only track where a click came from. */
-const TRACKING_PARAMS = new Set([
+export const TRACKING_PARAMS = new Set([
   "fbclid", "gclid", "dclid", "msclkid", "igsh", "igshid", "hl", "ref", "ref_src", "ref_url",
   "si", "mc_cid", "mc_eid", "_ga", "yclid",
 ]);

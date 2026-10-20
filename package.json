@@ -27,7 +27,9 @@
     "vitest": "^5.0.5"
   },
   "dependencies": {
+    "@extractus/feed-extractor": "^8.0.3",
     "@libsql/client": "^0.18.0",
+    "cheerio": "^1.2.0",
     "drizzle-orm": "^0.45.4",
     "next": "^15.5.28",
     "react": "^19.3.1",
