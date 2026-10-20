@@ -19,11 +19,11 @@ garde-fou de crédit), puis Instagram, X, LinkedIn un par un, la copie des image
 ## Liste des tâches
 
 ### Phase 1 : YouTube
-- [ ] Tâche 1 : Reconnaître une chaîne YouTube (`@nom`, `/channel/…`…) et trouver son flux
-- [ ] Tâche 2 : Lire les vidéos (miniature, description) et les relever comme un site
+- [x] Tâche 1 : Reconnaître une chaîne YouTube (`@nom`, `/channel/…`…) et trouver son flux
+- [x] Tâche 2 : Lire les vidéos (miniature, description) et les relever comme un site
 
 ### Checkpoint 1
-- [ ] @itsnicethat dans Plomb : ses vidéos dans la Salle de Dépêches — point avec Izenn
+- [x] @itsnicethat dans Plomb : ses vidéos dans la Salle de Dépêches (robots.txt YouTube → mode lecteur de flux, décidé par Izenn)
 
 ### Phase 2 : Socle Apify
 - [ ] Tâche 3 : Client Apify (lancer, statut, résultats, consommation du mois) + table `social_runs`

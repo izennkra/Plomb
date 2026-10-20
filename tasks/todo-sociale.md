@@ -2,16 +2,16 @@
 
 ## Tâche 1 : Chaîne YouTube
 **Description :** `parseSourceUrl` reconnaît youtube.com/@nom, /channel/UC…, /c/nom, /user/nom (et youtu.be ? non : vidéo, refusée) ; à l'ajout, Plomb lit la page de la chaîne pour trouver son identifiant et son flux.
-**Critères :** [ ] @itsnicethat → type youtube, nom @itsnicethat, flux trouvé · [ ] lien de vidéo → message clair
+**Critères :** [x] @itsnicethat → type youtube, nom @itsnicethat, flux trouvé · [x] lien de vidéo → message clair
 **Vérification :** `npm test` (copie figée de la page) · **Taille :** S
 
 ## Tâche 2 : Vidéos YouTube
 **Description :** Lecture du flux YouTube (titre, lien, date, miniature en grand, description) ; relève comme les sites (horloge, doublons, 7 jours).
-**Critères :** [ ] vidéos avec miniature et description · [ ] nouvelle vidéo = nouveauté
+**Critères :** [x] vidéos avec miniature et description · [x] nouvelle vidéo = nouveauté
 **Vérification :** `npm test` + essai réel · **Taille :** M
 
 ## Checkpoint 1
-- [ ] @itsnicethat dans Plomb — point avec Izenn
+- [x] @itsnicethat dans Plomb — point avec Izenn
 
 ## Tâche 3 : Socle Apify
 **Description :** Client HTTP Apify (lancer un « acteur », lire son statut et ses résultats, consommation du mois) ; table `social_runs`.
