@@ -4,8 +4,13 @@ import { load } from "cheerio";
 export const MAX_GALLERY_IMAGES = 12;
 
 const IMAGE_URL = /https?:\/\/[^\s"'()<>\\]+?\.(?:jpe?g|png|webp|gif|avif)(?:\?[^\s"'()<>\\]*)?(?=[\s"'()<>\\]|$)/gi;
-/** Site furniture, not article content. */
-const NOT_CONTENT = /logo|icon|favicon|avatar|sprite|placeholder|spinner|badge|apple-touch|social|share|pixel|blank|spacer/i;
+/** Site furniture, not article content. ("logo" is not in the list: on design media, logos are the subject.) */
+const NOT_CONTENT = /icon|favicon|avatar|sprite|placeholder|spinner|badge|apple-touch|social|share|pixel|blank|spacer/i;
+/** Words too common to identify a project on their own. */
+const GENERIC_WORDS = new Set([
+  "new", "logo", "image", "img", "photo", "picture", "screenshot", "cover", "hero", "header", "banner", "final",
+  "untitled", "the", "studio", "project", "brand", "identity", "design", "web", "post", "article", "featured",
+]);
 const SIZE_SUFFIX = /-\d{2,4}x\d{2,4}$/;
 /** Cache copies add a code to the name (photo-01-54723.webp, photo-01-bc9e4.webp): same picture as photo-01.jpg. */
 const CACHE_SUFFIX = /[-_][0-9a-f]{5,}$/;
@@ -17,8 +22,9 @@ const CACHE_SUFFIX = /[-_][0-9a-f]{5,}$/;
  */
 export function findArticleImages(html: string, pageUrl: string, mainImage: string | null): string[] {
   if (!mainImage) return [];
-  const main = parse(mainImage);
+  const main = parse(mainImage, 0, { isMain: true });
   if (!main) return [];
+  const articleSlug = slugOf(pageUrl);
 
   // One entry per picture (same base name = same picture in another size): keep its largest size.
   const pictures = new Map<string, Candidate>();
@@ -30,7 +36,7 @@ export function findArticleImages(html: string, pageUrl: string, mainImage: stri
   let order = 0;
   for (const url of collectImageUrls(html, pageUrl)) {
     const candidate = parse(url, ++order);
-    if (candidate && (candidate.key === main.key || isSameFamily(candidate, main))) add(candidate);
+    if (candidate && (candidate.key === main.key || isSameFamily(candidate, main, articleSlug))) add(candidate);
   }
   add({ ...main, order: 0, size: Math.max(main.size, pictures.get(main.key)?.size ?? 0) });
   const mainUrl = pictures.get(main.key)!.url;
@@ -74,7 +80,7 @@ type Candidate = {
   order: number;
 };
 
-function parse(url: string, order = 0): Candidate | null {
+function parse(url: string, order = 0, { isMain = false } = {}): Candidate | null {
   let parsed: URL;
   try {
     parsed = new URL(url.replace(/&amp;/g, "&"));
@@ -83,7 +89,7 @@ function parse(url: string, order = 0): Candidate | null {
   }
   const segments = decodeURIComponent(parsed.pathname).split("/").filter(Boolean);
   const file = segments.at(-1);
-  if (!file || NOT_CONTENT.test(file)) return null;
+  if (!file || (!isMain && NOT_CONTENT.test(file))) return null;
 
   const name = file.replace(/\.\w+$/, "").replace(SIZE_SUFFIX, "").toLowerCase();
   const isCacheCopy = CACHE_SUFFIX.test(name);
@@ -103,16 +109,39 @@ function parse(url: string, order = 0): Candidate | null {
   };
 }
 
-function isSameFamily(candidate: Candidate, main: Candidate): boolean {
-  // A folder named after the article (…/studio-hi-ho-pairs-kraft-and-butter…/) only holds that article's images.
+function isSameFamily(candidate: Candidate, main: Candidate, articleSlug: string | null): boolean {
+  // A folder named after the article (…/studio-hi-ho-pairs-kraft-and-butter…/) only holds that article's images,
+  // even when the main image is something else (a video still named 14048168.jpg).
+  if (articleSlug && candidate.folder.toLowerCase().includes(`/${articleSlug}`)) return true;
   const folderName = main.folder.split("/").at(-1) ?? "";
   if (candidate.folder === main.folder && folderName.split(/[-_]+/).length >= 3) return true;
 
   // Same base name: studio-herrstrom-milkshake-…-1.png and …-2.png, hard_rock_bet_casino_new / _advertising_01.
-  const needed = Math.max(2, main.stem.length - 2);
   let common = 0;
   while (common < main.stem.length && candidate.stem[common] === main.stem[common]) common++;
-  return common >= needed;
+  if (common >= Math.max(2, main.stem.length - 2)) return true;
+
+  // Short names often share only the brand: ptal_logo_before_after / ptal_packaging_06.
+  const brand = main.stem[0] ?? "";
+  return (
+    main.stem.length <= 4 &&
+    common >= 1 &&
+    candidate.key.split("/")[0] === main.key.split("/")[0] &&
+    /^[a-z]{3,}$/.test(brand) &&
+    !GENERIC_WORDS.has(brand)
+  );
+}
+
+/** Last part of the article address when it is descriptive (≥ 3 words), e.g. "hochburgs-identity-for-grill-brand". */
+function slugOf(pageUrl: string): string | null {
+  try {
+    const slug = decodeURIComponent(new URL(pageUrl).pathname.split("/").filter(Boolean).at(-1) ?? "")
+      .replace(/\.\w+$/, "")
+      .toLowerCase();
+    return slug.split(/[-_]+/).length >= 3 ? slug : null;
+  } catch {
+    return null;
+  }
 }
 
 /** Width hinted by the address (width-1600, -1200x800, ?w=1600, class=w1440): bigger is better. */

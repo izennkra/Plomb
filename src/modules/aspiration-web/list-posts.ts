@@ -4,7 +4,7 @@ import { posts, type Post } from "@/db/schema";
 
 export type PostSummary = Pick<
   Post,
-  "id" | "sourceId" | "url" | "title" | "excerpt" | "imageUrl" | "publishedAt" | "discoveredAt" | "beforeSubscription"
+  "id" | "sourceId" | "url" | "title" | "excerpt" | "imageUrl" | "images" | "publishedAt" | "discoveredAt" | "beforeSubscription"
 >;
 
 /** Most recent articles of each source (publication date, or discovery date when unknown), and totals. */
@@ -32,6 +32,7 @@ export async function listRecentPosts(
         title: posts.title,
         excerpt: posts.excerpt,
         imageUrl: posts.imageUrl,
+        images: posts.images,
         publishedAt: posts.publishedAt,
         discoveredAt: posts.discoveredAt,
         beforeSubscription: posts.beforeSubscription,

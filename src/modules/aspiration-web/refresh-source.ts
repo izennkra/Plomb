@@ -4,6 +4,7 @@ import { posts, seenLinks, sources, type Source } from "@/db/schema";
 import { createPoliteFetcher, type PageFetcher, type PoliteResult } from "@/modules/fetching/polite-fetch";
 import { readArticle } from "./article";
 import { findArticleLinks } from "./article-links";
+import { richerGallery } from "./enrich-gallery";
 import { findFeedUrls, parseFeed } from "./feed";
 import type { PostCandidate } from "./post";
 
@@ -170,15 +171,9 @@ async function readFromFeed(
     const listed = inSection.map((post) => post.url);
     const handled = await newOnes(db, source.id, listed);
     const wanted = new Set(handled);
-    return {
-      ok: true,
-      method: "rss",
-      feedUrl,
-      listed,
-      handled,
-      posts: inSection.filter((post) => wanted.has(post.url)),
-      unreadable: 0,
-    };
+    const fresh = inSection.filter((post) => wanted.has(post.url));
+    for (const post of fresh) post.images = await richerGallery(post.url, post.images, fetchPage);
+    return { ok: true, method: "rss", feedUrl, listed, handled, posts: fresh, unreadable: 0 };
   }
   return { ok: false, error: UNREADABLE };
 }

@@ -4,7 +4,8 @@ import type { Source } from "@/db/schema";
 import { listRecentPosts, type PostSummary } from "@/modules/aspiration-web/list-posts";
 import { isRefreshing } from "@/modules/aspiration-web/refresh-source";
 import { listSources } from "@/modules/sources/list-sources";
-import { refreshAllAction, unsubscribeAction } from "./actions";
+import { countMissingGalleries } from "@/modules/depeches/complete-galleries";
+import { completeGalleriesAction, isCompletingGalleries, refreshAllAction, unsubscribeAction } from "./actions";
 import { AddSourceForm } from "./add-source-form";
 import { AutoRefresh } from "./auto-refresh";
 
@@ -27,7 +28,9 @@ export default async function SourcesPage() {
     db,
     sources.map((source) => source.id),
   );
-  const refreshing = sources.some((source) => isRefreshing(source));
+  const completingGalleries = await isCompletingGalleries();
+  const refreshing = sources.some((source) => isRefreshing(source)) || completingGalleries;
+  const missingGalleries = await countMissingGalleries(db);
 
   return (
     <main>
@@ -40,6 +43,16 @@ export default async function SourcesPage() {
         <form action={refreshAllAction}>
           <button type="submit" disabled={refreshing}>
             {refreshing ? "Relevé en cours…" : "Relever maintenant"}
+          </button>
+        </form>
+      )}
+
+      {missingGalleries > 0 && (
+        <form action={completeGalleriesAction}>
+          <button type="submit" disabled={completingGalleries}>
+            {completingGalleries
+              ? `Galeries en cours… (${missingGalleries} restantes)`
+              : `Compléter les galeries (${missingGalleries} articles)`}
           </button>
         </form>
       )}
@@ -107,6 +120,7 @@ function PostItem({ post }: { post: PostSummary }) {
       </a>{" "}
       <small>
         · {date}
+        {post.images && ` · ${post.images.length} image${post.images.length > 1 ? "s" : ""}`}
         {post.beforeSubscription && " · avant l'abonnement"}
       </small>
     </li>

@@ -21,7 +21,7 @@ dédoublonnage, conservation 7 jours), enfin l'**interface** : page Sources dép
 - [x] Tâche 1 : Colonne `posts.images` (migration)
 - [x] Tâche 2 : Galerie d'un article lu sur sa page (règle de famille)
 - [x] Tâche 3 : Galerie d'un article de flux RSS
-- [ ] Tâche 4 : Enregistrer les galeries au relevé + bouton « Compléter les galeries »
+- [x] Tâche 4 : Enregistrer les galeries au relevé + bouton « Compléter les galeries »
 
 ### Checkpoint 1
 - [ ] Galeries réelles vérifiées sur les 6 sources — point avec Izenn

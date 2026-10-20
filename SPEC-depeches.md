@@ -28,6 +28,20 @@ au-delà d'une semaine, les publications sont supprimées.
 | Flux RSS (Findings…) | jusqu'à 13 | images contenues dans l'article du flux |
 
 L'outil de Mozilla (Readability) **supprime** la plupart de ces images : il faut une règle propre à Plomb.
+
+### Résultat sur les 131 articles réels (après la tâche 4)
+| Source | Images / article (moyenne) | Articles à 1 image |
+|---|---|---|
+| findings.mouthwash.studio (RSS) | 10,3 | 0 / 15 |
+| offbrandkoto.substack.com (RSS) | 8,8 | 3 / 17 |
+| the-brandidentity.com/features | 7,4 | 1 / 20 |
+| itsnicethat.com (RSS + page) | 4,5 | 13 / 20 — **limite connue** : images sans nom commun, mélangées aux autres articles |
+| underconsideration.com/brandnew | 1,3 | 14 / 20 — le site ne met que 1 à 2 images dans la page (le reste se charge plus tard) |
+| dandad.org/insights | 1,1 | 18 / 20 — attendu |
+
+Règles retenues : même dossier nommé d'après l'article, même nom de base que l'image principale, ou même nom de marque
+pour les noms courts (`ptal_logo…` / `ptal_packaging…`) ; les logos sont gardés (c'est le sujet sur un média design) ;
+copies en cache et tailles multiples fusionnées ; si un flux RSS ne donne qu'une image, la page de l'article est lue.
 Les images des autres articles de la page (« à lire aussi ») sont **exclues**. Au maximum 12 images par article.
 
 ## Fonctionnement

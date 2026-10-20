@@ -57,7 +57,7 @@ describe("findArticleImages — rules", () => {
     ]);
   });
 
-  it("ignores logos, icons and images of other articles", () => {
+  it("ignores the site's icons and images of other articles", () => {
     const html = page(`
       <img src="/img/logo.png"><img src="/img/icon-search.png">
       <img src="/img/another-article-cover-photo.jpg">
@@ -65,6 +65,26 @@ describe("findArticleImages — rules", () => {
     expect(findArticleImages(html, "https://example.com/post", "https://example.com/img/my-project-name-here-1.jpg")).toEqual([
       "https://example.com/img/my-project-name-here-1.jpg",
       "https://example.com/img/my-project-name-here-2.jpg",
+    ]);
+  });
+
+  it("keeps logos when they are the subject (design media)", () => {
+    const html = page(`<img src="/up/ptal_logo_detail.png"><img src="/up/ptal_packaging_06.jpg"><img src="/up/kfc_2026_logo_before_after.png">`);
+    const images = findArticleImages(html, "https://example.com/post", "https://example.com/up/ptal_logo_before_after.png");
+    expect(images[0]).toBe("https://example.com/up/ptal_logo_before_after.png");
+    expect(images.slice(1).sort()).toEqual(["https://example.com/up/ptal_logo_detail.png", "https://example.com/up/ptal_packaging_06.jpg"]);
+  });
+
+  it("takes the images stored in a folder named after the article (main image is a video still)", () => {
+    const article = "https://example.com/project/hochburgs-identity-for-grill-brand";
+    const html = page(`
+      <img src="/uploads/articles/2026/10/hochburgs-identity-for-grill-brand/Flamid-01.jpg">
+      <img src="/uploads/articles/2026/10/hochburgs-identity-for-grill-brand/Flamid-02.jpg">
+      <img src="/uploads/articles/2026/10/another-article-about-something/Other-01.jpg">`);
+    expect(findArticleImages(html, article, "https://example.com/uploads/videos/14048168.jpg")).toEqual([
+      "https://example.com/uploads/videos/14048168.jpg",
+      "https://example.com/uploads/articles/2026/10/hochburgs-identity-for-grill-brand/Flamid-01.jpg",
+      "https://example.com/uploads/articles/2026/10/hochburgs-identity-for-grill-brand/Flamid-02.jpg",
     ]);
   });
 

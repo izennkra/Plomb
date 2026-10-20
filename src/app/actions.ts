@@ -7,6 +7,7 @@ import { DEFAULT_USER_ID } from "@/db/client";
 import { getDb } from "@/db";
 import { sources } from "@/db/schema";
 import { markRefreshing, refreshAllSources, refreshSource } from "@/modules/aspiration-web/refresh-source";
+import { completeGalleries } from "@/modules/depeches/complete-galleries";
 import { addSource } from "@/modules/sources/add-source";
 import { unsubscribe } from "@/modules/sources/unsubscribe";
 
@@ -58,5 +59,26 @@ export async function unsubscribeAction(formData: FormData): Promise<void> {
   if (!Number.isInteger(sourceId)) return;
 
   await unsubscribe(await getDb(), DEFAULT_USER_ID, sourceId);
+  revalidatePath("/");
+}
+
+// Temporary (brick `depeches`): fill the galleries of articles stored before galleries existed.
+const galleryJob = globalThis as unknown as { plombGalleriesRunning?: boolean };
+
+export async function isCompletingGalleries(): Promise<boolean> {
+  return galleryJob.plombGalleriesRunning === true;
+}
+
+export async function completeGalleriesAction(): Promise<void> {
+  if (galleryJob.plombGalleriesRunning) return;
+  galleryJob.plombGalleriesRunning = true;
+  const db = await getDb();
+  after(async () => {
+    try {
+      await completeGalleries(db);
+    } finally {
+      galleryJob.plombGalleriesRunning = false;
+    }
+  });
   revalidatePath("/");
 }

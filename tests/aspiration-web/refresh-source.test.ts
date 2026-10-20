@@ -48,6 +48,11 @@ beforeAll(async () => {
     if (url === "/blog/broken-article-that-has-no-title") return html("<p>no title here</p>");
     if (url.startsWith("/blog/")) return html(articlePage(url));
     if (url === "/news") return html(`<link rel="alternate" type="application/rss+xml" href="/news/feed">`);
+    if (url.startsWith("/news/") && url !== "/news/feed") {
+      const name = url.split("/").pop();
+      return html(`<html><head><meta property="og:title" content="t"><meta property="og:image" content="/g/${name}-1.jpg"></head>
+        <body><img src="/g/${name}-2.jpg"><img src="/g/${name}-3.jpg"></body></html>`);
+    }
     if (url === "/news/feed") return res.writeHead(200, { "content-type": "application/rss+xml" }).end(feed(site.news, server.base));
     if (url === "/menu") return html(`<a href="/about">About</a><a href="/contact">Contact</a>`);
     // A section (/mag/brand) whose page announces the feed of the whole site, about other things.
@@ -103,6 +108,7 @@ describe("refreshSource — site without RSS (page reading)", () => {
       title: `Title of /blog/${slug(1)}`,
       excerpt: `Summary of /blog/${slug(1)}`,
       imageUrl: `${server.base}/img/${slug(1)}.jpg`,
+      images: [`${server.base}/img/${slug(1)}.jpg`],
       method: "page",
     });
     expect(stored[0].content).toMatch(/Full text/);
@@ -186,6 +192,14 @@ describe("refreshSource — site with RSS", () => {
     expect(source).toMatchObject({ fetchMethod: "rss", feedUrl: `${server.base}/news/feed` });
   });
 
+  it("reads the article page for its gallery when the feed has a single image", async () => {
+    const { db, sourceId } = await setup("/news");
+    await refreshSource(db, sourceId, { fetchPage: fetchPage() });
+
+    const [post] = await postsOf(db, sourceId);
+    expect(post.images).toHaveLength(3);
+  });
+
   it("goes straight to the remembered feed next time", async () => {
     const { db, sourceId } = await setup("/news");
     await refreshSource(db, sourceId, { fetchPage: fetchPage() });
@@ -194,6 +208,7 @@ describe("refreshSource — site with RSS", () => {
     site.hits = [];
     expect(await refreshSource(db, sourceId, { fetchPage: fetchPage() })).toMatchObject({ added: 1 });
     expect(site.hits).not.toContain("/news");
+    expect(site.hits.filter((hit) => hit.startsWith("/news/a-"))).toEqual([`/news/${slug(4)}`]);
   });
 });
 

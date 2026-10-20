@@ -27,8 +27,8 @@ gardées si même dossier propre à l'article ou même nom de base que l'image p
 ## Tâche 4 : Enregistrer les galeries + compléter les anciennes
 **Description :** Le relevé enregistre `images`. Bouton temporaire « Compléter les galeries » sur la page Sources : relit poliment les articles sans galerie.
 **Critères :**
-- [ ] Un nouvel article relevé a sa galerie
-- [ ] Après le bouton, les articles existants ont leur galerie
+- [x] Un nouvel article relevé a sa galerie
+- [x] Après le bouton, les articles existants ont leur galerie
 **Vérification :** `npm test` + essai réel · **Dépendances :** 2, 3 · **Taille :** M
 **Fichiers :** `src/modules/aspiration-web/refresh-source.ts`, `src/modules/depeches/complete-galleries.ts`, `src/app/actions.ts`, `src/app/page.tsx`, tests
 

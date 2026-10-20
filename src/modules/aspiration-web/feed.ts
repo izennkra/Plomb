@@ -60,13 +60,15 @@ export function parseFeed(xml: string, feedUrl: string): FeedResult {
 
     const raw = (entry.raw ?? {}) as Record<string, unknown>;
     const html = stringField(raw["content:encoded"]) ?? stringField(raw.content) ?? null;
-    const imageUrl = findImage(raw, html ?? entry.description ?? "", feedUrl);
+    // The feed reader strips HTML from descriptions: images are looked for in the raw content.
+    const richHtml = html ?? stringField(raw.description) ?? entry.description ?? "";
+    const imageUrl = findImage(raw, richHtml, feedUrl);
     posts.push({
       url,
       title,
       excerpt: toExcerpt(entry.description ? htmlToText(entry.description) : null),
       imageUrl,
-      images: findContentImages(html ?? entry.description ?? "", feedUrl, imageUrl),
+      images: findContentImages(richHtml, feedUrl, imageUrl),
       publishedAt: toDate(entry.published),
       content: html ? htmlToText(html) : null,
     });
