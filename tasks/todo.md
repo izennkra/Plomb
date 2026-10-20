@@ -93,6 +93,14 @@
 **Vérification :** `npm test` + vraie édition · **Dépendances :** 9, 10 · **Taille :** M
 **Fichiers :** `src/modules/edition/redacteur/*`, `src/modules/edition/build.ts`, tests
 
+## Tâche 12 : Fréquence du journal
+**Description :** Réglage par utilisateur (chaque jour / tous les 3 jours / jours choisis), toujours à 9h00. Règles : jour de parution ou non, période couverte par une première édition, prochaine parution. Formulaire sur la page Journal.
+**Critères :**
+- [ ] Les 3 rythmes donnent les bons jours de parution et la bonne période couverte
+- [ ] Le réglage s'enregistre ; la page affiche la prochaine parution
+**Vérification :** `npm test` + test manuel · **Dépendances :** 3 · **Taille :** M
+**Fichiers :** `src/modules/edition/schedule.ts`, `src/db/schema.ts`, `src/app/journal/*`, `src/app/actions.ts`, tests
+
 ## Checkpoint final
 - [ ] Critères de succès de SPEC-edition.md cochés
 - [ ] `/review`, push, proposition de pull request

@@ -19,6 +19,10 @@ Cette brique fabrique l'édition (à la demande, via un bouton) et prépare l'e-
   (surlignage ou couleur de carte ; repère provisoire, le vrai design viendra de Figma). Ils n'ont **aucun avantage
   de classement** : un article favori peut faire la Une si le sujet est fort, ou se retrouver en bas du journal.
 - Je retrouve les éditions des 7 derniers jours.
+- Je choisis la **fréquence** de mon journal (page Journal) : **chaque jour**, **tous les 3 jours**, ou **jours choisis**
+  (je coche les jours de la semaine). Il paraît toujours à **9h00** et couvre tout ce qui est arrivé depuis le précédent
+  (24 h pour un journal quotidien, 3 jours pour un journal tous les 3 jours, du vendredi au lundi pour lun/mer/ven…).
+  La page indique la prochaine parution.
 - J'ai un aperçu de l'**e-mail** de l'édition (« Votre journal du 21 octobre est prêt » + un extrait de la Une + lien vers le journal).
 
 ## Contenu d'une édition
@@ -60,6 +64,7 @@ sans toucher au reste (par ex. IA locale sur le Mac, autre solution une fois Plo
 - `edition_items` : édition, article, rang, place (une / secondaire / suite), titre et résumé rédigés, thème, note d'importance,
   notes par critère, sujet principal, autres médias qui couvrent le sujet.
 - `subscriptions.favorite` : source favorite (par utilisateur).
+- `users.edition_frequency` + `users.edition_weekdays` : fréquence du journal.
 
 ## Tech Stack
 - **Ollama** (application Mac) + appel HTTP local depuis Plomb (pas de librairie nécessaire).
@@ -94,6 +99,7 @@ scripts/compare-ai.ts            → comparatif des IA sur 5 articles (résultat
 - [ ] Les sources favorites sont mises en valeur, sans avantage de classement
 - [ ] Les 7 dernières éditions restent consultables
 - [ ] Aperçu de l'e-mail de l'édition
+- [ ] Fréquence réglable (chaque jour / tous les 3 jours / jours choisis) ; la page indique la prochaine parution
 - [ ] Si l'IA échoue sur un article, l'édition se fait quand même (résumé du média en secours)
 - [ ] `npm test`, `npm run lint`, `npm run typecheck` passent
 
@@ -109,6 +115,9 @@ scripts/compare-ai.ts            → comparatif des IA sur 5 articles (résultat
 
 7. Comparatif : **IA locales uniquement** (pas de Claude) ; téléchargement de 2–3 modèles accepté.
 9. **Favoris** : mise en valeur visuelle uniquement, **aucun bonus de classement** (Izenn, 2026-10-20).
+11. **Fréquence** : chaque jour / tous les 3 jours / jours choisis, toujours à 9h00 (Izenn, 2026-10-20).
+12. **Journal automatique même Mac fermé** : nécessite la mise en ligne (serveur + base Supabase + **Mistral en ligne**)
+    → brique `planification`, juste après celle-ci.
 10. Première édition test jugée très satisfaisante (texte, rythme du Mac) : **pas d'API pour l'instant**.
 8. **IA retenue : Mistral (Ministral 3 14B), en local** — voir [docs/comparatif-ia.md](docs/comparatif-ia.md).
    Si le Mac rame à chaque journal du matin → **IA en ligne** (API payante, choisie selon le prix).
