@@ -29,7 +29,7 @@ figées des vrais sites d'Izenn : flux RSS → repérage des liens d'articles �
 - [x] Tâche 4 : Copies figées des 6 sites (+ un article de chacun)
 - [x] Tâche 5 : Niveau 1 — trouver et lire un flux RSS/Atom
 - [x] Tâche 6 : Niveau 2a — repérer les liens d'articles dans une page (piège Brand New inclus)
-- [ ] Tâche 7 : Niveau 2b — lire un article (OpenGraph, date, texte complet)
+- [x] Tâche 7 : Niveau 2b — lire un article (OpenGraph, date, texte complet)
 
 ### Checkpoint 2
 - [ ] Les 6 sites donnent des articles corrects sur leurs copies figées — point avec Izenn

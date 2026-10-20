@@ -14,10 +14,10 @@ Instagram, X et LinkedIn ne sont **pas** concernés (brique `aspiration-sociale`
 |---|---|---|
 | findings.mouthwash.studio | 1 — RSS ✅ | flux `/feed` complet |
 | offbrandkoto.substack.com | 1 — RSS ✅ | flux `/feed` complet (Substack) |
-| the-brandidentity.com/features | 2 — page | ~20 liens `/project/…` ; chaque article a titre, résumé et image HD (OpenGraph), **pas de date** |
+| the-brandidentity.com/features | 2 — page | ~20 liens `/project/…` ; chaque article a titre, résumé, image HD (OpenGraph) et date |
 | itsnicethat.com | 2 — page | flux RSS interdit aux robots ; ~60 liens `/articles/…` |
-| underconsideration.com/brandnew | 2 — page | seul flux annoncé = podcast (à ignorer) ; articles `/brandnew/archives/….php` **mélangés à 44 liens de catégories** (cas piège) |
-| dandad.org/work/d-ad-awards-archive | 2 — page | archive des prix : liens `/work/d-ad-awards-archive/…` ; publie rarement |
+| underconsideration.com/brandnew | 2 — page | seul flux annoncé = podcast (à ignorer) ; articles `/brandnew/archives/….php` **mélangés à 44 liens de catégories** (cas piège) ; pas de date dans l'article |
+| dandad.org/work/d-ad-awards-archive | 2 — page | archive des prix : liens `/work/d-ad-awards-archive/…` ; **classée par ordre alphabétique**, pas par date ; image de partage générique |
 
 → Le **niveau 2** de la cascade (lire la page) n'est pas un cas rare : c'est le cas principal pour les médias design.
 

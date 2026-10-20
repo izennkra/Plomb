@@ -65,9 +65,9 @@
 ## Tâche 7 : Niveau 2b — lire un article
 **Description :** `readArticle(html, url)` : titre (sans le suffixe « — Nom du site »), résumé, image OpenGraph, date (`article:published_time` ou JSON-LD), texte complet via Readability.
 **Critères :**
-- [ ] Article The Brand Identity → titre propre, résumé, image HD, pas de date (null)
-- [ ] Article avec date → date lue correctement
-- [ ] Page sans titre exploitable → rejetée
+- [x] Article The Brand Identity → titre propre, résumé, image HD, pas de date (null)
+- [x] Article avec date → date lue correctement
+- [x] Page sans titre exploitable → rejetée
 **Vérification :** `npm test` sur copies figées
 **Dépendances :** 4 · **Taille :** M
 **Fichiers :** `src/modules/aspiration-web/article.ts`, `tests/aspiration-web/article.test.ts`
