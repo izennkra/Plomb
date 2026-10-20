@@ -1,81 +1,74 @@
-# Tâches : brique `depeches`
+# Tâches : brique `edition`
 
-## Tâche 1 : Colonne `posts.images`
-**Description :** Liste JSON des adresses d'images de l'article (image principale en premier). Migration.
+## Tâche 1 : Comparatif des IA locales
+**Description :** Script qui donne les 5 mêmes vrais articles (variés : The Brand Identity, It's Nice That, Findings…) à 3 IA locales (Ministral 3 14B, Gemma 4 12B, Gemma 4 E4B) avec la consigne du rédacteur ; mesure le temps ; résultats côte à côte dans `docs/comparatif-ia.md`.
 **Critères :**
-- [x] Une galerie s'enregistre et se relit telle quelle
-- [x] Les anciens articles (sans galerie) restent valides
-**Vérification :** `npm test` + `npm run db:migrate` · **Dépendances :** aucune · **Taille :** XS
-**Fichiers :** `src/db/schema.ts`, `drizzle/*`, `tests/db/schema.test.ts`
-
-## Tâche 2 : Galerie d'un article (page)
-**Description :** `findArticleImages(html, pageUrl, mainImage)` : toutes les adresses d'images de la page (balises et données),
-gardées si même dossier propre à l'article ou même nom de base que l'image principale ; doublons de taille retirés ; 12 max. `readArticle` renvoie `images`.
-**Critères :**
-- [x] The Brand Identity → 8, It's Nice That → 12, Brand New → 2, D&AD → 1
-- [x] Aucune image d'un autre article
-**Vérification :** `npm test` sur copies figées · **Dépendances :** 1 · **Taille :** M
-**Fichiers :** `src/modules/aspiration-web/images.ts`, `src/modules/aspiration-web/article.ts`, `tests/aspiration-web/images.test.ts`
-
-## Tâche 3 : Galerie d'un article de flux RSS
-**Description :** `parseFeed` renvoie `images` : image du flux + images du contenu, sans pictos ni pixels de suivi.
-**Critères :**
-- [x] Findings → plusieurs images pour le 1er article ; aucun fichier audio
-**Vérification :** `npm test` · **Dépendances :** 1 · **Taille :** S
-**Fichiers :** `src/modules/aspiration-web/feed.ts`, `tests/aspiration-web/feed.test.ts`
-
-## Tâche 4 : Enregistrer les galeries + compléter les anciennes
-**Description :** Le relevé enregistre `images`. Bouton temporaire « Compléter les galeries » sur la page Sources : relit poliment les articles sans galerie.
-**Critères :**
-- [x] Un nouvel article relevé a sa galerie
-- [x] Après le bouton, les articles existants ont leur galerie
-**Vérification :** `npm test` + essai réel · **Dépendances :** 2, 3 · **Taille :** M
-**Fichiers :** `src/modules/aspiration-web/refresh-source.ts`, `src/modules/depeches/complete-galleries.ts`, `src/app/actions.ts`, `src/app/page.tsx`, tests
+- [ ] 5 articles × 3 IA : titre, résumé, thème, note, texte de Une
+- [ ] Temps par article noté ; erreurs de format notées
+**Vérification :** lecture du document par Izenn · **Dépendances :** aucune · **Taille :** M
+**Fichiers :** `scripts/compare-ai.mjs`, `docs/comparatif-ia.md`
 
 ## Checkpoint 1
-- [x] Galeries réelles vérifiées — point avec Izenn
+- [ ] Izenn choisit l'IA
 
-## Tâche 5 : Requête du flux
-**Description :** `listFeed(db, userId, { type?, sourceId?, now })` : publications des sources suivies, 7 derniers jours (date de publication sinon découverte), tri du plus récent, dédoublonnées par adresse ; « avant l'abonnement » seulement si date de publication connue et récente (réglage) ; filtres.
+## Tâche 2 : Rédacteur Ollama
+**Description :** Interface `Redacteur` (`summarize(article)`, `writeLead(article)`), implémentation Ollama (JSON imposé, délai max, 2 essais), faux rédacteur pour les tests.
 **Critères :**
-- [x] Tri et fenêtre de 7 jours corrects ; un article de deux sources n'apparaît qu'une fois
-- [x] Règle « avant l'abonnement » respectée (dont : sans date → caché)
-- [x] Filtres par type et par source
-**Vérification :** `npm test` · **Dépendances :** 1 · **Taille :** M
-**Fichiers :** `src/modules/depeches/settings.ts`, `src/modules/depeches/list-feed.ts`, `tests/depeches/list-feed.test.ts`
+- [ ] Réponse valide → titre, résumé, thème (liste fermée), note 1–10
+- [ ] Réponse invalide ou IA injoignable → erreur claire après 2 essais
+**Vérification :** `npm test` (faux serveur Ollama local) · **Dépendances :** 1 · **Taille :** M
+**Fichiers :** `src/modules/edition/redacteur/*.ts`, `tests/edition/redacteur.test.ts`
 
-## Tâche 6 : Conservation 7 jours
-**Description :** `purgeOldPosts(db, now)` supprime les publications de plus de 7 jours ; appelée à chaque relevé. Les adresses restent « déjà vues ».
+## Tâche 3 : Base de données
+**Description :** Tables `editions` et `edition_items`, colonne `subscriptions.favorite`. Migration.
 **Critères :**
-- [x] Publication de 8 jours supprimée, de 6 jours gardée
-- [x] Une publication supprimée ne revient pas au relevé suivant
-**Vérification :** `npm test` · **Dépendances :** 5 · **Taille :** S
-**Fichiers :** `src/modules/depeches/purge.ts`, `src/modules/aspiration-web/refresh-source.ts`, `tests/depeches/purge.test.ts`
+- [ ] Une édition et ses articles s'enregistrent et se relisent
+- [ ] Supprimer un article supprime sa ligne d'édition, pas l'édition
+**Vérification :** `npm test` + `npm run db:migrate` · **Dépendances :** aucune · **Taille :** S
+**Fichiers :** `src/db/schema.ts`, `drizzle/*`, `tests/db/schema.test.ts`
 
-## Tâche 7 : Page Sources sur `/sources`
-**Description :** La page actuelle déplacée sur `/sources` ; navigation « Dépêches · Sources ».
+## Tâche 4 : Sélection des articles
+**Description :** `selectEditionPosts(db, userId, { now })` : articles nouveaux (jamais « avant l'abonnement ») des sources suivies, découverts après la fin de l'édition précédente et jusqu'à 8h00 (Paris) ; première édition : 24 h.
 **Critères :**
-- [x] Ajouter / retirer / relever fonctionne sur `/sources`
-**Vérification :** test manuel · **Dépendances :** aucune · **Taille :** S
-**Fichiers :** `src/app/sources/page.tsx`, `src/app/layout.tsx`, `src/app/actions.ts`
+- [ ] Fenêtre correcte (dont première édition), dédoublonnage par adresse
+- [ ] Articles d'avant l'abonnement exclus
+**Vérification :** `npm test` · **Dépendances :** 3 · **Taille :** S
+**Fichiers :** `src/modules/edition/select.ts`, `tests/edition/select.test.ts`
 
-## Tâche 8 : Cartes de la Salle de Dépêches
-**Description :** Page `/` : une carte par publication — carrousel d'images (flèches, clavier), titre, résumé, date relative, source, « En savoir plus » (nouvel onglet vers le média).
+## Tâche 5 : Fabrication de l'édition
+**Description :** `buildEdition(db, userId, { redacteur, now })` : rédige chaque article, note + bonus favoris, choisit la Une (1 + 2), rédige les textes de Une, classe la suite, enregistre ; secours si l'IA échoue ; édition vide assumée ; statut en préparation / prête / erreur.
 **Critères :**
-- [x] Les cartes s'affichent triées par date
-- [x] Le carrousel fait défiler les images de l'article
-- [x] « En savoir plus » ouvre l'article
-**Vérification :** test manuel · **Dépendances :** 5, 7 · **Taille :** M
-**Fichiers :** `src/app/page.tsx`, `src/app/components/post-card.tsx`, `src/app/components/carousel.tsx`, `src/app/globals.css`
+- [ ] Une 1 + 2 = les 3 mieux notés (bonus favoris inclus)
+- [ ] Un échec de l'IA sur un article n'empêche pas l'édition
+- [ ] Journée sans nouveauté → édition « pas de nouvelles »
+**Vérification :** `npm test` (faux rédacteur) · **Dépendances :** 2, 3, 4 · **Taille :** M
+**Fichiers :** `src/modules/edition/build.ts`, `tests/edition/build.test.ts`
 
-## Tâche 9 : Image en grand + filtres
-**Description :** Clic sur une image → affichage plein écran (flèches, Échap pour fermer). Filtres par type et par source, gardés dans l'adresse.
+## Checkpoint 2
+- [ ] Vraie édition sur les données d'Izenn — point avec Izenn
+
+## Tâche 6 : Favoris
+**Description :** Étoile « favori » par source sur la page Sources (par utilisateur).
 **Critères :**
-- [x] Image en grand utilisable à la souris et au clavier
-- [x] Filtres fonctionnels, adresse partageable
-**Vérification :** test manuel · **Dépendances :** 8 · **Taille :** M
-**Fichiers :** `src/app/components/lightbox.tsx`, `src/app/components/filters.tsx`, `src/app/page.tsx`
+- [ ] Marquer / démarquer une source ; l'état est gardé
+**Vérification :** test manuel + `npm test` · **Dépendances :** 3 · **Taille :** S
+**Fichiers :** `src/modules/sources/favorite.ts`, `src/app/sources/page.tsx`, `src/app/actions.ts`
+
+## Tâche 7 : Page Journal
+**Description :** `/journal` : édition du jour (Une majeure, 2 secondaires, suite), repère visuel des favoris, éditions des 7 derniers jours, bouton « Préparer l'édition » avec statut. Lien dans la navigation.
+**Critères :**
+- [ ] Lecture de l'édition complète ; navigation entre éditions
+- [ ] « Préparer l'édition » fonctionne en arrière-plan
+**Vérification :** test manuel · **Dépendances :** 5, 6 · **Taille :** M
+**Fichiers :** `src/app/journal/page.tsx`, `src/app/components/edition-*.tsx`, `src/modules/edition/list.ts`
+
+## Tâche 8 : E-mail de l'édition
+**Description :** Contenu de l'e-mail (« Votre journal du … est prêt », extrait de la Une, lien) en HTML + texte ; aperçu dans l'app.
+**Critères :**
+- [ ] Aperçu lisible ; extrait de la Une ; lien vers le journal
+**Vérification :** `npm test` + aperçu manuel · **Dépendances :** 5 · **Taille :** S
+**Fichiers :** `src/modules/edition/email.ts`, `src/app/journal/[id]/email/route.ts`, `tests/edition/email.test.ts`
 
 ## Checkpoint final
-- [x] Critères de succès de SPEC-depeches.md cochés
-- [x] `/review`, push, proposition de pull request
+- [ ] Critères de succès de SPEC-edition.md cochés
+- [ ] `/review`, push, proposition de pull request

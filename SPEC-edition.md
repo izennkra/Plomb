@@ -1,6 +1,6 @@
 # Spec : edition (l'IA Rédacteur en Chef)
 
-Brique 4 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [depeches](SPEC-depeches.md). Statut : **en attente de validation**.
+Brique 4 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [depeches](SPEC-depeches.md). Statut : **validée le 2026-10-20**.
 
 ## Objectif
 Chaque matin, une **édition personnelle** du journal Plomb : l'IA lit tout ce qui est arrivé depuis l'édition précédente,
@@ -39,9 +39,7 @@ peut faire tourner des modèles de taille moyenne via **Ollama** (logiciel gratu
 **Comparatif sur 5 vrais articles** (résumé, Une, note d'importance, respect du français et des faits) entre :
 - 2 ou 3 IA locales récentes adaptées à 16 Go (ex. familles Gemma, Qwen, Mistral — versions à jour au moment du test,
   ~5 à 10 Go chacune à télécharger) ;
-- **Claude** (via l'API d'Anthropic, payante à l'usage) comme référence de qualité — seulement si Izenn fournit une clé.
-
-Izenn choisit sur pièces. Le code passe par une **interface unique** (« rédacteur ») : on peut changer d'IA plus tard
+Izenn choisit sur pièces (Claude n'est **pas** inclus : uniquement des IA locales). Le code passe par une **interface unique** (« rédacteur ») : on peut changer d'IA plus tard
 sans toucher au reste (par ex. IA locale sur le Mac, autre solution une fois Plomb en ligne).
 
 ## Modèle de données
@@ -51,12 +49,11 @@ sans toucher au reste (par ex. IA locale sur le Mac, autre solution une fois Plo
 
 ## Tech Stack
 - **Ollama** (application Mac) + appel HTTP local depuis Plomb (pas de librairie nécessaire).
-- Claude (optionnel, comparatif) : `@anthropic-ai/sdk`, clé dans `.env.local` (jamais dans git).
 - E-mail : rendu HTML de l'e-mail + aperçu dans l'app ; **envoi réel dans la brique `planification`**.
 
 ## Project Structure
 ```
-src/modules/edition/redacteur/   → interface unique + Ollama (+ Claude) : prompts, lecture des réponses
+src/modules/edition/redacteur/   → interface unique + Ollama : prompts, lecture des réponses
 src/modules/edition/             → sélection des articles, notation, Une, fabrication et stockage de l'édition
 src/modules/edition/email.ts     → contenu de l'e-mail (HTML + texte)
 src/app/journal/                 → page Journal (édition du jour + 7 précédentes)
@@ -93,6 +90,7 @@ scripts/compare-ai.ts            → comparatif des IA sur 5 articles (résultat
    page `/journal` en attendant.
 6. Un **e-mail** est envoyé à 9h00 avec un extrait du journal (envoi : brique `planification`).
 
+7. Comparatif : **IA locales uniquement** (pas de Claude) ; téléchargement de 2–3 modèles accepté.
+
 ## Open Questions
-1. Télécharger 2–3 IA locales (~20–25 Go au total) pour le comparatif ?
-2. Inclure Claude au comparatif (nécessite une clé API Anthropic, payante, créée par Izenn) ?
+- Aucune.
