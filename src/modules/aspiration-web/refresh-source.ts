@@ -3,7 +3,7 @@ import type { Db } from "@/db/client";
 import { posts, seenLinks, sources, type Source } from "@/db/schema";
 import { createPoliteFetcher, type PageFetcher, type PoliteResult } from "@/modules/fetching/polite-fetch";
 import { readArticle } from "./article";
-import { findArticleLinks } from "./article-links";
+import { findArticleLinks, readCard } from "./article-links";
 import { enrichFromPage } from "./enrich-from-page";
 import { findFeedUrls, parseFeed } from "./feed";
 import type { PostCandidate } from "./post";
@@ -190,6 +190,9 @@ async function readFromFeed(
   return { ok: false, error: UNREADABLE };
 }
 
+/** Answers of a site that refuses robots (anti-robot protections such as Cloudflare). */
+const REFUSED = [401, 403, 429];
+
 async function readFromPage(
   db: Db,
   source: Source,
@@ -207,6 +210,12 @@ async function readFromPage(
   const found: PostCandidate[] = [];
   for (const url of handled) {
     const response = await fetchPage(url);
+    if (response.ok && REFUSED.includes(response.status)) {
+      // The site lets Plomb read its list but not its articles: the card of the list is kept.
+      const card = readCard(page.body, page.url, url);
+      if (card) found.push(card);
+      continue;
+    }
     if (!response.ok || response.status !== 200) continue;
     const article = readArticle(response.body, response.url);
     if (article.ok) found.push({ ...article.post, url });
