@@ -3,6 +3,7 @@ import type { Db } from "@/db/client";
 import { editionItems, editions, users, type Edition, type EditionItem } from "@/db/schema";
 import type { ArticleSummary, Redacteur } from "./redacteur/types";
 import { groupEchoes } from "./echo";
+import { mapInParallel } from "./parallel";
 import { parisDay } from "./paris-time";
 import { coverageDays, toSchedule } from "./schedule";
 import { importanceOf, type Criteria } from "./scoring";
@@ -33,13 +34,13 @@ export async function buildEdition(
   const edition = await startEdition(db, userId, selection.day, selection.periodStart, selection.periodEnd, redacteur.model);
 
   try {
-    const written: Written[] = [];
-    for (const post of selection.posts) {
+    // Several articles are written at the same time when the editor allows it (online AI).
+    const written: Written[] = await mapInParallel(selection.posts, redacteur.parallel, async (post) => {
       const article = { title: post.title, content: post.content, excerpt: post.excerpt, sourceName: post.sourceName };
       const summary = await redacteur.summarize(article).catch(() => null);
       const final = summary ?? fallbackSummary(post);
-      written.push({ post, summary: final, fallback: !summary, score: final.importance, coveredBy: [] });
-    }
+      return { post, summary: final, fallback: !summary, score: final.importance, coveredBy: [] };
+    });
 
     // The same story covered by several media appears once (the best article), and counts as a bigger story.
     const isBetter = (a: Written, b: Written) => a.score > b.score || (a.score === b.score && a.post.images.length > b.post.images.length);
@@ -57,24 +58,31 @@ export async function buildEdition(
     // Editorial meeting: the editor compares the best stories side by side and picks the Une.
     const ranked = await editorialMeeting(stories, redacteur);
 
-    const items: (typeof editionItems.$inferInsert)[] = [];
-    for (const [index, entry] of ranked.entries()) {
+    // Longer texts for the 3 articles of the Une, written together.
+    const leads = await mapInParallel(ranked.slice(0, UNE_SIZE), redacteur.parallel, (entry) =>
+      entry.fallback
+        ? Promise.resolve(null)
+        : redacteur
+            .writeLead({
+              title: entry.post.title,
+              content: entry.post.content,
+              excerpt: entry.post.excerpt,
+              sourceName: entry.post.sourceName,
+            })
+            .catch(() => null),
+    );
+
+    const items: (typeof editionItems.$inferInsert)[] = ranked.map((entry, index) => {
       const { post, summary, fallback } = entry;
       const placement: EditionItem["placement"] = index === 0 ? "une" : index < UNE_SIZE ? "secondaire" : "suite";
-      const leadText =
-        placement === "suite" || fallback
-          ? null
-          : await redacteur
-              .writeLead({ title: post.title, content: post.content, excerpt: post.excerpt, sourceName: post.sourceName })
-              .catch(() => null);
-      items.push({
+      return {
         editionId: edition.id,
         postId: post.postId,
         position: index + 1,
         placement,
         title: summary.title,
         summary: summary.summary,
-        leadText,
+        leadText: leads[index] ?? null,
         theme: fallback ? null : summary.theme,
         importance: fallback ? null : Math.round(entry.score),
         subject: fallback ? null : summary.subject || null,
@@ -85,8 +93,8 @@ export async function buildEdition(
         sourceName: post.sourceName,
         favorite: post.favorite,
         fallback,
-      });
-    }
+      };
+    });
     if (items.length > 0) await db.insert(editionItems).values(items);
 
     const message =
