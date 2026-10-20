@@ -83,7 +83,7 @@
 ## Tâche 8 : E-mail de l'édition
 **Description :** Contenu de l'e-mail (« Votre journal du … est prêt », extrait de la Une, lien) en HTML + texte ; aperçu dans l'app.
 **Critères :**
-- [ ] Aperçu lisible ; extrait de la Une ; lien vers le journal
+- [x] Aperçu lisible ; extrait de la Une ; lien vers le journal
 **Vérification :** `npm test` + aperçu manuel · **Dépendances :** 5 · **Taille :** S
 **Fichiers :** `src/modules/edition/email.ts`, `src/app/journal/[id]/email/route.ts`, `tests/edition/email.test.ts`
 
@@ -120,5 +120,5 @@
 **Fichiers :** `src/modules/edition/schedule.ts`, `src/db/schema.ts`, `src/app/journal/*`, `src/app/actions.ts`, tests
 
 ## Checkpoint final
-- [ ] Critères de succès de SPEC-edition.md cochés
-- [ ] `/review`, push, proposition de pull request
+- [x] Critères de succès de SPEC-edition.md cochés
+- [x] `/review`, push, proposition de pull request

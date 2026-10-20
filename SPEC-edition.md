@@ -1,6 +1,6 @@
 # Spec : edition (l'IA Rédacteur en Chef)
 
-Brique 4 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [depeches](SPEC-depeches.md). Statut : **validée le 2026-10-20**.
+Brique 4 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [depeches](SPEC-depeches.md). Statut : **terminée le 2026-10-20** (éditions réelles préparées et validées par Izenn).
 
 ## Objectif
 Chaque matin, une **édition personnelle** du journal Plomb : l'IA lit tout ce qui est arrivé depuis l'édition précédente,
@@ -91,17 +91,17 @@ scripts/compare-ai.ts            → comparatif des IA sur 5 articles (résultat
 - Jamais : publier le texte complet d'un article ; mettre une clé API dans git.
 
 ## Success Criteria
-- [ ] Comparatif des IA réalisé sur 5 vrais articles, choix d'Izenn noté
-- [ ] « Préparer l'édition » produit une édition : Une (1 + 2), suite classée par importance, résumés en français
-- [ ] Seuls les articles nouveaux arrivés jusqu'à 8h00 depuis l'édition précédente sont retenus
-- [ ] La Une revient aux sujets forts : un grand sujet passe devant un petit, quelle que soit la source
-- [ ] Un sujet couvert par plusieurs sources n'apparaît qu'une fois, avec « couvert par N médias », et gagne en importance
-- [ ] Les sources favorites sont mises en valeur, sans avantage de classement
-- [ ] Les 7 dernières éditions restent consultables
-- [ ] Aperçu de l'e-mail de l'édition
-- [ ] Fréquence réglable (chaque jour / tous les 3 jours / jours choisis) ; la page indique la prochaine parution
-- [ ] Si l'IA échoue sur un article, l'édition se fait quand même (résumé du média en secours)
-- [ ] `npm test`, `npm run lint`, `npm run typecheck` passent
+- [x] Comparatif des IA réalisé sur 5 vrais articles, choix d'Izenn noté
+- [x] « Préparer l'édition » produit une édition : Une (1 + 2), suite classée par importance, résumés en français
+- [x] Seuls les articles nouveaux arrivés jusqu'à 8h00 depuis l'édition précédente sont retenus
+- [x] La Une revient aux sujets forts : un grand sujet passe devant un petit, quelle que soit la source
+- [x] Un sujet couvert par plusieurs sources n'apparaît qu'une fois, avec « couvert par N médias », et gagne en importance
+- [x] Les sources favorites sont mises en valeur, sans avantage de classement
+- [x] Les 7 dernières éditions restent consultables
+- [x] Aperçu de l'e-mail de l'édition
+- [x] Fréquence réglable (chaque jour / tous les 3 jours / jours choisis) ; la page indique la prochaine parution
+- [x] Si l'IA échoue sur un article, l'édition se fait quand même (résumé du média en secours)
+- [x] `npm test`, `npm run lint`, `npm run typecheck` passent
 
 ## Décisions (Izenn, 2026-10-20)
 1. Articles : tout ce qui est nouveau jusqu'à 1 h avant le journal de 9h00.

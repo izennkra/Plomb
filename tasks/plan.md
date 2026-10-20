@@ -47,8 +47,8 @@ la fabrication de l'édition (sélection, notation, Une, rédaction), et enfin l
 - [x] Tâche 12 : Fréquence du journal (chaque jour / tous les 3 jours / jours choisis), prochaine parution affichée
 
 ### Checkpoint final
-- [ ] Critères de succès de la spec cochés
-- [ ] `/review`, push, proposition de pull request
+- [x] Critères de succès de la spec cochés
+- [x] `/review`, push, proposition de pull request
 
 ## Risques
 | Risque | Impact | Parade |
@@ -57,6 +57,18 @@ la fabrication de l'édition (sélection, notation, Une, rédaction), et enfin l
 | Réponse de l'IA mal formée | Moyen | Format JSON imposé, 2 essais, puis secours (texte du média) |
 | Mac lent ou occupé pendant la fabrication | Moyen | Fabrication en arrière-plan ; une IA légère reste possible |
 | Peu d'articles nouveaux (sources qui publient peu) | Faible | Édition courte ou « pas de nouvelles » assumée |
+
+## Review (fin de brique)
+- Corrigés pendant les tests réels : vieux articles (14 juillet, 14 septembre) dans le journal → règle de date de
+  publication ; notes toutes à 9/10 → grille de critères + conférence de rédaction ; favoris trop avantagés → aucun bonus ;
+  mode test qui ne prenait qu'une source → tour de rôle.
+- Dernière édition test : Une = refonte de Fulham F.C. (Music × F37), notes étalées de 3 à 6, articles du 19–20 octobre.
+- **Suivis :**
+  - **Ollama doit tourner** pour préparer le journal en local (`ollama serve`) — disparaît avec la mise en ligne (Mistral en ligne).
+  - Mode test (`PLOMB_EDITION_TEST=1` dans `.env.local`) à désactiver à la fin des tests.
+  - `scripts/compare-ai.mjs` garde l'ancienne consigne (comparatif historique) : à mettre à jour si on refait un comparatif.
+  - En développement, redémarrer le serveur après une modification de la base (il garde l'ancienne description en mémoire).
+  - Le choix automatique de la parution (8h00 selon la fréquence) et l'envoi de l'e-mail : brique `planification`.
 
 ## Questions ouvertes
 - Aucune.
