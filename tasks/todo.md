@@ -62,9 +62,9 @@ gardées si même dossier propre à l'article ou même nom de base que l'image p
 ## Tâche 8 : Cartes de la Salle de Dépêches
 **Description :** Page `/` : une carte par publication — carrousel d'images (flèches, clavier), titre, résumé, date relative, source, « En savoir plus » (nouvel onglet vers le média).
 **Critères :**
-- [ ] Les cartes s'affichent triées par date
-- [ ] Le carrousel fait défiler les images de l'article
-- [ ] « En savoir plus » ouvre l'article
+- [x] Les cartes s'affichent triées par date
+- [x] Le carrousel fait défiler les images de l'article
+- [x] « En savoir plus » ouvre l'article
 **Vérification :** test manuel · **Dépendances :** 5, 7 · **Taille :** M
 **Fichiers :** `src/app/page.tsx`, `src/app/components/post-card.tsx`, `src/app/components/carousel.tsx`, `src/app/globals.css`
 
