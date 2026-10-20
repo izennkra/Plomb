@@ -3,8 +3,8 @@
 ## Tâche 1 : Colonne `posts.images`
 **Description :** Liste JSON des adresses d'images de l'article (image principale en premier). Migration.
 **Critères :**
-- [ ] Une galerie s'enregistre et se relit telle quelle
-- [ ] Les anciens articles (sans galerie) restent valides
+- [x] Une galerie s'enregistre et se relit telle quelle
+- [x] Les anciens articles (sans galerie) restent valides
 **Vérification :** `npm test` + `npm run db:migrate` · **Dépendances :** aucune · **Taille :** XS
 **Fichiers :** `src/db/schema.ts`, `drizzle/*`, `tests/db/schema.test.ts`
 

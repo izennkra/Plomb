@@ -18,7 +18,7 @@ dédoublonnage, conservation 7 jours), enfin l'**interface** : page Sources dép
 ## Liste des tâches
 
 ### Phase 1 : Galeries d'images
-- [ ] Tâche 1 : Colonne `posts.images` (migration)
+- [x] Tâche 1 : Colonne `posts.images` (migration)
 - [ ] Tâche 2 : Galerie d'un article lu sur sa page (règle de famille)
 - [ ] Tâche 3 : Galerie d'un article de flux RSS
 - [ ] Tâche 4 : Enregistrer les galeries au relevé + bouton « Compléter les galeries »

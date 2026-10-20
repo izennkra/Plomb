@@ -35,6 +35,8 @@ export const posts = sqliteTable(
     title: text("title").notNull(),
     excerpt: text("excerpt"),
     imageUrl: text("image_url"),
+    /** Gallery of the article (main image first), shown in the card's carousel. */
+    images: text("images", { mode: "json" }).$type<string[]>(),
     /** Publication date given by the site, when there is one. */
     publishedAt: integer("published_at", { mode: "timestamp" }),
     discoveredAt: integer("discovered_at", { mode: "timestamp" })

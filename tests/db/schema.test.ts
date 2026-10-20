@@ -80,6 +80,17 @@ describe("database", () => {
       expect(stored.publishedAt).toBeNull();
     });
 
+    it("stores the gallery of an article as an ordered list", async () => {
+      const db = await createTestDb();
+      const [{ id }] = await db.insert(sources).values(source).returning({ id: sources.id });
+      const images = ["https://example.com/1.jpg", "https://example.com/2.jpg"];
+      const [stored] = await db.insert(posts).values({ ...post(id), images }).returning();
+      expect(stored.images).toEqual(images);
+
+      const [old] = await db.insert(posts).values({ ...post(id), url: "https://example.com/old" }).returning();
+      expect(old.images).toBeNull();
+    });
+
     it("deletes the articles of a deleted source", async () => {
       const db = await createTestDb();
       const [{ id }] = await db.insert(sources).values(source).returning({ id: sources.id });
