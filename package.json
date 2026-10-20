@@ -28,6 +28,7 @@
     "vitest": "^5.0.5"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0",
     "@extractus/feed-extractor": "^8.0.3",
     "@libsql/client": "^0.18.0",
     "@mozilla/readability": "^0.6.0",
@@ -37,6 +38,7 @@
     "next": "^15.5.28",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "resend": "^6.34.1",
     "robots-parser": "^3.0.1",
     "server-only": "^0.0.1"
   }

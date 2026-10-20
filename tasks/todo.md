@@ -1,124 +1,52 @@
-# Tâches : brique `edition`
+# Tâches : brique `planification`
 
-## Tâche 1 : Comparatif des IA locales
-**Description :** Script qui donne les 5 mêmes vrais articles (variés : The Brand Identity, It's Nice That, Findings…) à 3 IA locales (Ministral 3 14B, Gemma 4 12B, Gemma 4 E4B) avec la consigne du rédacteur ; mesure le temps ; résultats côte à côte dans `docs/comparatif-ia.md`.
+## Tâche 1 : Rédacteur IA en ligne (Mistral, puis Claude Haiku 5.5 retenu)
+**Description :** `createMistralRedacteur` (même interface que Ollama) : API Mistral, réponse JSON vérifiée, 2 essais ; choix par réglage (`PLOMB_AI_PROVIDER=mistral`). La fabrication de l'édition rédige 4 articles à la fois.
 **Critères :**
-- [x] 5 articles × 3 IA : titre, résumé, thème, note, texte de Une
-- [x] Temps par article noté ; erreurs de format notées
-**Vérification :** lecture du document par Izenn · **Dépendances :** aucune · **Taille :** M
-**Fichiers :** `scripts/compare-ai.mjs`, `docs/comparatif-ia.md`
+- [ ] Mêmes réponses vérifiées que pour Ollama (titre, résumé, thème, sujet, 5 critères, Une, conférence)
+- [ ] Erreurs claires (clé invalide, quota) ; rédaction en parallèle
+**Vérification :** `npm test` (faux serveur Mistral) + une vraie édition avec la clé d'Izenn · **Dépendances :** aucune · **Taille :** M
+
+## Tâche 2 : Horloge
+**Description :** `/api/horloge` (jeton secret) : relève les sources dues (les plus anciennes d'abord, budget ~4 min), prépare l'édition à 8h00 les jours de parution, la publie et envoie l'e-mail à 9h00 ; rattrapage ; ne refait jamais deux fois.
+**Critères :**
+- [x] Fausse heure : rien avant 8h00 ; édition à 8h00 ; publication + e-mail à 9h00 ; rattrapage à 10h si manqué
+- [x] Jour sans parution : pas d'édition ; jeton absent ou faux : refusé
+**Vérification :** `npm test` · **Dépendances :** 1 · **Taille :** L → découpée (relevé par tranches / planning du journal)
+
+## Tâche 3 : E-mail
+**Description :** Envoi via Resend (date d'envoi enregistrée, jamais deux fois) ; e-mail d'alerte si la préparation échoue.
+**Critères :**
+- [x] Un seul envoi par édition ; alerte en cas d'échec
+**Vérification :** `npm test` (faux envoyeur) + vrai e-mail reçu · **Dépendances :** 2 · **Taille :** S
+
+## Tâche 4 : Mot de passe
+**Description :** Middleware : toutes les pages et actions demandent le mot de passe (cookie de session signé) ; l'horloge passe avec son propre jeton.
+**Critères :**
+- [x] Sans mot de passe : page de connexion ; avec : accès ; l'horloge fonctionne sans mot de passe mais avec jeton
+**Vérification :** `npm test` + essai manuel · **Dépendances :** aucune · **Taille :** S
+
+## Tâche 5 : Base Turso
+**Description :** Connexion par adresse + jeton (`DATABASE_URL`, `DATABASE_AUTH_TOKEN`), migrations incluses dans l'app en ligne.
+**Critères :**
+- [x] En local : fichier SQLite inchangé ; en ligne : Turso
+**Vérification :** `npm test` + connexion réelle à Turso · **Dépendances :** aucune · **Taille :** S
 
 ## Checkpoint 1
-- [x] Izenn choisit l'IA → Mistral (Ministral 3 14B), API en ligne si le Mac rame
+- [ ] Tout fonctionne en local avec Claude en ligne — point avec Izenn
 
-## Tâche 2 : Rédacteur Ollama
-**Description :** Interface `Redacteur` (`summarize(article)`, `writeLead(article)`), implémentation Ollama (JSON imposé, délai max, 2 essais), faux rédacteur pour les tests.
+## Tâche 6 : Mise en ligne guidée
+**Description :** Izenn crée les comptes ; je prépare les réglages, le déploiement Vercel, l'horloge cron-job.org.
 **Critères :**
-- [x] Réponse valide → titre, résumé, thème (liste fermée), note 1–10
-- [x] Réponse invalide ou IA injoignable → erreur claire après 2 essais
-**Vérification :** `npm test` (faux serveur Ollama local) · **Dépendances :** 1 · **Taille :** M
-**Fichiers :** `src/modules/edition/redacteur/*.ts`, `tests/edition/redacteur.test.ts`
+- [ ] Plomb en ligne, protégé, horloge active
+**Vérification :** ouverture de l'adresse en ligne · **Dépendances :** 1–5 · **Taille :** M
 
-## Tâche 3 : Base de données
-**Description :** Tables `editions` et `edition_items`, colonne `subscriptions.favorite`. Migration.
+## Tâche 7 : Transfert des sources
+**Description :** Les 9 sources actuelles ajoutées sur le serveur (et leurs favoris), premier relevé en ligne.
 **Critères :**
-- [x] Une édition et ses articles s'enregistrent et se relisent
-- [x] Supprimer un article supprime sa ligne d'édition, pas l'édition
-**Vérification :** `npm test` + `npm run db:migrate` · **Dépendances :** aucune · **Taille :** S
-**Fichiers :** `src/db/schema.ts`, `drizzle/*`, `tests/db/schema.test.ts`
-
-## Tâche 4 : Sélection des articles
-**Description :** `selectEditionPosts(db, userId, { now })` : articles nouveaux (jamais « avant l'abonnement ») des sources suivies, découverts après la fin de l'édition précédente et jusqu'à 8h00 (Paris) ; première édition : 24 h.
-**Critères :**
-- [x] Fenêtre correcte (dont première édition), dédoublonnage par adresse
-- [x] Articles d'avant l'abonnement exclus
-**Vérification :** `npm test` · **Dépendances :** 3 · **Taille :** S
-**Fichiers :** `src/modules/edition/select.ts`, `tests/edition/select.test.ts`
-
-## Tâche 5 : Fabrication de l'édition
-**Description :** `buildEdition(db, userId, { redacteur, now })` : rédige chaque article, note + bonus favoris, choisit la Une (1 + 2), rédige les textes de Une, classe la suite, enregistre ; secours si l'IA échoue ; édition vide assumée ; statut en préparation / prête / erreur.
-**Critères :**
-- [x] Une 1 + 2 = les 3 mieux notés (bonus favoris inclus)
-- [x] Un échec de l'IA sur un article n'empêche pas l'édition
-- [x] Journée sans nouveauté → édition « pas de nouvelles »
-**Vérification :** `npm test` (faux rédacteur) · **Dépendances :** 2, 3, 4 · **Taille :** M
-**Fichiers :** `src/modules/edition/build.ts`, `tests/edition/build.test.ts`
-
-## Checkpoint 2
-- [x] Vraie édition sur les données d'Izenn — très satisfait ; demande : mieux hiérarchiser la Une
-
-## Tâche 6 : Favoris
-**Description :** Étoile « favori » par source sur la page Sources (par utilisateur).
-**Critères :**
-- [x] Marquer / démarquer une source ; l'état est gardé
-**Vérification :** test manuel + `npm test` · **Dépendances :** 3 · **Taille :** S
-**Fichiers :** `src/modules/sources/favorite.ts`, `src/app/sources/page.tsx`, `src/app/actions.ts`
-
-## Tâche 7 : Page Journal
-**Description :** `/journal` : édition du jour (Une majeure, 2 secondaires, suite), repère visuel des favoris, éditions des 7 derniers jours, bouton « Préparer l'édition » avec statut. Lien dans la navigation.
-**Critères :**
-- [x] Lecture de l'édition complète ; navigation entre éditions
-- [x] « Préparer l'édition » fonctionne en arrière-plan
-**Vérification :** test manuel · **Dépendances :** 5, 6 · **Taille :** M
-**Fichiers :** `src/app/journal/page.tsx`, `src/app/components/edition-*.tsx`, `src/modules/edition/list.ts`
-
-## Checkpoint 2
-- [x] Vraie édition sur les données d'Izenn — très satisfait ; demande : mieux hiérarchiser la Une
-
-## Tâche 6 : Favoris
-**Description :** Étoile « favori » par source sur la page Sources (par utilisateur).
-**Critères :**
-- [x] Marquer / démarquer une source ; l'état est gardé
-**Vérification :** test manuel + `npm test` · **Dépendances :** 3 · **Taille :** S
-**Fichiers :** `src/modules/sources/favorite.ts`, `src/app/sources/page.tsx`, `src/app/actions.ts`
-
-## Tâche 7 : Page Journal
-**Description :** `/journal` : édition du jour (Une majeure, 2 secondaires, suite), repère visuel des favoris, éditions des 7 derniers jours, bouton « Préparer l'édition » avec statut. Lien dans la navigation.
-**Critères :**
-- [x] Lecture de l'édition complète ; navigation entre éditions
-- [x] « Préparer l'édition » fonctionne en arrière-plan
-**Vérification :** test manuel · **Dépendances :** 5, 6 · **Taille :** M
-**Fichiers :** `src/app/journal/page.tsx`, `src/app/components/edition-*.tsx`, `src/modules/edition/list.ts`
-
-## Tâche 8 : E-mail de l'édition
-**Description :** Contenu de l'e-mail (« Votre journal du … est prêt », extrait de la Une, lien) en HTML + texte ; aperçu dans l'app.
-**Critères :**
-- [x] Aperçu lisible ; extrait de la Une ; lien vers le journal
-**Vérification :** `npm test` + aperçu manuel · **Dépendances :** 5 · **Taille :** S
-**Fichiers :** `src/modules/edition/email.ts`, `src/app/journal/[id]/email/route.ts`, `tests/edition/email.test.ts`
-
-## Tâche 9 : Grille de critères
-**Description :** Le rédacteur note 5 critères (notoriété, ampleur, auteurs, portée, qualité, de 1 à 5) et nomme le sujet principal ; Plomb calcule la note sur 10 avec des poids. Consigne calibrée par des exemples. Favoris : plus de bonus.
-**Critères :**
-- [x] Note calculée correctement à partir des critères ; notoriété et ampleur pèsent le plus
-- [x] Un article favori n'est pas avantagé dans le classement, mais reste marqué
-**Vérification :** `npm test` · **Dépendances :** 5 · **Taille :** M
-**Fichiers :** `src/modules/edition/redacteur/*`, `src/modules/edition/scoring.ts`, `src/modules/edition/build.ts`, `src/db/schema.ts`, tests
-
-## Tâche 10 : Écho médiatique
-**Description :** Articles au même sujet principal venant de sources différentes → regroupés en un seul (le plus riche), mention des autres médias, bonus d'importance.
-**Critères :**
-- [x] « Coca-Cola » chez 3 sources → 1 article, couvert par 3 médias, mieux classé
-- [x] Sujets différents jamais fusionnés par erreur (noms trop courts ou génériques ignorés)
-**Vérification :** `npm test` · **Dépendances :** 9 · **Taille :** M
-**Fichiers :** `src/modules/edition/echo.ts`, `src/modules/edition/build.ts`, tests
-
-## Tâche 11 : Conférence de rédaction
-**Description :** Une demande de plus à l'IA : elle compare les ~8 meilleurs candidats et choisit la Une (1 + 2). Réponse invalide → ordre des notes.
-**Critères :**
-- [x] La Une suit le choix de l'IA quand il est valide
-- [x] Réponse invalide ou erreur → la Une suit les notes
-**Vérification :** `npm test` + vraie édition · **Dépendances :** 9, 10 · **Taille :** M
-**Fichiers :** `src/modules/edition/redacteur/*`, `src/modules/edition/build.ts`, tests
-
-## Tâche 12 : Fréquence du journal
-**Description :** Réglage par utilisateur (chaque jour / tous les 3 jours / jours choisis), toujours à 9h00. Règles : jour de parution ou non, période couverte par une première édition, prochaine parution. Formulaire sur la page Journal.
-**Critères :**
-- [x] Les 3 rythmes donnent les bons jours de parution et la bonne période couverte
-- [x] Le réglage s'enregistre ; la page affiche la prochaine parution
-**Vérification :** `npm test` + test manuel · **Dépendances :** 3 · **Taille :** M
-**Fichiers :** `src/modules/edition/schedule.ts`, `src/db/schema.ts`, `src/app/journal/*`, `src/app/actions.ts`, tests
+- [ ] Les 9 sources en ligne, relevées
+**Vérification :** page Sources en ligne · **Dépendances :** 6 · **Taille :** S
 
 ## Checkpoint final
-- [x] Critères de succès de SPEC-edition.md cochés
-- [x] `/review`, push, proposition de pull request
+- [ ] Un matin, Mac fermé : e-mail à 9h00, journal en ligne
+- [ ] `/review`, push, proposition de pull request

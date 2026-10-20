@@ -40,6 +40,8 @@ export type FrontPageChoice = { une: number; secondary: number[] };
 /** The AI editor-in-chief. Interchangeable: local AI today, something else once Plomb is online. */
 export interface Redacteur {
   readonly model: string;
+  /** How many articles it can write at the same time (1 on the Mac, more online). */
+  readonly parallel: number;
   summarize(article: ArticleInput): Promise<ArticleSummary>;
   /** Longer text for the 3 articles of the Une (~120 words). */
   writeLead(article: ArticleInput): Promise<string>;

@@ -3,6 +3,8 @@ import type { Db } from "@/db/client";
 import { editionItems, editions, users, type Edition, type EditionItem } from "@/db/schema";
 import type { ArticleSummary, Redacteur } from "./redacteur/types";
 import { groupEchoes } from "./echo";
+import { FatalRedacteurError } from "./redacteur/json-redacteur";
+import { mapInParallel } from "./parallel";
 import { parisDay } from "./paris-time";
 import { coverageDays, toSchedule } from "./schedule";
 import { importanceOf, type Criteria } from "./scoring";
@@ -12,6 +14,11 @@ import { selectEditionPosts, type EditionPost } from "./select";
 const UNE_SIZE = 3;
 /** Stories compared side by side in the editorial meeting. */
 const MEETING_SIZE = 8;
+/**
+ * The meeting arbitrates between stories of similar weight: its Une may not be more than this below the
+ * best-noted story (a 4/10 story cannot take the Une from a 6/10 one).
+ */
+const UNE_MAX_GAP = 1.5;
 /** Criteria given when the AI could not judge an article: an average story. */
 const DEFAULT_CRITERIA: Criteria = { notoriety: 3, scale: 3, authors: 3, reach: 3, quality: 3 };
 
@@ -25,21 +32,42 @@ type Written = { post: EditionPost; summary: ArticleSummary; fallback: boolean; 
 export async function buildEdition(
   db: Db,
   userId: string,
-  { redacteur, now = new Date(), testMode = false }: { redacteur: Redacteur; now?: Date; testMode?: boolean },
+  {
+    redacteur,
+    now = new Date(),
+    testMode = false,
+    publishAt = null,
+  }: {
+    redacteur: Redacteur;
+    now?: Date;
+    testMode?: boolean;
+    /** Automatic edition: shown (and e-mailed) from 9:00. None (by hand): shown at once, no e-mail. */
+    publishAt?: Date | null;
+  },
 ): Promise<Edition> {
   const user = await db.query.users.findFirst({ where: eq(users.id, userId) });
   const schedule = toSchedule(user?.editionFrequency, user?.editionWeekdays);
   const selection = await selectEditionPosts(db, userId, { now, testMode, coverageDays: coverageDays(schedule, parisDay(now)) });
-  const edition = await startEdition(db, userId, selection.day, selection.periodStart, selection.periodEnd, redacteur.model);
+  const edition = await startEdition(db, userId, {
+    day: selection.day,
+    periodStart: selection.periodStart,
+    periodEnd: selection.periodEnd,
+    model: redacteur.model,
+    publishAt,
+  });
 
   try {
-    const written: Written[] = [];
-    for (const post of selection.posts) {
+    // Several articles are written at the same time when the editor allows it (online AI).
+    const written: Written[] = await mapInParallel(selection.posts, redacteur.parallel, async (post) => {
       const article = { title: post.title, content: post.content, excerpt: post.excerpt, sourceName: post.sourceName };
-      const summary = await redacteur.summarize(article).catch(() => null);
+      const summary = await redacteur.summarize(article).catch((error) => {
+        // The AI cannot work at all: stop, so the reader is alerted (rather than a journal of media texts).
+        if (error instanceof FatalRedacteurError) throw error;
+        return null;
+      });
       const final = summary ?? fallbackSummary(post);
-      written.push({ post, summary: final, fallback: !summary, score: final.importance, coveredBy: [] });
-    }
+      return { post, summary: final, fallback: !summary, score: final.importance, coveredBy: [] };
+    });
 
     // The same story covered by several media appears once (the best article), and counts as a bigger story.
     const isBetter = (a: Written, b: Written) => a.score > b.score || (a.score === b.score && a.post.images.length > b.post.images.length);
@@ -57,24 +85,31 @@ export async function buildEdition(
     // Editorial meeting: the editor compares the best stories side by side and picks the Une.
     const ranked = await editorialMeeting(stories, redacteur);
 
-    const items: (typeof editionItems.$inferInsert)[] = [];
-    for (const [index, entry] of ranked.entries()) {
+    // Longer texts for the 3 articles of the Une, written together.
+    const leads = await mapInParallel(ranked.slice(0, UNE_SIZE), redacteur.parallel, (entry) =>
+      entry.fallback
+        ? Promise.resolve(null)
+        : redacteur
+            .writeLead({
+              title: entry.post.title,
+              content: entry.post.content,
+              excerpt: entry.post.excerpt,
+              sourceName: entry.post.sourceName,
+            })
+            .catch(() => null),
+    );
+
+    const items: (typeof editionItems.$inferInsert)[] = ranked.map((entry, index) => {
       const { post, summary, fallback } = entry;
       const placement: EditionItem["placement"] = index === 0 ? "une" : index < UNE_SIZE ? "secondaire" : "suite";
-      const leadText =
-        placement === "suite" || fallback
-          ? null
-          : await redacteur
-              .writeLead({ title: post.title, content: post.content, excerpt: post.excerpt, sourceName: post.sourceName })
-              .catch(() => null);
-      items.push({
+      return {
         editionId: edition.id,
         postId: post.postId,
         position: index + 1,
         placement,
         title: summary.title,
         summary: summary.summary,
-        leadText,
+        leadText: leads[index] ?? null,
         theme: fallback ? null : summary.theme,
         importance: fallback ? null : Math.round(entry.score),
         subject: fallback ? null : summary.subject || null,
@@ -85,8 +120,8 @@ export async function buildEdition(
         sourceName: post.sourceName,
         favorite: post.favorite,
         fallback,
-      });
-    }
+      };
+    });
     if (items.length > 0) await db.insert(editionItems).values(items);
 
     const message =
@@ -95,7 +130,8 @@ export async function buildEdition(
         : `${items.length} article${items.length > 1 ? "s" : ""}`;
     return await finish(db, edition.id, { status: "ready", message });
   } catch (error) {
-    await finish(db, edition.id, { status: "error", message: "La préparation de l'édition a échoué." });
+    const reason = error instanceof Error ? ` (${error.message})` : "";
+    await finish(db, edition.id, { status: "error", message: `La préparation de l'édition a échoué${reason}.` });
     throw error;
   }
 }
@@ -118,8 +154,13 @@ async function editorialMeeting<T extends Written>(stories: T[], redacteur: Reda
         importance: story.score,
       })),
     );
-    const front = [choice.une, ...choice.secondary].map((index) => candidates[index]);
+    let front = [choice.une, ...choice.secondary].map((index) => candidates[index]);
     if (front.some((story) => !story) || new Set(front).size !== front.length) return stories;
+    // The Une goes to a big story: if the meeting picked one far below the best, the best takes the Une.
+    const best = candidates[0];
+    if (front[0].score < best.score - UNE_MAX_GAP) {
+      front = [best, ...front.filter((story) => story !== best)].slice(0, front.length);
+    }
     return [...front, ...stories.filter((story) => !front.includes(story))];
   } catch {
     return stories;
@@ -127,18 +168,24 @@ async function editorialMeeting<T extends Written>(stories: T[], redacteur: Reda
 }
 
 /** Creates the edition of the day, or resets it when it is prepared again. */
-async function startEdition(db: Db, userId: string, day: string, periodStart: Date, periodEnd: Date, model: string) {
-  const existing = await db.query.editions.findFirst({ where: and(eq(editions.userId, userId), eq(editions.day, day)) });
+async function startEdition(
+  db: Db,
+  userId: string,
+  values: Pick<Edition, "day" | "periodStart" | "periodEnd" | "model" | "publishAt">,
+) {
+  const existing = await db.query.editions.findFirst({
+    where: and(eq(editions.userId, userId), eq(editions.day, values.day)),
+  });
   if (existing) {
     await db.delete(editionItems).where(eq(editionItems.editionId, existing.id));
     const [edition] = await db
       .update(editions)
-      .set({ status: "building", periodStart, periodEnd, model, message: null, createdAt: new Date() })
+      .set({ ...values, status: "building", message: null, createdAt: new Date(), attempts: existing.attempts + 1 })
       .where(eq(editions.id, existing.id))
       .returning();
     return edition;
   }
-  const [edition] = await db.insert(editions).values({ userId, day, periodStart, periodEnd, model }).returning();
+  const [edition] = await db.insert(editions).values({ ...values, userId, attempts: 1 }).returning();
   return edition;
 }
 

@@ -1,74 +1,47 @@
-# Plan d'implémentation : brique `edition` (IA Rédacteur en Chef)
+# Plan d'implémentation : brique `planification` (mise en ligne, journal automatique)
 
-Spec : [SPEC-edition.md](../SPEC-edition.md) · Tâches détaillées : [todo.md](todo.md)
-Plans précédents (`sources`, `aspiration-web`, `depeches`) : terminés et fusionnés (pull requests #1 à #3).
+Spec : [SPEC-planification.md](../SPEC-planification.md) · Tâches détaillées : [todo.md](todo.md)
+Plans précédents (briques 1 à 4) : terminés et fusionnés (pull requests #1 à #4).
 
 ## Vue d'ensemble
-D'abord **choisir l'IA** sur de vrais articles (Izenn décide), puis construire le « rédacteur » (l'appel à l'IA),
-la fabrication de l'édition (sélection, notation, Une, rédaction), et enfin la page Journal, les favoris et l'e-mail.
+D'abord ce qui se teste sur le Mac (rédacteur Mistral, horloge, e-mail, mot de passe, base Turso), puis la mise en ligne
+guidée (comptes, réglages, horloge), et enfin la vérification en réel : un matin, Mac fermé, le journal arrive.
 
 ## Décisions d'architecture
-- **IA locale via Ollama** (serveur sur le Mac, `http://127.0.0.1:11434`). Réponses demandées **au format JSON**
-  (titre, résumé, thème, note d'importance) pour être lues de façon fiable.
-- **Interface unique `Redacteur`** : l'IA est interchangeable ; les tests utilisent un faux rédacteur (pas d'IA, rapides).
-- **Une demande par article** (résumé + thème + note), puis une demande supplémentaire pour les 3 articles de la Une
-  (texte développé). Une édition de 50 articles ≈ 10–15 min sur le Mac : acceptable pour une préparation à 8h00.
-- **Secours** : si l'IA échoue sur un article (2 essais), on garde le titre et le résumé du média ; l'édition se fait quand même.
-- **Fabrication en arrière-plan** avec un statut (« en préparation… »), comme les relevés.
+- **Une seule « horloge »** : `/api/horloge`, appelée toutes les 15 min, décide quoi faire selon l'heure de Paris
+  (relever, préparer, publier, envoyer) et **rattrape** ce qui a été manqué. Idempotente : la rappeler deux fois ne fait rien de plus.
+- **Budget de temps** par appel (~4 min sur 5) : le relevé s'arrête proprement et reprend au prochain appel.
+- **Rédaction en parallèle** (4 articles à la fois) avec l'IA en ligne pour tenir dans le temps.
+- **Publication à 9h00** : l'édition du jour n'est affichée qu'à partir de 9h00 ; e-mail envoyé une seule fois (date d'envoi enregistrée).
+- **Même code partout** : en local, la base reste le fichier SQLite et l'IA peut rester Ollama ; en ligne, Turso et Claude (réglages).
 
 ## Liste des tâches
 
-### Phase 1 : Choisir l'IA
-- [x] Tâche 1 : Comparatif de 3 IA locales sur 5 vrais articles → `docs/comparatif-ia.md`
+### Phase 1 : Préparer le code
+- [ ] Tâche 1 : Rédacteur IA en ligne — Claude Haiku 5.5 (Mistral demandait un compte Pro) — + rédaction en parallèle
+- [x] Tâche 2 : Horloge `/api/horloge` (relevé par tranches, 8h00, 9h00, rattrapage, jeton secret)
+- [x] Tâche 3 : E-mail via Resend (envoi unique à 9h00, alerte en cas d'échec)
+- [x] Tâche 4 : Mot de passe sur toute l'app
+- [x] Tâche 5 : Base Turso (adresse + jeton, migrations embarquées)
 
 ### Checkpoint 1
-- [x] Izenn choisit l'IA → Mistral (Ministral 3 14B), API en ligne si le Mac rame
+- [ ] Tout fonctionne en local avec Claude en ligne (clé dans `.env.local`) — point avec Izenn
 
-### Phase 2 : Le rédacteur et l'édition
-- [x] Tâche 2 : Rédacteur Ollama (JSON, essais, secours) + faux rédacteur de test
-- [x] Tâche 3 : Base de données (`editions`, `edition_items`, sources favorites)
-- [x] Tâche 4 : Sélection des articles d'une édition (nouveaux, jusqu'à 8h00, depuis l'édition précédente)
-- [x] Tâche 5 : Fabrication (notation + bonus favoris, Une 1 + 2, rédaction, thème, journée vide)
-
-### Checkpoint 2
-- [x] Une vraie édition fabriquée sur les données d'Izenn — très satisfait ; demande : mieux hiérarchiser la Une
-
-### Phase 2 bis : Hiérarchie éditoriale (ajout après la 1re édition)
-- [x] Tâche 9 : Grille de critères + sujet principal (consigne calibrée, note calculée, favoris sans bonus)
-- [x] Tâche 10 : Écho médiatique (même sujet chez plusieurs sources → un seul article, « couvert par N médias », bonus)
-- [x] Tâche 11 : Conférence de rédaction (l'IA choisit la Une parmi les ~8 meilleurs, secours = ordre des notes)
-
-### Phase 3 : Lecture
-- [x] Tâche 6 : Favoris (étoile sur la page Sources)
-- [x] Tâche 7 : Page Journal (édition du jour, 7 précédentes, bouton « Préparer l'édition »)
-- [x] Tâche 8 : E-mail de l'édition (contenu + aperçu ; envoi réel : brique `planification`)
-
-### Phase 4 : Fréquence (ajout du 20/10)
-- [x] Tâche 12 : Fréquence du journal (chaque jour / tous les 3 jours / jours choisis), prochaine parution affichée
+### Phase 2 : Mise en ligne (guidée)
+- [ ] Tâche 6 : Comptes et réglages (Vercel, Turso, Resend, cron-job.org) + déploiement
+- [ ] Tâche 7 : Transfert des sources
 
 ### Checkpoint final
-- [x] Critères de succès de la spec cochés
-- [x] `/review`, push, proposition de pull request
+- [ ] Un matin, Mac fermé : e-mail reçu à 9h00, journal en ligne
+- [ ] `/review`, push, proposition de pull request
 
 ## Risques
 | Risque | Impact | Parade |
 |---|---|---|
-| Qualité du français ou invention de faits par une IA locale | Élevé | Comparatif sur vrais articles ; consignes strictes ; résumé basé uniquement sur le texte fourni |
-| Réponse de l'IA mal formée | Moyen | Format JSON imposé, 2 essais, puis secours (texte du média) |
-| Mac lent ou occupé pendant la fabrication | Moyen | Fabrication en arrière-plan ; une IA légère reste possible |
-| Peu d'articles nouveaux (sources qui publient peu) | Faible | Édition courte ou « pas de nouvelles » assumée |
-
-## Review (fin de brique)
-- Corrigés pendant les tests réels : vieux articles (14 juillet, 14 septembre) dans le journal → règle de date de
-  publication ; notes toutes à 9/10 → grille de critères + conférence de rédaction ; favoris trop avantagés → aucun bonus ;
-  mode test qui ne prenait qu'une source → tour de rôle.
-- Dernière édition test : Une = refonte de Fulham F.C. (Music × F37), notes étalées de 3 à 6, articles du 19–20 octobre.
-- **Suivis :**
-  - **Ollama doit tourner** pour préparer le journal en local (`ollama serve`) — disparaît avec la mise en ligne (Mistral en ligne).
-  - Mode test (`PLOMB_EDITION_TEST=1` dans `.env.local`) à désactiver à la fin des tests.
-  - `scripts/compare-ai.mjs` garde l'ancienne consigne (comparatif historique) : à mettre à jour si on refait un comparatif.
-  - En développement, redémarrer le serveur après une modification de la base (il garde l'ancienne description en mémoire).
-  - Le choix automatique de la parution (8h00 selon la fréquence) et l'envoi de l'e-mail : brique `planification`.
+| Un appel dépasse 5 min | Moyen | Budget de temps, reprise au prochain appel, rédaction en parallèle |
+| cron-job.org en panne un matin | Moyen | Rattrapage au premier appel suivant ; e-mail d'alerte si rien à 9h30 |
+| Un site bloque les adresses de Vercel | Faible | Statut d'erreur visible par source (déjà en place) |
+| Usage commercial interdit sur l'offre gratuite de Vercel | Élevé (plus tard) | À revoir avant les abonnés payants (brique 7) |
 
 ## Questions ouvertes
 - Aucune.

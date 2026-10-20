@@ -23,6 +23,7 @@ export function createFakeRedacteur({
   const meetings: FrontPageCandidate[][] = [];
   const redacteur: Redacteur = {
     model: "fake",
+    parallel: 3,
     async summarize(article: ArticleInput): Promise<ArticleSummary> {
       if (failsOn.includes(article.title)) throw new Error("AI failed");
       const criteria = all(importance[article.title] ?? 3);

@@ -126,6 +126,14 @@ export const editions = sqliteTable(
     language: text("language").notNull().default("fr"),
     message: text("message"),
     createdAt: createdAt(),
+    /** Shown from this moment (9:00 for the automatic edition; at once when prepared by hand). */
+    publishAt: integer("publish_at", { mode: "timestamp" }),
+    /** The 9:00 e-mail: sent once. */
+    emailSentAt: integer("email_sent_at", { mode: "timestamp" }),
+    /** "Your journal could not be prepared": sent once. */
+    alertSentAt: integer("alert_sent_at", { mode: "timestamp" }),
+    /** Preparation attempts (the clock retries a failed edition a few times). */
+    attempts: integer("attempts").notNull().default(0),
   },
   (table) => [uniqueIndex("editions_user_day_unique").on(table.userId, table.day)],
 );
