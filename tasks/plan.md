@@ -17,10 +17,10 @@ reconnaissance des URL → base de données → vérification des sites → ajou
 
 ### Phase 1 : Fondations
 - [x] Tâche 1 : Mettre en place le projet (Next.js, TypeScript, Vitest, lint)
-- [ ] Tâche 2 : Reconnaître et normaliser une URL
+- [x] Tâche 2 : Reconnaître et normaliser une URL
 
 ### Checkpoint 1
-- [ ] Tests, lint et typecheck passent ; la page d'accueil s'affiche
+- [x] Tests, lint et typecheck passent ; la page d'accueil s'affiche
 
 ### Phase 2 : Moteur
 - [ ] Tâche 3 : Créer la base de données (sources, users, subscriptions)

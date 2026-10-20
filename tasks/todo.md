@@ -12,15 +12,15 @@
 ## Tâche 2 : Reconnaître et normaliser une URL
 **Description :** Fonction pure `parseSourceUrl(input)` qui renvoie type, nom affiché, URL normalisée et clé unique — ou un message d'erreur en français. Écrite en TDD (tests d'abord).
 **Critères :**
-- [ ] Tous les exemples du tableau de la spec sont reconnus
-- [ ] www, majuscules, paramètres de suivi et `/` final n'influencent pas la clé
-- [ ] URL invalide et pages non-profil → message clair
+- [x] Tous les exemples du tableau de la spec sont reconnus
+- [x] www, majuscules, paramètres de suivi et `/` final n'influencent pas la clé
+- [x] URL invalide et pages non-profil → message clair
 **Vérification :** `npm test`
 **Dépendances :** 1 · **Taille :** S
 **Fichiers :** `src/modules/sources/parse-url.ts`, `tests/sources/parse-url.test.ts`
 
 ## Checkpoint 1
-- [ ] Tests, lint, typecheck OK — point avec Izenn
+- [x] Tests, lint, typecheck OK — point avec Izenn
 
 ## Tâche 3 : Créer la base de données
 **Description :** Schéma Drizzle (`sources`, `users`, `subscriptions`), migration, connexion SQLite dans `data/plomb.db`, utilisateur par défaut.
