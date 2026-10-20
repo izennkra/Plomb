@@ -24,10 +24,10 @@ dédoublonnage, conservation 7 jours), enfin l'**interface** : page Sources dép
 - [x] Tâche 4 : Enregistrer les galeries au relevé + bouton « Compléter les galeries »
 
 ### Checkpoint 1
-- [ ] Galeries réelles vérifiées sur les 6 sources — point avec Izenn
+- [x] Galeries réelles vérifiées sur les 6 sources — point avec Izenn
 
 ### Phase 2 : Le flux
-- [ ] Tâche 5 : Requête du flux (7 jours, tri, dédoublonnage, règle « avant l'abonnement », filtres)
+- [x] Tâche 5 : Requête du flux (7 jours, tri, dédoublonnage, règle « avant l'abonnement », filtres)
 - [ ] Tâche 6 : Suppression des publications de plus de 7 jours à chaque relevé
 
 ### Phase 3 : Interface

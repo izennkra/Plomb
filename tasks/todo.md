@@ -33,14 +33,14 @@ gardées si même dossier propre à l'article ou même nom de base que l'image p
 **Fichiers :** `src/modules/aspiration-web/refresh-source.ts`, `src/modules/depeches/complete-galleries.ts`, `src/app/actions.ts`, `src/app/page.tsx`, tests
 
 ## Checkpoint 1
-- [ ] Galeries réelles vérifiées — point avec Izenn
+- [x] Galeries réelles vérifiées — point avec Izenn
 
 ## Tâche 5 : Requête du flux
 **Description :** `listFeed(db, userId, { type?, sourceId?, now })` : publications des sources suivies, 7 derniers jours (date de publication sinon découverte), tri du plus récent, dédoublonnées par adresse ; « avant l'abonnement » seulement si date de publication connue et récente (réglage) ; filtres.
 **Critères :**
-- [ ] Tri et fenêtre de 7 jours corrects ; un article de deux sources n'apparaît qu'une fois
-- [ ] Règle « avant l'abonnement » respectée (dont : sans date → caché)
-- [ ] Filtres par type et par source
+- [x] Tri et fenêtre de 7 jours corrects ; un article de deux sources n'apparaît qu'une fois
+- [x] Règle « avant l'abonnement » respectée (dont : sans date → caché)
+- [x] Filtres par type et par source
 **Vérification :** `npm test` · **Dépendances :** 1 · **Taille :** M
 **Fichiers :** `src/modules/depeches/settings.ts`, `src/modules/depeches/list-feed.ts`, `tests/depeches/list-feed.test.ts`
 
