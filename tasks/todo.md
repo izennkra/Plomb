@@ -3,9 +3,9 @@
 ## Tâche 1 : Mettre en place le projet
 **Description :** Créer le squelette Next.js 15 + TypeScript, configurer Vitest, ESLint et les scripts npm de la spec. Ignorer `data/` et `.env*` dans git.
 **Critères :**
-- [ ] `npm run dev` affiche une page « Plomb »
-- [ ] `npm test` lance Vitest (un test d'exemple passe)
-- [ ] `npm run lint` et `npm run typecheck` passent
+- [x] `npm run dev` affiche une page « Plomb »
+- [x] `npm test` lance Vitest (un test d'exemple passe)
+- [x] `npm run lint` et `npm run typecheck` passent
 **Dépendances :** aucune · **Taille :** M
 **Fichiers :** `package.json`, `tsconfig.json`, `vitest.config.ts`, `src/app/page.tsx`, `.gitignore`
 

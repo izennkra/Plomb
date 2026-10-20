@@ -16,7 +16,7 @@ reconnaissance des URL → base de données → vérification des sites → ajou
 ## Liste des tâches
 
 ### Phase 1 : Fondations
-- [ ] Tâche 1 : Mettre en place le projet (Next.js, TypeScript, Vitest, lint)
+- [x] Tâche 1 : Mettre en place le projet (Next.js, TypeScript, Vitest, lint)
 - [ ] Tâche 2 : Reconnaître et normaliser une URL
 
 ### Checkpoint 1
