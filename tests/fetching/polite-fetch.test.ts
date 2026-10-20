@@ -67,6 +67,16 @@ describe("politeFetcher", () => {
     expect(network.requested.filter((url) => url.endsWith("/robots.txt"))).toHaveLength(1);
   });
 
+  it("requests to the same site made at the same time leave one after the other", async () => {
+    const network = fakeNetwork({ "https://a.com": "" });
+    const clock = fakeClock();
+    const fetchPage = createPoliteFetcher({ fetch: network.fetch, ...clock });
+
+    await Promise.all([fetchPage("https://a.com/1"), fetchPage("https://a.com/2")]);
+
+    expect(clock.sleeps).toEqual([1000, 1000]);
+  });
+
   it("waits at least 1 second between two requests to the same site", async () => {
     const network = fakeNetwork({ "https://a.com": "" });
     const clock = fakeClock();

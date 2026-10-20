@@ -10,7 +10,7 @@ import { parisDay, parisTime } from "@/modules/edition/paris-time";
 import type { Redacteur } from "@/modules/edition/redacteur/types";
 import { isEditionDay, toSchedule } from "@/modules/edition/schedule";
 import { mapInParallel } from "@/modules/edition/parallel";
-import type { PageFetcher } from "@/modules/fetching/polite-fetch";
+import { createPoliteFetcher, type PageFetcher } from "@/modules/fetching/polite-fetch";
 import type { ApifyClient } from "@/modules/social/apify";
 import type { MediaStore } from "@/modules/social/media-store";
 import { collectSocialRuns, forgetOldRuns, launchSocialRuns } from "@/modules/social/refresh-social";
@@ -213,11 +213,12 @@ async function refreshDueSources(
     )
     .orderBy(asc(sql`coalesce(${sources.lastFetchedAt}, 0)`));
 
-  const fetcher = fetchPage?.();
+  // One polite visitor for the whole relève: two sources of the same site share its pace.
+  const fetcher = fetchPage?.() ?? createPoliteFetcher();
   let refreshed = 0;
   await mapInParallel(due, PARALLEL_SOURCES, async ({ id }) => {
     if (timeLeft() < SOURCE_RESERVE_MS) return;
-    await refreshSource(db, id, fetcher ? { fetchPage: fetcher } : {}).catch(() => null);
+    await refreshSource(db, id, { fetchPage: fetcher }).catch(() => null);
     refreshed++;
   });
   return refreshed;
