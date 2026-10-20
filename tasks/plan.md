@@ -32,7 +32,7 @@ reconnaissance des URL → base de données → vérification des sites → ajou
 
 ### Phase 3 : Interface minimale
 - [x] Tâche 6 : Page Sources — ajouter et lister
-- [ ] Tâche 7 : Retirer une source
+- [x] Tâche 7 : Retirer une source
 
 ### Checkpoint final
 - [ ] Tous les critères de succès de la spec sont cochés

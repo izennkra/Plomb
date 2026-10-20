@@ -14,7 +14,7 @@ Cette brique ne récupère **pas encore** les publications (c'est la brique `asp
 - Je colle `https://x.com/studiobakers` → source **X**, nommée `@studiobakers`.
 - Je colle `the-brandidentity.com/features` → source **Web**, nommée `the-brandidentity.com`.
 - Je colle deux fois la même source écrite différemment (`https://www.instagram.com/mouthwash.studio/?hl=fr` et `instagram.com/mouthwash.studio`) → Plomb comprend que c'est la même et ne crée pas de doublon.
-- Je vois la liste de mes sources et je peux me désabonner d'une source.
+- Je vois la liste de mes sources et je peux me désabonner d'une source. La source reste en base tant qu'un autre utilisateur la suit ; elle est supprimée quand plus personne ne la suit.
 - Si je colle n'importe quoi (`bonjour`), Plomb affiche un message clair au lieu de planter.
 - Si je colle l'adresse d'un site qui n'existe pas ou ne répond pas, Plomb me le dit et ne l'ajoute pas.
 

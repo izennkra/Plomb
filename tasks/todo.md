@@ -66,8 +66,8 @@
 ## Tâche 7 : Retirer une source
 **Description :** Service `unsubscribe(userId, sourceId)` + bouton « Retirer » sur la page. La source reste en base si un autre utilisateur la suit.
 **Critères :**
-- [ ] La source disparaît de ma liste
-- [ ] Elle n'est pas supprimée si quelqu'un d'autre la suit
+- [x] La source disparaît de ma liste
+- [x] Elle n'est pas supprimée si quelqu'un d'autre la suit
 **Vérification :** `npm test` + test manuel
 **Dépendances :** 6 · **Taille :** S
 **Fichiers :** `src/modules/sources/unsubscribe.ts`, `tests/sources/unsubscribe.test.ts`, `src/app/page.tsx`, `src/app/actions.ts`

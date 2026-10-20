@@ -2,6 +2,7 @@ import { DEFAULT_USER_ID } from "@/db/client";
 import { getDb } from "@/db";
 import type { Source } from "@/db/schema";
 import { listSources } from "@/modules/sources/list-sources";
+import { unsubscribeAction } from "./actions";
 import { AddSourceForm } from "./add-source-form";
 
 export const dynamic = "force-dynamic";
@@ -31,7 +32,13 @@ export default async function SourcesPage() {
               <span>{TYPE_LABELS[source.type]}</span> —{" "}
               <a href={source.url} target="_blank" rel="noreferrer">
                 {source.displayName}
-              </a>
+              </a>{" "}
+              <form action={unsubscribeAction} style={{ display: "inline" }}>
+                <input type="hidden" name="sourceId" value={source.id} />
+                <button type="submit" aria-label={`Retirer ${source.displayName}`}>
+                  Retirer
+                </button>
+              </form>
             </li>
           ))}
         </ul>

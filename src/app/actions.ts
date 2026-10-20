@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { DEFAULT_USER_ID } from "@/db/client";
 import { getDb } from "@/db";
 import { addSource } from "@/modules/sources/add-source";
+import { unsubscribe } from "@/modules/sources/unsubscribe";
 
 export type AddSourceState = {
   status: "idle" | "success" | "error";
@@ -23,4 +24,12 @@ export async function addSourceAction(_previous: AddSourceState, formData: FormD
   return result.alreadyFollowed
     ? { status: "success", message: `Vous suivez déjà ${name}.`, input: "" }
     : { status: "success", message: `${name} a été ajouté à vos sources.`, input: "" };
+}
+
+export async function unsubscribeAction(formData: FormData): Promise<void> {
+  const sourceId = Number(formData.get("sourceId"));
+  if (!Number.isInteger(sourceId)) return;
+
+  await unsubscribe(await getDb(), DEFAULT_USER_ID, sourceId);
+  revalidatePath("/");
 }
