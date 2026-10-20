@@ -21,6 +21,10 @@ export const sources = sqliteTable("sources", {
   lastFetchStatus: text("last_fetch_status", { enum: ["ok", "error", "running"] }),
   /** Error message shown to the user, or the number of new articles on success. */
   lastFetchMessage: text("last_fetch_message"),
+  /** Logo or profile picture of the source (copied into Plomb), for its tile on the Sources page. */
+  imageUrl: text("image_url"),
+  /** When Plomb last looked for that picture (looked for again after a while when none was found). */
+  imageCheckedAt: integer("image_checked_at", { mode: "timestamp" }),
 });
 
 /** An article (or post) published by a source. Stored once per source, identified by its cleaned address. */

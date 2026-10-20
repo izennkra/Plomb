@@ -14,6 +14,7 @@ import { createPoliteFetcher, type PageFetcher } from "@/modules/fetching/polite
 import type { ApifyClient } from "@/modules/social/apify";
 import type { MediaStore } from "@/modules/social/media-store";
 import { collectSocialRuns, forgetOldRuns, launchSocialRuns } from "@/modules/social/refresh-social";
+import { refreshSourceImages } from "@/modules/sources/source-image";
 import { renderAlertEmail } from "./alert-email";
 import type { SendEmail } from "./email-sender";
 
@@ -101,6 +102,12 @@ export async function runClock(db: Db, deps: ClockDeps): Promise<ClockReport> {
     fetchPage: deps.fetchPage,
     timeLeft: () => budget - elapsed(),
   });
+  // Pictures of the sources still missing, a few at a time, when there is time left.
+  if (deps.mediaStore && budget - elapsed() > SOURCE_RESERVE_MS) {
+    await refreshSourceImages(db, { fetchPage: deps.fetchPage?.() ?? createPoliteFetcher(), mediaStore: deps.mediaStore, now: now() }).catch(
+      () => 0,
+    );
+  }
   await purgeOldPosts(db, now());
   return report;
 }
