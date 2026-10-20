@@ -1,6 +1,6 @@
 # Spec : depeches (Salle de Dépêches)
 
-Brique 3 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [aspiration-web](SPEC-aspiration-web.md). Statut : **validée le 2026-10-20**.
+Brique 3 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [aspiration-web](SPEC-aspiration-web.md). Statut : **terminée le 2026-10-20** (testée dans le navigateur, ordinateur et téléphone).
 
 ## Objectif
 Un **flux unique**, trié par date (le plus récent en haut), où arrivent les publications de toutes les sources suivies.
@@ -94,16 +94,16 @@ Comme les briques précédentes. Composants React petits, sans librairie d'inter
 - Jamais : afficher le texte complet d'un article ; défilement infini.
 
 ## Success Criteria
-- [ ] The Brand Identity → 8 images, It's Nice That → 12, Brand New → 2, aucune image d'un autre article
-- [ ] Le flux mélange toutes les sources des 7 derniers jours, trié par date, chaque carte datée
-- [ ] Articles d'avant l'abonnement : affichés seulement s'ils sont récents (réglage 7 j en test, 3 j ensuite), jamais sans date
-- [ ] Les publications de plus de 7 jours sont supprimées et ne reviennent pas
-- [ ] « En savoir plus » ouvre l'article sur le site du média
-- [ ] Un article suivi via deux sources n'apparaît qu'une fois
-- [ ] Carrousel + affichage en grand fonctionnent (souris et clavier)
-- [ ] Filtres par type et par source fonctionnent et se retrouvent dans l'adresse
-- [ ] La page Sources fonctionne comme avant, à sa nouvelle adresse
-- [ ] `npm test`, `npm run lint`, `npm run typecheck` passent
+- [x] The Brand Identity → 8 images, It's Nice That → 12, Brand New → 2, aucune image d'un autre article
+- [x] Le flux mélange toutes les sources des 7 derniers jours, trié par date, chaque carte datée
+- [x] Articles d'avant l'abonnement : affichés seulement s'ils sont récents (réglage 7 j en test, 3 j ensuite), jamais sans date
+- [x] Les publications de plus de 7 jours sont supprimées et ne reviennent pas
+- [x] « En savoir plus » ouvre l'article sur le site du média
+- [x] Un article suivi via deux sources n'apparaît qu'une fois
+- [x] Carrousel + affichage en grand fonctionnent (souris et clavier)
+- [x] Filtres par type et par source fonctionnent et se retrouvent dans l'adresse
+- [x] La page Sources fonctionne comme avant, à sa nouvelle adresse
+- [x] `npm test`, `npm run lint`, `npm run typecheck` passent
 
 ## Décisions (Izenn, 2026-10-20)
 1. « En savoir plus » renvoie **directement à la source** (article du média, plus tard post Instagram / X).

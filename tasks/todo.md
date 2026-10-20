@@ -71,11 +71,11 @@ gardées si même dossier propre à l'article ou même nom de base que l'image p
 ## Tâche 9 : Image en grand + filtres
 **Description :** Clic sur une image → affichage plein écran (flèches, Échap pour fermer). Filtres par type et par source, gardés dans l'adresse.
 **Critères :**
-- [ ] Image en grand utilisable à la souris et au clavier
-- [ ] Filtres fonctionnels, adresse partageable
+- [x] Image en grand utilisable à la souris et au clavier
+- [x] Filtres fonctionnels, adresse partageable
 **Vérification :** test manuel · **Dépendances :** 8 · **Taille :** M
 **Fichiers :** `src/app/components/lightbox.tsx`, `src/app/components/filters.tsx`, `src/app/page.tsx`
 
 ## Checkpoint final
-- [ ] Critères de succès de SPEC-depeches.md cochés
-- [ ] `/review`, push, proposition de pull request
+- [x] Critères de succès de SPEC-depeches.md cochés
+- [x] `/review`, push, proposition de pull request

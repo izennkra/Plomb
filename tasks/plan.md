@@ -33,11 +33,11 @@ dédoublonnage, conservation 7 jours), enfin l'**interface** : page Sources dép
 ### Phase 3 : Interface
 - [x] Tâche 7 : Page Sources déplacée sur `/sources` + navigation
 - [x] Tâche 8 : Salle de Dépêches — cartes (carrousel, titre, résumé, date, source, « En savoir plus »)
-- [ ] Tâche 9 : Image en grand + filtres par type et par source
+- [x] Tâche 9 : Image en grand + filtres par type et par source
 
 ### Checkpoint final
-- [ ] Critères de succès de la spec cochés, testés dans le navigateur
-- [ ] `/review`, push, proposition de pull request
+- [x] Critères de succès de la spec cochés, testés dans le navigateur
+- [x] `/review`, push, proposition de pull request
 
 ## Risques
 | Risque | Impact | Parade |
@@ -45,6 +45,19 @@ dédoublonnage, conservation 7 jours), enfin l'**interface** : page Sources dép
 | La règle de famille rate des images ou en prend d'un autre article | Moyen | Tests sur 4 sites réels ; au pire la galerie se réduit à l'image principale |
 | Un média bloque l'affichage de ses images depuis un autre site | Moyen | `referrerPolicy="no-referrer"` ; sinon carte sans image (titre et résumé restent) |
 | Compléter 131 galeries = ~131 pages relues | Faible | Bouton temporaire, relecture polie (1 s/page), une seule fois |
+
+## Review (fin de brique)
+- Corrigé : dans l'image en grand, les touches ← → étaient traitées deux fois (image en grand + carte) ;
+  clic sur le fond sombre pour fermer.
+- Corrigé pendant les tests réels : logos écartés à tort (c'est le sujet sur un média design), articles commençant
+  par une vidéo, flux RSS à une seule image (It's Nice That), copies en cache comptées en double.
+- **Suivis :**
+  - Passer `BACKFILL_MAX_AGE_DAYS` de 7 à 3 jours à la fin de la phase de test (`src/modules/depeches/settings.ts`).
+  - Retirer le bouton temporaire « Compléter les galeries » une fois les galeries existantes complétées.
+  - Galeries d'It's Nice That incomplètes sur certains articles (images sans nom commun) — à revoir si gênant.
+  - Les filtres par source sont une liste de pastilles : à repenser (menu, recherche) quand il y aura beaucoup de sources ;
+    le design viendra de Figma.
+  - Images affichées depuis le site du média : si un média les bloque, la carte reste lisible (titre, résumé) sans image.
 
 ## Questions ouvertes
 - Aucune.
