@@ -29,7 +29,8 @@ s'est arrêté ; la rédaction des articles par Mistral se fait plusieurs à la 
 L'horloge de Vercel (offre gratuite : une fois par jour, ± 59 min) n'est pas utilisée.
 
 ## Fonctionnement automatique (fuseau Europe/Paris)
-- Toutes les **15 minutes**, l'horloge appelle Plomb (adresse secrète protégée par un jeton), qui fait ce qu'il y a à faire :
+- Toutes les **15 minutes**, l'horloge appelle Plomb (adresse secrète protégée par un jeton), qui répond aussitôt (cron-job.org abandonne
+  après 30 secondes) puis fait en arrière-plan ce qu'il y a à faire :
 - **Relevé** des sources web (chaque source au plus toutes les 30 minutes, les plus anciennes d'abord, par tranches).
 - **8h00** : si c'est un jour de parution (fréquence choisie), préparation de l'édition par Mistral en ligne.
 - **9h00** : publication (le journal du jour s'affiche à partir de 9h00, la veille reste affichée avant) + **envoi de l'e-mail**.
@@ -90,6 +91,11 @@ Je ne peux ni créer ces comptes, ni saisir de clés ou de mots de passe à sa p
 
 3. Hébergement **gratuit** : Vercel + Turso + cron-job.org (+ Mistral ~1 €/mois, Resend gratuit).
 4. Sources actuelles transférées sur le serveur (proposé ; à confirmer).
+
+## Constats de la mise en ligne (2026-10-20)
+- Premier passage réel : 63 articles relevés, 10 demandes Apify lancées, e-mail reçu.
+- **the-brandidentity.com** (protégé par Cloudflare) refuse les serveurs (erreur 403) alors qu'il répond au Mac.
+  Contourner cette protection est exclu ; The Brand Identity reste suivi sur X (@TweetsByTBI).
 
 ## Open Questions
 - Aucune.
