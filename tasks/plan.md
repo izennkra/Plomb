@@ -28,7 +28,7 @@ dédoublonnage, conservation 7 jours), enfin l'**interface** : page Sources dép
 
 ### Phase 2 : Le flux
 - [x] Tâche 5 : Requête du flux (7 jours, tri, dédoublonnage, règle « avant l'abonnement », filtres)
-- [ ] Tâche 6 : Suppression des publications de plus de 7 jours à chaque relevé
+- [x] Tâche 6 : Suppression des publications de plus de 7 jours à chaque relevé
 
 ### Phase 3 : Interface
 - [ ] Tâche 7 : Page Sources déplacée sur `/sources` + navigation

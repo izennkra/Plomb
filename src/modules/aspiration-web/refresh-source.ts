@@ -7,6 +7,7 @@ import { findArticleLinks } from "./article-links";
 import { richerGallery } from "./enrich-gallery";
 import { findFeedUrls, parseFeed } from "./feed";
 import type { PostCandidate } from "./post";
+import { purgeOldPosts } from "@/modules/depeches/purge";
 
 /** Articles stored per relève: enough to fill the first edition, without hammering the site. */
 const MAX_POSTS_PER_REFRESH = 20;
@@ -92,6 +93,8 @@ export async function refreshAllSources(
     }
   }
   await Promise.all(Array.from({ length: Math.min(PARALLEL_SOURCES, total) }, worker));
+  // One week of publications is kept.
+  await purgeOldPosts(db);
   return { sources: total, failed, added };
 }
 

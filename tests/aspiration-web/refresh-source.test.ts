@@ -266,6 +266,22 @@ describe("refreshAllSources", () => {
     expect(summary).toEqual({ sources: 2, failed: 1, added: 5 });
   });
 
+  it("deletes publications older than 7 days", async () => {
+    const { db, sourceId } = await setup("/blog");
+    await db.insert(posts).values({
+      sourceId,
+      url: `${server.base}/blog/very-old-article-from-last-month`,
+      title: "Very old",
+      method: "page",
+      publishedAt: new Date(Date.now() - 30 * 24 * 3600 * 1000),
+    });
+
+    await refreshAllSources(db, { fetchPage: fetchPage() });
+
+    const titles = (await postsOf(db, sourceId)).map((post) => post.title);
+    expect(titles).not.toContain("Very old");
+  });
+
   it("says when there is nothing new", async () => {
     const { db, sourceId } = await setup("/blog");
     await refreshSource(db, sourceId, { fetchPage: fetchPage() });

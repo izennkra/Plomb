@@ -47,8 +47,8 @@ gardées si même dossier propre à l'article ou même nom de base que l'image p
 ## Tâche 6 : Conservation 7 jours
 **Description :** `purgeOldPosts(db, now)` supprime les publications de plus de 7 jours ; appelée à chaque relevé. Les adresses restent « déjà vues ».
 **Critères :**
-- [ ] Publication de 8 jours supprimée, de 6 jours gardée
-- [ ] Une publication supprimée ne revient pas au relevé suivant
+- [x] Publication de 8 jours supprimée, de 6 jours gardée
+- [x] Une publication supprimée ne revient pas au relevé suivant
 **Vérification :** `npm test` · **Dépendances :** 5 · **Taille :** S
 **Fichiers :** `src/modules/depeches/purge.ts`, `src/modules/aspiration-web/refresh-source.ts`, `tests/depeches/purge.test.ts`
 
