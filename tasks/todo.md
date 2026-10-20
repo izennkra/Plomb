@@ -44,7 +44,8 @@
 ## Tâche 7 : Transfert des sources
 **Description :** Les 9 sources actuelles ajoutées sur le serveur (et leurs favoris), premier relevé en ligne.
 **Critères :**
-- [ ] Les 9 sources en ligne, relevées
+- [x] Les 20 sources en ligne (favoris et fréquence compris ; ancienne entrée YouTube « site » écartée)
+- [ ] Premier relevé en ligne
 **Vérification :** page Sources en ligne · **Dépendances :** 6 · **Taille :** S
 
 ## Checkpoint final
