@@ -31,7 +31,7 @@ dédoublonnage, conservation 7 jours), enfin l'**interface** : page Sources dép
 - [x] Tâche 6 : Suppression des publications de plus de 7 jours à chaque relevé
 
 ### Phase 3 : Interface
-- [ ] Tâche 7 : Page Sources déplacée sur `/sources` + navigation
+- [x] Tâche 7 : Page Sources déplacée sur `/sources` + navigation
 - [ ] Tâche 8 : Salle de Dépêches — cartes (carrousel, titre, résumé, date, source, « En savoir plus »)
 - [ ] Tâche 9 : Image en grand + filtres par type et par source
 

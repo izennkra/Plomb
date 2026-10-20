@@ -33,7 +33,7 @@ export async function addSourceAction(_previous: AddSourceState, formData: FormD
     after(() => refreshSource(db, source.id));
   }
 
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   const name = source.displayName;
   if (result.alreadyFollowed) return { status: "success", message: `Vous suivez déjà ${name}.`, input: "" };
   return {
@@ -51,7 +51,7 @@ export async function refreshAllAction(): Promise<void> {
     websites.map((source) => source.id),
   );
   after(() => refreshAllSources(db));
-  revalidatePath("/");
+  revalidatePath("/", "layout");
 }
 
 export async function unsubscribeAction(formData: FormData): Promise<void> {
@@ -59,7 +59,7 @@ export async function unsubscribeAction(formData: FormData): Promise<void> {
   if (!Number.isInteger(sourceId)) return;
 
   await unsubscribe(await getDb(), DEFAULT_USER_ID, sourceId);
-  revalidatePath("/");
+  revalidatePath("/", "layout");
 }
 
 // Temporary (brick `depeches`): fill the galleries of articles stored before galleries existed.
@@ -80,5 +80,5 @@ export async function completeGalleriesAction(): Promise<void> {
       galleryJob.plombGalleriesRunning = false;
     }
   });
-  revalidatePath("/");
+  revalidatePath("/", "layout");
 }

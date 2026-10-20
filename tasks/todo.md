@@ -55,7 +55,7 @@ gardées si même dossier propre à l'article ou même nom de base que l'image p
 ## Tâche 7 : Page Sources sur `/sources`
 **Description :** La page actuelle déplacée sur `/sources` ; navigation « Dépêches · Sources ».
 **Critères :**
-- [ ] Ajouter / retirer / relever fonctionne sur `/sources`
+- [x] Ajouter / retirer / relever fonctionne sur `/sources`
 **Vérification :** test manuel · **Dépendances :** aucune · **Taille :** S
 **Fichiers :** `src/app/sources/page.tsx`, `src/app/layout.tsx`, `src/app/actions.ts`
 
