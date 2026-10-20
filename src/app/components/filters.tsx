@@ -26,12 +26,12 @@ export function Filters({
   return (
     <nav className="filters" aria-label="Filtres">
       <div className="filters__row">
-        <Link href="/" className="chip" aria-current={all ? "page" : undefined}>
+        <Link href="/depeches" className="chip" aria-current={all ? "page" : undefined}>
           Tout
         </Link>
         {types.length > 1 &&
           types.map((value) => (
-            <Link key={value} href={`/?type=${value}`} className="chip" aria-current={type === value && sourceId === undefined ? "page" : undefined}>
+            <Link key={value} href={`/depeches?type=${value}`} className="chip" aria-current={type === value && sourceId === undefined ? "page" : undefined}>
               {TYPE_LABELS[value]}
             </Link>
           ))}
@@ -40,7 +40,7 @@ export function Filters({
         {shown.map((source) => (
           <Link
             key={source.id}
-            href={`/?source=${source.id}`}
+            href={`/depeches?source=${source.id}`}
             className="chip chip--small"
             aria-current={sourceId === source.id ? "page" : undefined}
           >

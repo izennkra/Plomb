@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import type { ReactNode } from "react";
+import { Logo } from "./components/logo";
+import { TabBar } from "./components/tab-bar";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,16 +14,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="fr">
       <body>
         <header className="site-header">
-          <Link href="/" className="site-name">
-            Plomb
-          </Link>
-          <nav aria-label="Navigation principale">
-            <Link href="/journal">Journal</Link>
-            <Link href="/">Dépêches</Link>
-            <Link href="/sources">Sources</Link>
-          </nav>
+          <Logo />
         </header>
         {children}
+        <TabBar />
       </body>
     </html>
   );

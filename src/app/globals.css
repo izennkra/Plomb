@@ -1,62 +1,287 @@
-/* Minimal layout until the Figma design system arrives. */
+/* Plomb — design V1 (Izenn, 2026-10-20): brutalist, flat, one typeface, tiny and huge sizes, no shadows. */
+
+/* ABC Diatype Compressed (licensed by Izenn). The installed font is used first, then the copy served by Plomb. */
+@font-face {
+  font-family: "Diatype Compressed";
+  font-weight: 300;
+  font-display: swap;
+  src: local("ABCDiatypeCompressedTrial-Light"), local("ABC Diatype Compressed Trial Light"),
+    url("/fonts/diatype-compressed-light.otf") format("opentype");
+}
+@font-face {
+  font-family: "Diatype Compressed";
+  font-weight: 400;
+  font-display: swap;
+  src: local("ABCDiatypeCompressedTrial-Regular"), local("ABC Diatype Compressed Trial"),
+    url("/fonts/diatype-compressed-regular.otf") format("opentype");
+}
+@font-face {
+  font-family: "Diatype Compressed";
+  font-weight: 500;
+  font-display: swap;
+  src: local("ABCDiatypeCompressedTrial-Medium"), local("ABC Diatype Compressed Trial Medium"),
+    url("/fonts/diatype-compressed-medium.otf") format("opentype");
+}
+
+:root {
+  --paper: #eaeaea; /* background */
+  --panel: #a8a8a8; /* cards and windows */
+  --tab: #bdbdbd; /* inactive tab */
+  --tab-text: #d9d9d9;
+  --ink: #000;
+  --white: #fff;
+  --accent: #f08f35; /* the Une */
+  --radius: 6px;
+  --gutter: 30px;
+  --tab-height: 22px;
+  --font: "Diatype Compressed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --fast: 150ms;
+
+  font-family: var(--font);
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-:root {
-  --ink: #111;
-  --muted: #6b6b6b;
-  --line: #e2e2e2;
-  --paper: #fafaf7;
-  font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-  color: var(--ink);
+body {
+  margin: 0;
+  min-height: 100vh;
   background: var(--paper);
 }
 
-body {
-  margin: 0;
+a {
+  color: inherit;
 }
 
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 16px 64px;
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
 }
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Buttons: flat black blocks; hover inverts instantly (no transition, on purpose). */
+button {
+  border: 0;
+  border-radius: calc(var(--radius) - 2px);
+  padding: 3px 10px 2px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 15px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+button:hover {
+  background: var(--white);
+  color: var(--ink);
+}
+button:disabled {
+  background: var(--tab);
+  color: var(--tab-text);
+  cursor: default;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="url"] {
+  border: 0;
+  border-radius: calc(var(--radius) - 2px);
+  padding: 4px 10px 3px;
+  background: var(--white);
+  font-size: 17px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Frame: logo at the top, tabs at the bottom -------------------------------------------------- */
 
 .site-header {
   display: flex;
-  align-items: baseline;
-  gap: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px;
-  border-bottom: 1px solid var(--line);
+  justify-content: center;
+  padding: 40px var(--gutter) 24px;
 }
 
-.site-name {
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: inherit;
+.logo {
+  display: block;
+  color: var(--ink);
+  line-height: 0;
+}
+
+.logo__block {
+  animation: logo-block 260ms steps(1, end) both;
+}
+
+@keyframes logo-block {
+  from {
+    opacity: 0;
+  }
+}
+
+.page {
+  min-height: calc(100vh - 160px);
+  padding: 0 var(--gutter) calc(var(--tab-height) + 80px);
+  animation: page-in var(--fast) ease-out both;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.tab-bar {
+  --gap: 14px;
+  position: fixed;
+  z-index: 10;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+/* Content fades out under the tabs (as on the mockups), the tabs stay on the background. */
+.tab-bar::before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(var(--tab-height) + 100px);
+  background: linear-gradient(to bottom, rgb(234 234 234 / 0), var(--paper) 55%);
+  pointer-events: none;
+}
+
+.tab-bar__tab {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--tab-height);
+  padding: 2px 8px 0;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--tab);
+  color: var(--tab-text);
+  font-size: 15px;
   text-decoration: none;
 }
+.tab-bar__tab[aria-current="page"] {
+  background: transparent;
+  color: var(--white);
+}
+.tab-bar__tab:not([aria-current="page"]):hover {
+  background: var(--ink);
+  color: var(--white);
+}
 
-.site-header nav {
-  display: flex;
-  gap: 16px;
+.tab-bar kbd {
+  font: inherit;
+  font-size: 12px;
+  opacity: 0;
+}
+.tab-bar__tab:hover kbd {
+  opacity: 0.6;
+}
+
+/* The black block glides under the open tab. */
+.tab-bar__active {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: calc((100% - 2 * var(--gap)) / 3);
+  height: var(--tab-height);
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--ink);
+  transform: translateX(calc(var(--active) * (100% + var(--gap))));
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.tab-bar__active ~ .tab-bar__tab[aria-current="page"] {
+  z-index: 2;
 }
 
 .page-title {
   margin: 0 0 24px;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
 }
 
-/* Salle de Dépêches: cards in reading order (left → right, top → bottom), most recent first. */
-.feed {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-  gap: 32px 24px;
+/* --- Sign in ------------------------------------------------------------------------------------- */
+
+.sign-in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 18vh auto 0;
+  max-width: 260px;
+  text-align: center;
 }
+.sign-in p {
+  margin: 0;
+  font-size: 15px;
+}
+.sign-in input {
+  width: 100%;
+  text-align: center;
+}
+.sign-in [role="alert"] {
+  color: var(--accent);
+}
+
+@media (max-width: 700px) {
+  :root {
+    --gutter: 14px;
+  }
+  .site-header {
+    padding-top: 24px;
+  }
+  .tab-bar {
+    --gap: 8px;
+    bottom: 16px;
+  }
+  .tab-bar::before {
+    height: calc(var(--tab-height) + 60px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- Until each screen is redesigned (tasks 2 to 4) ---------------------------------------------- */
 
 .card {
   display: flex;
@@ -332,8 +557,3 @@ main {
   padding-left: 22px;
 }
 
-.sign-in {
-  display: grid;
-  gap: 8px;
-  max-width: 320px;
-}
