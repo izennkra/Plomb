@@ -57,6 +57,13 @@
       "when": 1792503116625,
       "tag": "0007_edition_publication",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1792506025457,
+      "tag": "0008_social_runs",
+      "breakpoints": true
     }
   ]
 }

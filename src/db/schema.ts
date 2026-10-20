@@ -44,7 +44,7 @@ export const posts = sqliteTable(
       .default(sql`(unixepoch())`),
     /** Full text, for the AI editor only: never displayed. */
     content: text("content"),
-    method: text("method", { enum: ["rss", "page"] }).notNull(),
+    method: text("method", { enum: ["rss", "page", "social"] }).notNull(),
     /** Already published when the source was added: a starting point, not news. */
     beforeSubscription: integer("before_subscription", { mode: "boolean" }).notNull().default(false),
   },
@@ -52,6 +52,28 @@ export const posts = sqliteTable(
     uniqueIndex("posts_source_url_unique").on(table.sourceId, table.url),
     index("posts_source_idx").on(table.sourceId, table.discoveredAt),
   ],
+);
+
+/**
+ * A request sent to Apify for a social source (Instagram, X, LinkedIn): started by the clock, results read at a later
+ * call (the scraper takes a minute or two).
+ */
+export const socialRuns = sqliteTable(
+  "social_runs",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    sourceId: integer("source_id")
+      .notNull()
+      .references(() => sources.id, { onDelete: "cascade" }),
+    actor: text("actor").notNull(),
+    runId: text("run_id").notNull(),
+    datasetId: text("dataset_id").notNull(),
+    status: text("status", { enum: ["running", "done", "failed"] }).notNull().default("running"),
+    startedAt: createdAt(),
+    finishedAt: integer("finished_at", { mode: "timestamp" }),
+    message: text("message"),
+  },
+  (table) => [index("social_runs_status_idx").on(table.status, table.sourceId)],
 );
 
 /**
