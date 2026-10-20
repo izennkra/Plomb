@@ -10,6 +10,10 @@ export function getDb(): Promise<Db> {
     const db = createDb();
     await prepareDb(db);
     return db;
-  })();
+  })().catch((error) => {
+    // Don't keep a failed start in cache: the next request tries again.
+    cache.plombDb = undefined;
+    throw error;
+  });
   return cache.plombDb;
 }

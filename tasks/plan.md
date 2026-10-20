@@ -35,8 +35,8 @@ reconnaissance des URL → base de données → vérification des sites → ajou
 - [x] Tâche 7 : Retirer une source
 
 ### Checkpoint final
-- [ ] Tous les critères de succès de la spec sont cochés
-- [ ] Review (`/review`), push de la branche, proposition de pull request
+- [x] Tous les critères de succès de la spec sont cochés
+- [x] Review (`/review`), push de la branche, proposition de pull request
 
 ## Risques
 | Risque | Impact | Parade |
@@ -44,6 +44,13 @@ reconnaissance des URL → base de données → vérification des sites → ajou
 | `better-sqlite3` ne s'installe pas avec Node 26 (module compilé) | Moyen | **Appliqué** : `@libsql/client` utilisé dès la tâche 3 |
 | Certains sites bloquent les robots (erreur 403) alors qu'ils existent | Moyen | Envoyer un en-tête navigateur classique ; traiter 403 comme « existe mais protégé » et accepter la source |
 | Règles d'URL des réseaux sociaux qui changent | Faible | Règles regroupées dans un seul fichier, couvertes par des tests |
+
+## Review (fin de brique)
+- Corrigé : une erreur au démarrage de la base n'est plus gardée en mémoire (nouvel essai à la requête suivante).
+- Corrigé : test d'exemple de la tâche 1 supprimé (remplacé par les vrais tests).
+- **À faire avant la mise en ligne** (sécurité) : la vérification des sites contacte n'importe quelle adresse,
+  y compris celles du réseau interne du serveur (ex. 127.0.0.1, 192.168.x.x). Sans danger en local, mais à bloquer
+  avant d'héberger Plomb pour d'autres utilisateurs. À traiter dans la brique `aspiration-web`, qui contactera aussi les sites.
 
 ## Questions ouvertes
 - Aucune pour l'instant.

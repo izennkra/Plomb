@@ -88,12 +88,12 @@ export function parseSourceUrl(input: string): ParsedSource | ParseError {
 - Jamais : committer la base locale ou des clés secrètes, aller chercher le contenu des sources (c'est la brique suivante).
 
 ## Success Criteria
-- [ ] Les 4 types d'URL du tableau sont reconnus, avec le bon nom et la bonne clé
-- [ ] Une même source écrite de 2 façons différentes ne crée qu'une seule ligne en base
-- [ ] Une URL invalide ou une page non-profil affiche un message clair en français
-- [ ] Un site web qui ne répond pas ou renvoie une erreur est refusé avec un message clair
-- [ ] Sur la page, je peux ajouter, voir et retirer mes sources
-- [ ] `npm test`, `npm run lint` et `npm run typecheck` passent
+- [x] Les 4 types d'URL du tableau sont reconnus, avec le bon nom et la bonne clé
+- [x] Une même source écrite de 2 façons différentes ne crée qu'une seule ligne en base
+- [x] Une URL invalide ou une page non-profil affiche un message clair en français
+- [x] Un site web qui ne répond pas ou renvoie une erreur est refusé avec un message clair
+- [x] Sur la page, je peux ajouter, voir et retirer mes sources
+- [x] `npm test`, `npm run lint` et `npm run typecheck` passent
 
 ## Décisions
 1. Vérifier qu'un site web existe dès l'ajout : **oui** (voir « Vérification à l'ajout »).

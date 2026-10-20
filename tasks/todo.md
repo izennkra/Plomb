@@ -52,7 +52,7 @@
 **Fichiers :** `src/modules/sources/add-source.ts`, `tests/sources/add-source.test.ts`
 
 ## Checkpoint 2
-- [ ] Tous les tests passent — point avec Izenn
+- [x] Tous les tests passent — point avec Izenn
 
 ## Tâche 6 : Page Sources — ajouter et lister
 **Description :** Page avec un champ « Coller une URL », un bouton Ajouter, le message d'erreur éventuel et la liste des sources suivies (type + nom).
@@ -73,5 +73,5 @@
 **Fichiers :** `src/modules/sources/unsubscribe.ts`, `tests/sources/unsubscribe.test.ts`, `src/app/page.tsx`, `src/app/actions.ts`
 
 ## Checkpoint final
-- [ ] Tous les critères de succès de SPEC-sources.md cochés
-- [ ] `/review`, push de la branche, proposition de pull request
+- [x] Tous les critères de succès de SPEC-sources.md cochés
+- [x] `/review`, push de la branche, proposition de pull request
