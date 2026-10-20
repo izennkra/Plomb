@@ -30,8 +30,8 @@
 ## Tâche 4 : Sélection des articles
 **Description :** `selectEditionPosts(db, userId, { now })` : articles nouveaux (jamais « avant l'abonnement ») des sources suivies, découverts après la fin de l'édition précédente et jusqu'à 8h00 (Paris) ; première édition : 24 h.
 **Critères :**
-- [ ] Fenêtre correcte (dont première édition), dédoublonnage par adresse
-- [ ] Articles d'avant l'abonnement exclus
+- [x] Fenêtre correcte (dont première édition), dédoublonnage par adresse
+- [x] Articles d'avant l'abonnement exclus
 **Vérification :** `npm test` · **Dépendances :** 3 · **Taille :** S
 **Fichiers :** `src/modules/edition/select.ts`, `tests/edition/select.test.ts`
 
