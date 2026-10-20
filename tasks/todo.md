@@ -38,9 +38,9 @@
 ## Tâche 5 : Fabrication de l'édition
 **Description :** `buildEdition(db, userId, { redacteur, now })` : rédige chaque article, note + bonus favoris, choisit la Une (1 + 2), rédige les textes de Une, classe la suite, enregistre ; secours si l'IA échoue ; édition vide assumée ; statut en préparation / prête / erreur.
 **Critères :**
-- [ ] Une 1 + 2 = les 3 mieux notés (bonus favoris inclus)
-- [ ] Un échec de l'IA sur un article n'empêche pas l'édition
-- [ ] Journée sans nouveauté → édition « pas de nouvelles »
+- [x] Une 1 + 2 = les 3 mieux notés (bonus favoris inclus)
+- [x] Un échec de l'IA sur un article n'empêche pas l'édition
+- [x] Journée sans nouveauté → édition « pas de nouvelles »
 **Vérification :** `npm test` (faux rédacteur) · **Dépendances :** 2, 3, 4 · **Taille :** M
 **Fichiers :** `src/modules/edition/build.ts`, `tests/edition/build.test.ts`
 
