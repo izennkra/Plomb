@@ -281,173 +281,229 @@ input[type="url"] {
   }
 }
 
-/* --- Until each screen is redesigned (tasks 2 to 4) ---------------------------------------------- */
+/* --- Dépêches: one centered column, the middle card sharp ------------------------------------------- */
+
+.page:has(.depeches) {
+  padding-bottom: 0;
+}
+
+.depeches {
+  position: relative;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 auto 4px;
+  max-width: 560px;
+}
+
+.chip {
+  padding: 2px 7px 1px;
+  border-radius: calc(var(--radius) - 3px);
+  background: var(--tab);
+  color: var(--white);
+  font-size: 13px;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.chip:hover,
+.chip[aria-current="page"] {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.stream__count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.stream {
+  height: calc(100vh - 124px);
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  padding: 36vh 0 42vh;
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+}
+.stream::-webkit-scrollbar {
+  display: none;
+}
+
+.stream__item {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 28px;
+  scroll-snap-align: center;
+  transition: opacity 260ms ease-out, transform 260ms ease-out;
+}
+.stream__item[data-distance="1"] {
+  opacity: 0.32;
+  transform: scale(0.88);
+  cursor: pointer;
+}
+.stream__item[data-distance="2"] {
+  opacity: 0;
+  transform: scale(0.8);
+}
 
 .card {
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 260px);
+  padding: 14px 7px 12px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--white);
+  text-align: center;
 }
 
-.card__body {
-  padding-top: 12px;
-}
-
-.card__meta {
-  margin: 0 0 6px;
-  font-size: 0.8rem;
-  color: var(--muted);
+.card__head {
+  padding: 0 8px;
 }
 
 .card__title {
-  margin: 0 0 8px;
-  font-size: 1.05rem;
-  line-height: 1.3;
+  margin: 0;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.04;
+  overflow-wrap: anywhere;
+}
+
+.card__meta {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.2;
 }
 
 .card__excerpt {
-  margin: 0 0 12px;
-  font-size: 0.9rem;
-  line-height: 1.45;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  max-height: 10.5em;
+  margin: 0;
+  padding: 0 10px;
   overflow: hidden;
+  font-size: 13px;
+  line-height: 1.17;
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
 }
 
 .card__more {
-  font-size: 0.9rem;
-  color: inherit;
+  font-size: 13px;
+  text-decoration: none;
+}
+.card__more:hover {
+  color: var(--ink);
 }
 
+/* Images of an article: one at a time, arrows on hover, the image in large on click. */
 .carousel {
   position: relative;
-  aspect-ratio: 4 / 3;
-  background: var(--line);
+  width: 100%;
+  border-radius: calc(var(--radius) - 2px);
   overflow: hidden;
+  background: var(--tab);
 }
-
-.carousel:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 2px;
-}
-
 .carousel img {
   display: block;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
 }
-
-.carousel__arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 50%;
-  background: rgb(255 255 255 / 85%);
-  font-size: 1.4rem;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.carousel__arrow--prev {
-  left: 8px;
-}
-
-.carousel__arrow--next {
-  right: 8px;
-}
-
-.carousel__count {
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-  padding: 2px 8px;
-  border-radius: 10px;
-  background: rgb(0 0 0 / 60%);
-  color: #fff;
-  font-size: 0.75rem;
-}
-
 .carousel__open {
   display: block;
   width: 100%;
-  height: 100%;
   padding: 0;
-  border: none;
+  border-radius: 0;
   background: none;
   cursor: zoom-in;
 }
+.carousel__open:hover {
+  background: none;
+}
+.carousel__arrow {
+  position: absolute;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  transform: translateY(-50%);
+  font-size: 15px;
+  line-height: 1;
+  opacity: 0;
+}
+.carousel:hover .carousel__arrow,
+.carousel:focus-within .carousel__arrow,
+.lightbox .carousel__arrow {
+  opacity: 1;
+}
+.carousel__arrow--prev {
+  left: 6px;
+}
+.carousel__arrow--next {
+  right: 6px;
+}
+.carousel__count {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  padding: 1px 5px 0;
+  border-radius: 3px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 12px;
+}
 
-/* Image in large: the whole picture, uncropped, on a dark background. */
 .lightbox {
   width: 100vw;
-  max-width: 100vw;
+  max-width: none;
   height: 100vh;
-  max-height: 100vh;
+  max-height: none;
   margin: 0;
-  padding: 48px 16px;
-  border: none;
-  background: rgb(0 0 0 / 92%);
+  padding: 40px;
+  border: 0;
+  background: var(--paper);
 }
-
 .lightbox::backdrop {
-  background: rgb(0 0 0 / 60%);
+  background: var(--paper);
 }
-
 .lightbox img {
   display: block;
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: calc(100vh - 80px);
+  margin: 0 auto;
+  border-radius: var(--radius);
   object-fit: contain;
 }
-
 .lightbox__close {
   position: absolute;
-  top: 12px;
-  right: 16px;
-  border: none;
-  background: none;
-  color: #fff;
-  font-size: 2rem;
-  line-height: 1;
-  cursor: pointer;
+  top: 14px;
+  right: 14px;
 }
 
-.filters {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 24px;
+.empty {
+  margin: 20vh auto 0;
+  max-width: 340px;
+  text-align: center;
+  font-size: 17px;
 }
 
-.filters__row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+@media (max-width: 700px) {
+  .stream {
+    height: calc(100vh - 110px);
+  }
+  .card {
+    width: min(100%, 320px);
+  }
 }
 
-.chip {
-  padding: 4px 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: inherit;
-  text-decoration: none;
-  font-size: 0.9rem;
-  background: #fff;
-}
-
-.chip--small {
-  font-size: 0.8rem;
-}
-
-.chip[aria-current="page"] {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: #fff;
-}
+/* --- Until each screen is redesigned (tasks 3 and 4) ------------------------------------------------- */
 
 /* Journal: the Une in large, 2 secondary articles beside, then the rest. */
 .journal-header {
@@ -556,4 +612,3 @@ input[type="url"] {
   gap: 10px;
   padding-left: 22px;
 }
-

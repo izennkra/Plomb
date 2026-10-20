@@ -6,6 +6,7 @@ import { listFeed } from "@/modules/depeches/list-feed";
 import { listSources } from "@/modules/sources/list-sources";
 import { Filters } from "../components/filters";
 import { PostCard } from "../components/post-card";
+import { Stream } from "./stream";
 
 export const dynamic = "force-dynamic";
 
@@ -28,27 +29,27 @@ export default async function DepechesPage({ searchParams }: { searchParams: Sea
   const filtered = type !== undefined || sourceId !== undefined;
 
   return (
-    <main>
-      <h1 className="page-title">Dépêches</h1>
+    <main className="depeches">
+      <h1 className="visually-hidden">Dépêches</h1>
       {sources.length > 0 && <Filters sources={sources} type={type} sourceId={sourceId} />}
       {items.length === 0 ? (
-        <p>
+        <p className="empty">
           {filtered ? (
             <>
               Aucune dépêche cette semaine pour ce filtre. <Link href="/depeches">Tout afficher</Link>
             </>
           ) : (
             <>
-              Aucune dépêche cette semaine. <Link href="/sources">Ajoutez des sources</Link> pour remplir votre salle de dépêches.
+              Aucune dépêche cette semaine. <Link href="/sources">Ajoute des sources</Link> pour remplir la salle de dépêches.
             </>
           )}
         </p>
       ) : (
-        <div className="feed">
+        <Stream>
           {items.map((item) => (
             <PostCard key={item.id} item={item} now={now} />
           ))}
-        </div>
+        </Stream>
       )}
     </main>
   );
