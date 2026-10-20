@@ -20,10 +20,10 @@ figées des vrais sites d'Izenn : flux RSS → repérage des liens d'articles �
 ### Phase 1 : Fondations
 - [x] Tâche 1 : Accès réseau sécurisé (adresses internes bloquées, taille, délai, redirections vérifiées)
 - [x] Tâche 2 : Politesse (robots.txt + pause entre deux pages d'un même site)
-- [ ] Tâche 3 : Base de données (table `posts` + infos de relevé sur `sources`)
+- [x] Tâche 3 : Base de données (table `posts` + infos de relevé sur `sources`)
 
 ### Checkpoint 1
-- [ ] Tests OK ; la brique 1 marche toujours (ajout d'une source dans le navigateur)
+- [x] Tests OK ; la brique 1 marche toujours (ajout d'une source dans le navigateur)
 
 ### Phase 2 : La cascade
 - [ ] Tâche 4 : Copies figées des 6 sites (+ un article de chacun)

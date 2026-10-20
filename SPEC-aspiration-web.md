@@ -79,7 +79,7 @@ tests/fixtures/                 → copies de pages réelles (the-brandidentity,
 ```
 
 ## Modèle de données
-- Nouvelle table `posts` : source, adresse (unique), titre, résumé, image, date de publication (si connue),
+- Nouvelle table `posts` : source, adresse (unique **par source** : deux sources peuvent partager un article), titre, résumé, image, date de publication (si connue),
   date de découverte, texte complet (pour l'IA), méthode (`rss` | `page`), marqueur « antérieur à l'abonnement ».
 - Ajouts à `sources` : méthode retenue, adresse du flux trouvé, date / statut / message du dernier relevé.
 

@@ -23,14 +23,14 @@
 ## Tâche 3 : Base de données
 **Description :** Table `posts` (source, adresse unique, titre, résumé, image, date de publication, date de découverte, texte complet, méthode, marqueur « antérieur ») et colonnes de relevé sur `sources` (méthode, flux, date/statut/message du dernier relevé). Migration.
 **Critères :**
-- [ ] Une même adresse d'article ne peut pas être enregistrée deux fois
-- [ ] Supprimer une source supprime ses articles
+- [x] Une même adresse d'article ne peut pas être enregistrée deux fois
+- [x] Supprimer une source supprime ses articles
 **Vérification :** `npm test` + `npm run db:migrate`
 **Dépendances :** aucune · **Taille :** S
 **Fichiers :** `src/db/schema.ts`, `drizzle/*`, `tests/db/schema.test.ts`
 
 ## Checkpoint 1
-- [ ] Tests OK ; ajout d'une source toujours fonctionnel dans le navigateur
+- [x] Tests OK ; ajout d'une source toujours fonctionnel dans le navigateur
 
 ## Tâche 4 : Copies figées des sites
 **Description :** Script qui télécharge la page de chaque site de test et un article de chacun dans `tests/fixtures/`, plus les flux RSS de Findings et OFF Brand.

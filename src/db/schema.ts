@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 const createdAt = () =>
   integer("created_at", { mode: "timestamp" })
@@ -14,7 +14,43 @@ export const sources = sqliteTable("sources", {
   url: text("url").notNull(),
   key: text("key").notNull().unique(),
   createdAt: createdAt(),
+  /** How articles were last read successfully: remembered to go straight to the right level. */
+  fetchMethod: text("fetch_method", { enum: ["rss", "page"] }),
+  feedUrl: text("feed_url"),
+  lastFetchedAt: integer("last_fetched_at", { mode: "timestamp" }),
+  lastFetchStatus: text("last_fetch_status", { enum: ["ok", "error"] }),
+  /** Error message shown to the user, or the number of new articles on success. */
+  lastFetchMessage: text("last_fetch_message"),
 });
+
+/** An article (or post) published by a source. Stored once per source, identified by its cleaned address. */
+export const posts = sqliteTable(
+  "posts",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    sourceId: integer("source_id")
+      .notNull()
+      .references(() => sources.id, { onDelete: "cascade" }),
+    url: text("url").notNull(),
+    title: text("title").notNull(),
+    excerpt: text("excerpt"),
+    imageUrl: text("image_url"),
+    /** Publication date given by the site, when there is one. */
+    publishedAt: integer("published_at", { mode: "timestamp" }),
+    discoveredAt: integer("discovered_at", { mode: "timestamp" })
+      .notNull()
+      .default(sql`(unixepoch())`),
+    /** Full text, for the AI editor only: never displayed. */
+    content: text("content"),
+    method: text("method", { enum: ["rss", "page"] }).notNull(),
+    /** Already published when the source was added: a starting point, not news. */
+    beforeSubscription: integer("before_subscription", { mode: "boolean" }).notNull().default(false),
+  },
+  (table) => [
+    uniqueIndex("posts_source_url_unique").on(table.sourceId, table.url),
+    index("posts_source_idx").on(table.sourceId, table.discoveredAt),
+  ],
+);
 
 export const users = sqliteTable("users", {
   id: text("id").primaryKey(),
@@ -36,3 +72,4 @@ export const subscriptions = sqliteTable(
 );
 
 export type Source = typeof sources.$inferSelect;
+export type Post = typeof posts.$inferSelect;
