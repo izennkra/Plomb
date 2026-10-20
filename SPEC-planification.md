@@ -6,7 +6,7 @@ Brique 5 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [edition](SPEC-ed
 Le journal doit arriver **quoi qu'il se passe** : Mac fermé, éteint ou cassé, Izenn à la salle de sport —
 à 10h00, le journal de 9h00 est déjà là (dans l'app et dans sa boîte mail). Plus rien à lancer à la main.
 
-Pour cela, Plomb quitte le Mac : il tourne sur un **serveur toujours allumé**, avec une **IA en ligne**.
+Pour cela, Plomb quitte le Mac : il tourne en ligne, avec une **IA en ligne** (Claude Haiku 5.5).
 
 ### Récits utilisateur
 - Le matin, je reçois à **9h00** l'e-mail « Votre journal du … est prêt » avec un extrait de la Une, sans avoir rien fait.
@@ -21,7 +21,7 @@ Pour cela, Plomb quitte le Mac : il tourne sur un **serveur toujours allumé**, 
 | L'app en ligne | **Vercel** (offre Hobby) | Gratuit — **usage personnel non commercial** : à revoir quand Plomb aura des abonnés payants (offre Pro ~20 $/mois ou autre hébergeur) |
 | Base de données | **Turso** (même moteur que la base actuelle : presque aucun changement de code) | Gratuit (5 Go, sans carte bancaire) |
 | Horloge | **cron-job.org** : appelle Plomb toutes les 15 minutes (précis à la minute) | Gratuit |
-| IA en ligne | **Mistral Small** | ~1 € par mois (journal quotidien de 50 articles) |
+| IA en ligne | **Claude Haiku 5.5** (API d'Anthropic, crédit prépayé) | ~0,60 $ par mois (journal quotidien de 50 articles) ; crédit minimum à acheter sur console.anthropic.com |
 | E-mail | **Resend** | Gratuit jusqu'à 100 e-mails/jour |
 
 Contraintes : chaque appel de Vercel dure **5 minutes maximum** → le relevé travaille par tranches et reprend là où il
@@ -47,7 +47,7 @@ L'horloge de Vercel (offre gratuite : une fois par jour, ± 59 min) n'est pas ut
 ## Ce qu'Izenn devra faire (guidé pas à pas)
 1. Créer un compte **Vercel** (connexion avec GitHub) — offre Hobby.
 2. Créer un compte **Turso** (connexion avec GitHub).
-3. Créer un compte **Mistral** (console.mistral.ai), ajouter un moyen de paiement, créer une **clé API**.
+3. Créer un compte **Anthropic** (console.anthropic.com), acheter un petit crédit (quelques dollars), créer une **clé API**.
 4. Créer un compte **Resend** avec son adresse e-mail.
 5. Créer un compte **cron-job.org**.
 6. Coller les clés, jetons et le mot de passe choisi dans les réglages secrets (Vercel, et `.env.local` sur le Mac pour les tests).
@@ -58,7 +58,8 @@ Je ne peux ni créer ces comptes, ni saisir de clés ou de mots de passe à sa p
   (premier relevé = « avant l'abonnement », comme d'habitude). Le Mac redevient un simple outil de développement.
 
 ## Tech Stack (ajouts)
-- Rédacteur **Mistral** (même interface `Redacteur` : on garde Ollama pour le développement local si besoin).
+- Rédacteur **Claude** via la bibliothèque officielle `@anthropic-ai/sdk` (réponses au format imposé, effort faible) —
+  même interface `Redacteur` ; Mistral et Ollama restent disponibles par réglage.
 - Horloge : une adresse `/api/horloge` protégée par un jeton secret, appelée par cron-job.org toutes les 15 minutes.
 - Base : Turso via `@libsql/client` (déjà utilisé) — seule l'adresse change, plus un jeton d'accès.
 - `resend` (envoi d'e-mails) ; protection par mot de passe via le middleware de Next.js.
@@ -76,7 +77,7 @@ Je ne peux ni créer ces comptes, ni saisir de clés ou de mots de passe à sa p
 
 ## Success Criteria
 - [ ] Plomb est accessible en ligne, protégé par mot de passe
-- [ ] Le journal est préparé par Mistral en ligne à 8h00 selon la fréquence, publié et envoyé par e-mail à 9h00
+- [ ] Le journal est préparé par Claude Haiku 5.5 à 8h00 selon la fréquence, publié et envoyé par e-mail à 9h00
 - [ ] Ça fonctionne Mac éteint (vérifié en réel un matin)
 - [ ] Rattrapage après redémarrage, jamais de double e-mail
 - [ ] E-mail d'alerte si la préparation échoue
@@ -85,7 +86,7 @@ Je ne peux ni créer ces comptes, ni saisir de clés ou de mots de passe à sa p
 
 ## Décisions (Izenn, 2026-10-20)
 1. Le journal doit arriver quoi qu'il arrive au Mac → mise en ligne.
-2. IA : **Mistral en ligne** (plus d'Ollama pour le journal).
+2. IA : ~~Mistral en ligne~~ → **Claude Haiku 5.5** (l'API Mistral demandait un compte Pro ; Izenn, 2026-10-20).
 
 3. Hébergement **gratuit** : Vercel + Turso + cron-job.org (+ Mistral ~1 €/mois, Resend gratuit).
 4. Sources actuelles transférées sur le serveur (proposé ; à confirmer).

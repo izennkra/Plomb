@@ -11,21 +11,21 @@ guidée (comptes, réglages, horloge), et enfin la vérification en réel : un m
 - **Une seule « horloge »** : `/api/horloge`, appelée toutes les 15 min, décide quoi faire selon l'heure de Paris
   (relever, préparer, publier, envoyer) et **rattrape** ce qui a été manqué. Idempotente : la rappeler deux fois ne fait rien de plus.
 - **Budget de temps** par appel (~4 min sur 5) : le relevé s'arrête proprement et reprend au prochain appel.
-- **Rédaction en parallèle** (4 articles à la fois) avec Mistral pour tenir dans le temps.
+- **Rédaction en parallèle** (4 articles à la fois) avec l'IA en ligne pour tenir dans le temps.
 - **Publication à 9h00** : l'édition du jour n'est affichée qu'à partir de 9h00 ; e-mail envoyé une seule fois (date d'envoi enregistrée).
-- **Même code partout** : en local, la base reste le fichier SQLite et l'IA peut rester Ollama ; en ligne, Turso et Mistral (réglages).
+- **Même code partout** : en local, la base reste le fichier SQLite et l'IA peut rester Ollama ; en ligne, Turso et Claude (réglages).
 
 ## Liste des tâches
 
 ### Phase 1 : Préparer le code
-- [ ] Tâche 1 : Rédacteur Mistral en ligne (+ rédaction en parallèle)
+- [ ] Tâche 1 : Rédacteur IA en ligne — Claude Haiku 5.5 (Mistral demandait un compte Pro) — + rédaction en parallèle
 - [x] Tâche 2 : Horloge `/api/horloge` (relevé par tranches, 8h00, 9h00, rattrapage, jeton secret)
 - [x] Tâche 3 : E-mail via Resend (envoi unique à 9h00, alerte en cas d'échec)
 - [x] Tâche 4 : Mot de passe sur toute l'app
 - [x] Tâche 5 : Base Turso (adresse + jeton, migrations embarquées)
 
 ### Checkpoint 1
-- [ ] Tout fonctionne en local avec Mistral en ligne (clé dans `.env.local`) — point avec Izenn
+- [ ] Tout fonctionne en local avec Claude en ligne (clé dans `.env.local`) — point avec Izenn
 
 ### Phase 2 : Mise en ligne (guidée)
 - [ ] Tâche 6 : Comptes et réglages (Vercel, Turso, Resend, cron-job.org) + déploiement

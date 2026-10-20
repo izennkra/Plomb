@@ -158,6 +158,18 @@ describe("buildEdition", () => {
     expect((await itemsOf(edition.id)).map((item) => item.title)).toEqual(["FR two-days-ago"]);
   });
 
+  it("stops when the AI cannot work at all (key refused): no journal of media texts", async () => {
+    const { FatalRedacteurError } = await import("@/modules/edition/redacteur/json-redacteur");
+    await add(ordinary, "a");
+    const { redacteur } = createFakeRedacteur();
+    redacteur.summarize = async () => {
+      throw new FatalRedacteurError("clé Claude refusée");
+    };
+
+    await expect(buildEdition(db, DEFAULT_USER_ID, { redacteur, now })).rejects.toThrow(/clé Claude refusée/);
+    expect((await db.select().from(editions))[0]).toMatchObject({ status: "error", message: expect.stringMatching(/clé Claude refusée/) });
+  });
+
   it("says so when there is no news", async () => {
     const { redacteur } = createFakeRedacteur();
     const edition = await buildEdition(db, DEFAULT_USER_ID, { redacteur, now });

@@ -1,6 +1,6 @@
 # Tâches : brique `planification`
 
-## Tâche 1 : Rédacteur Mistral en ligne
+## Tâche 1 : Rédacteur IA en ligne (Mistral, puis Claude Haiku 5.5 retenu)
 **Description :** `createMistralRedacteur` (même interface que Ollama) : API Mistral, réponse JSON vérifiée, 2 essais ; choix par réglage (`PLOMB_AI_PROVIDER=mistral`). La fabrication de l'édition rédige 4 articles à la fois.
 **Critères :**
 - [ ] Mêmes réponses vérifiées que pour Ollama (titre, résumé, thème, sujet, 5 critères, Une, conférence)
@@ -33,7 +33,7 @@
 **Vérification :** `npm test` + connexion réelle à Turso · **Dépendances :** aucune · **Taille :** S
 
 ## Checkpoint 1
-- [ ] Tout fonctionne en local avec Mistral en ligne — point avec Izenn
+- [ ] Tout fonctionne en local avec Claude en ligne — point avec Izenn
 
 ## Tâche 6 : Mise en ligne guidée
 **Description :** Izenn crée les comptes ; je prépare les réglages, le déploiement Vercel, l'horloge cron-job.org.

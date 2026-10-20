@@ -5,6 +5,12 @@ import type { ArticleSummary, FrontPageChoice, Redacteur, Theme } from "./types"
 
 export class RedacteurError extends Error {}
 
+/**
+ * The AI cannot work at all (key refused, no credit left…): retrying article by article is useless, the whole
+ * preparation stops so that the reader is alerted.
+ */
+export class FatalRedacteurError extends RedacteurError {}
+
 /** Sends one prompt to an AI and returns its JSON answer (already parsed). Throws RedacteurError when it can't. */
 export type AskJson = (prompt: string, schema: object) => Promise<unknown>;
 

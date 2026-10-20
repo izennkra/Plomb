@@ -3,6 +3,7 @@ import type { Db } from "@/db/client";
 import { editionItems, editions, users, type Edition, type EditionItem } from "@/db/schema";
 import type { ArticleSummary, Redacteur } from "./redacteur/types";
 import { groupEchoes } from "./echo";
+import { FatalRedacteurError } from "./redacteur/json-redacteur";
 import { mapInParallel } from "./parallel";
 import { parisDay } from "./paris-time";
 import { coverageDays, toSchedule } from "./schedule";
@@ -54,7 +55,11 @@ export async function buildEdition(
     // Several articles are written at the same time when the editor allows it (online AI).
     const written: Written[] = await mapInParallel(selection.posts, redacteur.parallel, async (post) => {
       const article = { title: post.title, content: post.content, excerpt: post.excerpt, sourceName: post.sourceName };
-      const summary = await redacteur.summarize(article).catch(() => null);
+      const summary = await redacteur.summarize(article).catch((error) => {
+        // The AI cannot work at all: stop, so the reader is alerted (rather than a journal of media texts).
+        if (error instanceof FatalRedacteurError) throw error;
+        return null;
+      });
       const final = summary ?? fallbackSummary(post);
       return { post, summary: final, fallback: !summary, score: final.importance, coveredBy: [] };
     });

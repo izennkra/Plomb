@@ -1,4 +1,4 @@
-import { createJsonRedacteur, RedacteurError } from "./json-redacteur";
+import { createJsonRedacteur, FatalRedacteurError, RedacteurError } from "./json-redacteur";
 import { SYSTEM_PROMPT } from "./prompts";
 import type { Redacteur } from "./types";
 
@@ -27,7 +27,7 @@ export function createMistralRedacteur({
   parallel = 4,
   sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
 }: Options): Redacteur {
-  if (!apiKey) throw new RedacteurError("Clé Mistral manquante (réglage MISTRAL_API_KEY).");
+  if (!apiKey) throw new FatalRedacteurError("Clé Mistral manquante (réglage MISTRAL_API_KEY).");
 
   return createJsonRedacteur({
     model,
@@ -52,7 +52,7 @@ export function createMistralRedacteur({
             }),
           });
           if (response.status === 401 || response.status === 403) {
-            throw new RedacteurError("Le rédacteur n'a pas pu écrire : clé Mistral refusée (vérifiez MISTRAL_API_KEY).");
+            throw new FatalRedacteurError("Le rédacteur n'a pas pu écrire : clé Mistral refusée (vérifiez MISTRAL_API_KEY).");
           }
           if (response.status === 429 || response.status >= 500) {
             // Too many requests at once, or Mistral busy: wait a little and try again.
