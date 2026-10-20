@@ -113,10 +113,10 @@ export default async function SourcesPage() {
 function statusLine(source: Source, total: number): string {
   const social = source.type !== "web" && source.type !== "youtube";
   if (isRefreshing(source)) return social ? "Demande en cours chez Apify (1 à 2 minutes)…" : "Relevé en cours…";
-  if (social && !source.lastFetchedAt) return "Relevé 2 fois par jour (7h30 et 17h30), ou avec « Relever maintenant ».";
+  if (social && !source.lastFetchedAt) return "Relevé 4 fois par jour (7h30, 11h30, 15h30, 19h30), ou avec « Relever maintenant ».";
   if (source.lastFetchStatus === "error") return `⚠ ${source.lastFetchMessage}`;
   if (!source.lastFetchedAt) return "Pas encore relevé.";
-  const method = social ? "via Apify, 2 fois par jour" : source.fetchMethod === "rss" ? "flux RSS" : "lecture de la page";
+  const method = social ? "via Apify, 4 fois par jour" : source.fetchMethod === "rss" ? "flux RSS" : "lecture de la page";
   return `${total} article${total > 1 ? "s" : ""} · relevé à ${time.format(source.lastFetchedAt)} (${method}) · dernier relevé : ${source.lastFetchMessage}`;
 }
 

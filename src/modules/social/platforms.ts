@@ -1,11 +1,15 @@
 import type { Source } from "@/db/schema";
 import { cleanPostUrl, toDate, toExcerpt, type PostCandidate } from "@/modules/aspiration-web/post";
 
-/** How one social network is read through Apify: which scraper, what to ask, how to read its answer. */
+/**
+ * How one social network is read through Apify: which scraper, what to ask for several accounts at once (one request
+ * per network saves money), and how to give each account its own posts back.
+ */
 export type Platform = {
   actor: string;
-  /** `since`: only posts published after this date; `first`: first relève (a few recent posts as a starting point). */
-  input(source: Source, since: Date | null): object;
+  /** `since`: only posts published after this date; none = first relève (a few recent posts as a starting point). */
+  input(sources: Source[], since: Date | null): object;
+  /** The posts of the answer that belong to this account, read as Plomb articles. */
   read(items: unknown[], source: Source): PostCandidate[];
 };
 
@@ -33,17 +37,20 @@ export function titleFrom(text: string, fallback: string): string {
 const unique = (urls: string[]) => [...new Set(urls.filter(Boolean))].slice(0, MAX_IMAGES);
 
 const handleOf = (source: Source) => source.key.split(":")[1] ?? "";
+const same = (a: unknown, b: string) => str(a).toLowerCase() === b.toLowerCase();
 
 export const instagram: Platform = {
   actor: "apify/instagram-post-scraper",
-  input: (source, since) => ({
-    username: [handleOf(source)],
+  input: (sources, since) => ({
+    username: sources.map(handleOf),
     resultsLimit: since ? MAX_POSTS : FIRST_POSTS,
     skipPinnedPosts: true,
     ...(since ? { onlyPostsNewerThan: since.toISOString() } : {}),
   }),
   read: (items, source) =>
-    arr(items).flatMap((item) => {
+    arr(items)
+      .filter((item) => same(item.ownerUsername, handleOf(source)))
+      .flatMap((item) => {
       const url = cleanPostUrl(str(item.url), "https://www.instagram.com/");
       if (!url) return [];
       const caption = str(item.caption);
@@ -66,15 +73,18 @@ export const instagram: Platform = {
 
 export const x: Platform = {
   actor: "kaitoeasyapi/twitter-x-data-tweet-scraper-pay-per-result-cheapest",
-  input: (source, since) => ({
-    from: handleOf(source),
+  // One search for every account (the scraper bills at least 20 tweets per request, whatever the number of accounts).
+  input: (sources, since) => ({
+    searchTerms: [
+      `(${sources.map((source) => `from:${handleOf(source)}`).join(" OR ")})${since ? ` since_time:${Math.floor(since.getTime() / 1000)}` : ""}`,
+    ],
     queryType: "Latest",
-    maxItems: 20,
-    ...(since ? { since_time: Math.floor(since.getTime() / 1000) } : {}),
+    maxItems: Math.max(20, sources.length * (since ? MAX_POSTS : FIRST_POSTS)),
   }),
   read: (items, source) =>
     arr(items)
-      // Own tweets only: no retweets, no replies.
+      // This account's own tweets only: no retweets, no replies.
+      .filter((item) => same((item.author as Item | undefined)?.userName, handleOf(source)))
       .filter((item) => !item.retweeted_tweet && !item.isReply)
       .slice(0, MAX_POSTS)
       .flatMap((item) => {
@@ -99,14 +109,16 @@ export const x: Platform = {
 
 export const linkedin: Platform = {
   actor: "harvestapi/linkedin-company-posts",
-  input: (source, since) => ({
-    targetUrls: [source.url],
+  input: (sources, since) => ({
+    targetUrls: sources.map((source) => source.url),
     maxPosts: since ? MAX_POSTS : FIRST_POSTS,
     includeReposts: false,
     ...(since ? { postedLimitDate: since.toISOString() } : {}),
   }),
   read: (items, source) =>
-    arr(items).flatMap((item) => {
+    arr(items)
+      .filter((item) => belongsToLinkedIn(item, source))
+      .flatMap((item) => {
       const url = cleanPostUrl(str(item.linkedinUrl) || str(item.shareUrl), "https://www.linkedin.com/");
       if (!url) return [];
       const text = str(item.content);
@@ -124,6 +136,14 @@ export const linkedin: Platform = {
       ];
     }),
 };
+
+/** The answer says which page was asked (query.targetUrl) and who wrote (author.universalName / publicIdentifier). */
+function belongsToLinkedIn(item: Item, source: Source): boolean {
+  const slug = source.key.split("/").pop() ?? "";
+  const target = str((item.query as Item | undefined)?.targetUrl).replace(/\/+$/, "").toLowerCase();
+  const author = item.author as Item | undefined;
+  return target.endsWith(`/${slug}`) || same(author?.universalName, slug) || same(author?.publicIdentifier, slug);
+}
 
 /** LinkedIn people (linkedin.com/in/…) use the profile scraper, with the same answers. */
 const linkedinProfile: Platform = { ...linkedin, actor: "harvestapi/linkedin-profile-posts" };

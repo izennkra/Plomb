@@ -52,14 +52,36 @@ afterEach(() => rmSync(mediaDir, { recursive: true, force: true }));
 const fakeImage = async () => ({ bytes: new Uint8Array([1]), contentType: "image/jpeg" });
 
 describe("social windows", () => {
-  it("7:30 and 17:30 (Paris), the early morning belongs to yesterday's 17:30", () => {
-    expect(socialWindowStart(paris("07:20"))).toEqual(paris("17:30", "2026-10-20"));
+  it("7:30, 11:30, 15:30 and 19:30 (Paris), the early morning belongs to yesterday's 19:30", () => {
+    expect(socialWindowStart(paris("07:20"))).toEqual(paris("19:30", "2026-10-20"));
     expect(socialWindowStart(paris("07:31"))).toEqual(paris("07:30"));
-    expect(socialWindowStart(paris("18:00"))).toEqual(paris("17:30"));
+    expect(socialWindowStart(paris("12:00"))).toEqual(paris("11:30"));
+    expect(socialWindowStart(paris("16:00"))).toEqual(paris("15:30"));
+    expect(socialWindowStart(paris("23:00"))).toEqual(paris("19:30"));
   });
 });
 
 describe("social relève", () => {
+  it("asks for several Instagram accounts in a single request, and gives each its posts", async () => {
+    const [{ id: otherId }] = await db
+      .insert(sources)
+      .values({ type: "instagram", displayName: "@another.studio", url: "https://www.instagram.com/another.studio", key: "instagram:another.studio" })
+      .returning({ id: sources.id });
+    await db.insert(subscriptions).values({ userId: DEFAULT_USER_ID, sourceId: otherId });
+    const apify = fakeApify();
+
+    expect(await launchSocialRuns(db, { apify: apify.client, now: paris("07:31") })).toEqual({ launched: 2 });
+    expect(apify.started).toHaveLength(1);
+    expect(apify.started[0].input).toMatchObject({ username: ["mouthwash.studio", "another.studio"] });
+
+    apify.finish();
+    await collectSocialRuns(db, { apify: apify.client, mediaStore: createLocalStore(mediaDir), now: paris("07:46"), fetchImage: fakeImage });
+    const bySource = await db.select().from(posts);
+    expect(bySource.filter((post) => post.sourceId === sourceId)).toHaveLength(3);
+    expect(bySource.filter((post) => post.sourceId === otherId)).toHaveLength(0);
+    expect((await db.select().from(socialRuns)).every((run) => run.status === "done")).toBe(true);
+  });
+
   it("launches once per window, then reads the results at the next call (posts + copied images)", async () => {
     const apify = fakeApify();
 
@@ -91,7 +113,7 @@ describe("social relève", () => {
     apify.finish();
     await collectSocialRuns(db, { apify: apify.client, mediaStore: createLocalStore(mediaDir), now: paris("07:46"), fetchImage: fakeImage });
 
-    await launchSocialRuns(db, { apify: apify.client, now: paris("17:31") });
+    await launchSocialRuns(db, { apify: apify.client, now: paris("11:31") });
 
     expect(apify.started[1].input).toMatchObject({ onlyPostsNewerThan: paris("07:31").toISOString(), resultsLimit: 10 });
   });
@@ -113,6 +135,6 @@ describe("social relève", () => {
 
     expect((await db.select().from(socialRuns))[0].status).toBe("failed");
     expect((await db.query.sources.findFirst())?.lastFetchStatus).toBe("error");
-    expect((await launchSocialRuns(db, { apify: apify.client, now: paris("17:31") })).launched).toBe(1);
+    expect((await launchSocialRuns(db, { apify: apify.client, now: paris("11:31") })).launched).toBe(1);
   });
 });

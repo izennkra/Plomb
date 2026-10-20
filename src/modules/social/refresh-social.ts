@@ -9,8 +9,8 @@ import type { MediaStore } from "./media-store";
 import { platformOf } from "./platforms";
 
 export const SOCIAL_TYPES: Source["type"][] = ["instagram", "x", "linkedin"];
-/** Twice a day (Paris): 7:30, in time for the 8:00 edition, and 17:30. */
-export const SOCIAL_HOURS = [7.5, 17.5];
+/** Four times a day (Paris): 7:30, in time for the 8:00 edition, then 11:30, 15:30 and 19:30. */
+export const SOCIAL_HOURS = [7.5, 11.5, 15.5, 19.5];
 /** No new request to Apify past this spending in the month (the free plan gives 5 $). */
 export const MONTHLY_BUDGET_USD = 4;
 /** A request still running after this is considered lost. */
@@ -18,7 +18,7 @@ const RUN_TIMEOUT_MS = 2 * 60 * 60 * 1000;
 /** Their images expire after a few days: they are copied. (X images last.) */
 const COPY_IMAGES_FOR: Source["type"][] = ["instagram", "linkedin"];
 
-/** Start of the current window (7:30 or 17:30, or yesterday's 17:30 in the early morning). */
+/** Start of the current window (the last check time passed, or yesterday's last one in the early morning). */
 export function socialWindowStart(now: Date): Date {
   const today = parisDay(now);
   const at = (day: string, hour: number) => new Date(parisTime(day, Math.floor(hour)).getTime() + (hour % 1) * 3_600_000);
@@ -61,21 +61,39 @@ export async function launchSocialRuns(
     return { launched: 0, skipped: message };
   }
 
+  // One request per network for all its accounts (cheaper): accounts just added (a few recent posts) apart from
+  // the others (posts newer than their oldest last successful request).
+  const byActor = Map.groupBy(due, (source) => platformOf(source)?.actor ?? "");
   let launched = 0;
-  for (const source of due) {
-    const platform = platformOf(source);
-    if (!platform) continue;
-    const since = await lastSuccessfulRun(db, source.id);
-    try {
-      const { runId, datasetId } = await apify.startRun(platform.actor, platform.input(source, since));
-      await db.insert(socialRuns).values({ sourceId: source.id, actor: platform.actor, runId, datasetId, startedAt: now });
-      await db.update(sources).set({ lastFetchStatus: "running", lastFetchedAt: now }).where(eq(sources.id, source.id));
-      launched++;
-    } catch (error) {
-      await db
-        .update(sources)
-        .set({ lastFetchStatus: "error", lastFetchMessage: error instanceof Error ? error.message : "Apify injoignable.", lastFetchedAt: now })
-        .where(eq(sources.id, source.id));
+  for (const [actor, group] of byActor) {
+    const platform = platformOf(group[0]);
+    if (!actor || !platform) continue;
+    const lastSuccess = new Map(await Promise.all(group.map(async (source) => [source.id, await lastSuccessfulRun(db, source.id)] as const)));
+    const newcomers = group.filter((source) => !lastSuccess.get(source.id));
+    const regulars = group.filter((source) => lastSuccess.get(source.id));
+    const since = regulars.length
+      ? new Date(Math.min(...regulars.map((source) => lastSuccess.get(source.id)!.getTime())))
+      : null;
+
+    for (const [batch, batchSince] of [
+      [newcomers, null],
+      [regulars, since],
+    ] as const) {
+      if (batch.length === 0) continue;
+      try {
+        const { runId, datasetId } = await apify.startRun(actor, platform.input(batch, batchSince));
+        await db.insert(socialRuns).values(batch.map((source) => ({ sourceId: source.id, actor, runId, datasetId, startedAt: now })));
+        await db
+          .update(sources)
+          .set({ lastFetchStatus: "running", lastFetchedAt: now })
+          .where(inArray(sources.id, batch.map((source) => source.id)));
+        launched += batch.length;
+      } catch (error) {
+        await db
+          .update(sources)
+          .set({ lastFetchStatus: "error", lastFetchMessage: error instanceof Error ? error.message : "Apify injoignable.", lastFetchedAt: now })
+          .where(inArray(sources.id, batch.map((source) => source.id)));
+      }
     }
   }
   return { launched };
@@ -95,48 +113,55 @@ export async function collectSocialRuns(
   let collected = 0;
   let added = 0;
 
-  for (const run of running) {
-    const source = await db.query.sources.findFirst({ where: eq(sources.id, run.sourceId) });
-    const platform = source ? platformOf(source) : null;
-    if (!source || !platform) {
-      await finish(db, run.id, "failed", "source retirée", now);
-      continue;
-    }
-
-    let status;
+  // A request serves several accounts: read its state and its answer once.
+  for (const [runId, rows] of Map.groupBy(running, (run) => run.runId)) {
+    let state;
     try {
-      status = await apify.getRun(run.runId);
+      state = await apify.getRun(runId);
     } catch {
       continue; // try again at the next call
     }
-    if (!isFinished(status.status)) {
-      if (now.getTime() - run.startedAt.getTime() > RUN_TIMEOUT_MS) {
-        await finish(db, run.id, "failed", "demande trop longue", now);
-        await setStatus(db, source.id, "error", "La demande à Apify n'a pas abouti. Nouvel essai au prochain relevé.", now);
+    if (!isFinished(state.status)) {
+      if (now.getTime() - rows[0].startedAt.getTime() > RUN_TIMEOUT_MS) {
+        for (const run of rows) {
+          await finish(db, run.id, "failed", "demande trop longue", now);
+          await setStatus(db, run.sourceId, "error", "La demande à Apify n'a pas abouti. Nouvel essai au prochain relevé.", now);
+        }
       }
       continue;
     }
-    if (status.status !== "SUCCEEDED") {
-      await finish(db, run.id, "failed", status.status, now);
-      await setStatus(db, source.id, "error", "La demande à Apify a échoué. Nouvel essai au prochain relevé.", now);
+    if (state.status !== "SUCCEEDED") {
+      for (const run of rows) {
+        await finish(db, run.id, "failed", state.status, now);
+        await setStatus(db, run.sourceId, "error", "La demande à Apify a échoué. Nouvel essai au prochain relevé.", now);
+      }
       continue;
     }
 
-    const found = platform.read(await apify.getItems(run.datasetId), source);
-    const listed = found.map((post) => post.url);
-    const handled = await newOnes(db, source.id, listed);
-    const fresh = found.filter((post) => handled.includes(post.url));
-    if (COPY_IMAGES_FOR.includes(source.type)) {
-      for (const post of fresh) {
-        post.images = await copyImages(post.images, mediaStore, fetchImage ? { fetchImage } : {});
-        post.imageUrl = post.images[0] ?? post.imageUrl;
+    const items = await apify.getItems(rows[0].datasetId);
+    for (const run of rows) {
+      const source = await db.query.sources.findFirst({ where: eq(sources.id, run.sourceId) });
+      const platform = source ? platformOf(source) : null;
+      if (!source || !platform) {
+        await finish(db, run.id, "failed", "source retirée", now);
+        continue;
       }
+      const found = platform.read(items, source);
+      const listed = found.map((post) => post.url);
+      const handled = await newOnes(db, source.id, listed);
+      const fresh = found.filter((post) => handled.includes(post.url));
+      if (COPY_IMAGES_FOR.includes(source.type)) {
+        for (const post of fresh) {
+          post.images = await copyImages(post.images, mediaStore, fetchImage ? { fetchImage } : {});
+          post.imageUrl = post.images[0] ?? post.imageUrl;
+        }
+      }
+      const count = await store(db, source.id, { method: "social", listed, handled, posts: fresh });
+      await finish(db, run.id, "done", null, now);
+      await setStatus(db, source.id, "ok", newArticlesMessage(count), now);
+      collected++;
+      added += count;
     }
-    const count = await store(db, source.id, { method: "social", listed, handled, posts: fresh });
-    await finish(db, run.id, "done", null, now);
-    await setStatus(db, source.id, "ok", newArticlesMessage(count), now);
-    collected++;
-    added += count;
   }
   return { collected, added };
 }

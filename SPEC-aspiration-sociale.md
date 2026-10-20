@@ -33,7 +33,9 @@ pour un usage personnel ; à revoir avant les abonnés payants.
 ## Fonctionnement
 - **YouTube** : traité comme un site à flux RSS (relevé à chaque passage de l'horloge, toutes les 30 min au plus) ;
   la chaîne est reconnue à l'ajout (adresse `@nom`, `/channel/…`, `/c/…`, `/user/…`) et son flux mémorisé.
-- **Instagram / X / LinkedIn** : relevés **2 fois par jour, à 7h30 et 17h30** (Paris) — 7h30 pour être dans le journal de 8h00.
+- **Instagram / X / LinkedIn** : relevés **4 fois par jour, à 7h30, 11h30, 15h30 et 19h30** (Paris) — 7h30 pour être dans
+  le journal de 8h00. **Une seule demande par réseau** pour tous les comptes (X facture au moins 20 tweets par demande :
+  regrouper divise la facture par le nombre de comptes).
   Plomb lance les demandes à Apify, puis récupère les résultats au passage suivant de l'horloge (15 min plus tard) :
   aucune attente dans la limite de 5 minutes.
 - Seuls les posts **plus récents que le dernier relevé** sont demandés (premier relevé : 3 derniers posts, marqués
@@ -74,7 +76,8 @@ pour un usage personnel ; à revoir avant les abonnés payants.
 1. Faire fonctionner YouTube, Instagram, X, LinkedIn **avant** la mise en ligne, à **0 €** si possible.
 2. Instagram : **Apify** pour commencer (API officielle Meta possible plus tard).
 3. X et LinkedIn : **Apify**, dans le même crédit gratuit, avec garde-fou.
-4. Réseaux sociaux vérifiés **2 fois par jour** (7h30 et 17h30) ; YouTube comme les sites.
+4. Réseaux sociaux vérifiés ~~2 fois~~ **4 fois par jour** (7h30, 11h30, 15h30, 19h30) — Izenn, 2026-10-20 ;
+   YouTube comme les sites, **jamais via Apify** (son flux RSS est gratuit).
 5. Le `robots.txt` de YouTube interdit `/feeds/videos.xml` aux robots : pour le flux d'une chaîne suivie, Plomb se
    comporte en **lecteur de flux** (règle robots.txt non appliquée, rythme poli conservé). Ailleurs, robots.txt reste respecté.
    (Alternative non retenue : API officielle YouTube, gratuite, avec une clé Google Cloud.)

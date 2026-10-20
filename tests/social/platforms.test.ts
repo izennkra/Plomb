@@ -28,11 +28,36 @@ describe("Instagram (real answer, @mouthwash.studio)", () => {
   });
 
   it("asks only for posts newer than the last relève (3 posts the first time)", () => {
-    expect(instagram.input(mouthwash, null)).toEqual({ username: ["mouthwash.studio"], resultsLimit: 3, skipPinnedPosts: true });
-    expect(instagram.input(mouthwash, new Date("2026-10-20T05:30:00Z"))).toMatchObject({
+    expect(instagram.input([mouthwash], null)).toEqual({ username: ["mouthwash.studio"], resultsLimit: 3, skipPinnedPosts: true });
+    expect(instagram.input([mouthwash], new Date("2026-10-20T05:30:00Z"))).toMatchObject({
       resultsLimit: 10,
       onlyPostsNewerThan: "2026-10-20T05:30:00.000Z",
     });
+  });
+});
+
+describe("several accounts in one request", () => {
+  it("each account gets back only its own posts", () => {
+    const other = source("instagram", "instagram:another.studio", "https://www.instagram.com/another.studio", "@another.studio");
+    expect(instagram.input([mouthwash, other], null)).toMatchObject({ username: ["mouthwash.studio", "another.studio"] });
+    expect(instagram.read(load("instagram"), other)).toEqual([]);
+    expect(instagram.read(load("instagram"), mouthwash)).toHaveLength(3);
+  });
+
+  it("X: one search for every account, at least 20 tweets in total", () => {
+    const other = source("x", "x:pentagram", "https://x.com/pentagram", "@pentagram");
+    expect(x.input([bakers, other], new Date("2026-10-20T05:30:00Z"))).toEqual({
+      searchTerms: ["(from:studiobakers OR from:pentagram) since_time:1792474200"],
+      queryType: "Latest",
+      maxItems: 20,
+    });
+    expect(x.read(load("x"), other)).toEqual([]);
+  });
+
+  it("LinkedIn: posts are given back to the page that was asked", () => {
+    const other = source("linkedin", "linkedin:company/wolff-olins", "https://www.linkedin.com/company/wolff-olins", "wolff-olins");
+    expect(linkedin.read(load("linkedin"), other)).toEqual([]);
+    expect(linkedin.input([pentagram, other], null)).toMatchObject({ targetUrls: [pentagram.url, other.url] });
   });
 });
 
@@ -51,10 +76,11 @@ describe("X (real answer, @studiobakers)", () => {
   });
 
   it("leaves out retweets and replies", () => {
+    const author = { userName: "studiobakers" };
     const items = [
-      { url: "https://x.com/a/status/1", text: "mine", createdAt: "Tue Oct 20 09:20:00 +0000 2026" },
-      { url: "https://x.com/a/status/2", text: "rt", retweeted_tweet: { id: "9" } },
-      { url: "https://x.com/a/status/3", text: "reply", isReply: true },
+      { url: "https://x.com/a/status/1", text: "mine", createdAt: "Tue Oct 20 09:20:00 +0000 2026", author },
+      { url: "https://x.com/a/status/2", text: "rt", retweeted_tweet: { id: "9" }, author },
+      { url: "https://x.com/a/status/3", text: "reply", isReply: true, author },
     ];
     expect(x.read(items, bakers).map((post) => post.title)).toEqual(["mine"]);
   });
