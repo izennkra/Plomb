@@ -24,10 +24,25 @@ export type ArticleSummary = {
   importance: number;
 };
 
+/** A story competing for the Une, as seen in the editorial meeting. */
+export type FrontPageCandidate = {
+  title: string;
+  summary: string;
+  subject: string;
+  sourceName: string;
+  coveredBy: string[];
+  importance: number;
+};
+
+/** The editorial meeting's choice: positions in the candidates list (0-based). */
+export type FrontPageChoice = { une: number; secondary: number[] };
+
 /** The AI editor-in-chief. Interchangeable: local AI today, something else once Plomb is online. */
 export interface Redacteur {
   readonly model: string;
   summarize(article: ArticleInput): Promise<ArticleSummary>;
   /** Longer text for the 3 articles of the Une (~120 words). */
   writeLead(article: ArticleInput): Promise<string>;
+  /** Editorial meeting: compares the best candidates side by side and picks the Une (1 major + 2 secondary). */
+  chooseFrontPage(candidates: FrontPageCandidate[]): Promise<FrontPageChoice>;
 }

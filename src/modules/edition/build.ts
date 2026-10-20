@@ -8,6 +8,8 @@ import { selectEditionPosts, type EditionPost } from "./select";
 
 /** The Une: 1 major article + 2 secondary ones. */
 const UNE_SIZE = 3;
+/** Stories compared side by side in the editorial meeting. */
+const MEETING_SIZE = 8;
 /** Criteria given when the AI could not judge an article: an average story. */
 const DEFAULT_CRITERIA: Criteria = { notoriety: 3, scale: 3, authors: 3, reach: 3, quality: 3 };
 
@@ -48,9 +50,11 @@ export async function buildEdition(
 
     // Most important first; on a tie, the richer gallery.
     stories.sort((a, b) => b.score - a.score || b.post.images.length - a.post.images.length);
+    // Editorial meeting: the editor compares the best stories side by side and picks the Une.
+    const ranked = await editorialMeeting(stories, redacteur);
 
     const items: (typeof editionItems.$inferInsert)[] = [];
-    for (const [index, entry] of stories.entries()) {
+    for (const [index, entry] of ranked.entries()) {
       const { post, summary, fallback } = entry;
       const placement: EditionItem["placement"] = index === 0 ? "une" : index < UNE_SIZE ? "secondaire" : "suite";
       const leadText =
@@ -89,6 +93,32 @@ export async function buildEdition(
   } catch (error) {
     await finish(db, edition.id, { status: "error", message: "La préparation de l'édition a échoué." });
     throw error;
+  }
+}
+
+/**
+ * Puts the Une chosen by the editor first (1 major + 2 secondary), then the rest by importance.
+ * Without a usable choice, the order of the notes stands.
+ */
+async function editorialMeeting<T extends Written>(stories: T[], redacteur: Redacteur): Promise<T[]> {
+  const candidates = stories.slice(0, MEETING_SIZE).filter((story) => !story.fallback);
+  if (candidates.length < 2) return stories;
+  try {
+    const choice = await redacteur.chooseFrontPage(
+      candidates.map((story) => ({
+        title: story.summary.title,
+        summary: story.summary.summary,
+        subject: story.summary.subject,
+        sourceName: story.post.sourceName,
+        coveredBy: story.coveredBy,
+        importance: story.score,
+      })),
+    );
+    const front = [choice.une, ...choice.secondary].map((index) => candidates[index]);
+    if (front.some((story) => !story) || new Set(front).size !== front.length) return stories;
+    return [...front, ...stories.filter((story) => !front.includes(story))];
+  } catch {
+    return stories;
   }
 }
 

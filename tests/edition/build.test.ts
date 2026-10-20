@@ -107,6 +107,34 @@ describe("buildEdition", () => {
     expect(items[0].importance).toBeGreaterThan(items[1].importance!);
   });
 
+  it("the editorial meeting picks the Une among the best stories", async () => {
+    for (const title of ["a", "b", "c", "d"]) await add(ordinary, title);
+    const { redacteur, meetings } = createFakeRedacteur({
+      importance: { a: 5, b: 4, c: 3, d: 2 },
+      frontPage: { une: "c", secondary: ["a", "d"] },
+    });
+
+    const edition = await buildEdition(db, DEFAULT_USER_ID, { redacteur, now });
+
+    const items = await itemsOf(edition.id);
+    expect(items.map((item) => [item.placement, item.title])).toEqual([
+      ["une", "FR c"],
+      ["secondaire", "FR a"],
+      ["secondaire", "FR d"],
+      ["suite", "FR b"],
+    ]);
+    expect(meetings[0].map((candidate) => candidate.title)).toEqual(["FR a", "FR b", "FR c", "FR d"]);
+  });
+
+  it("without a usable meeting answer, the Une follows the notes", async () => {
+    for (const title of ["a", "b"]) await add(ordinary, title);
+    const { redacteur } = createFakeRedacteur({ importance: { a: 2, b: 5 }, frontPage: { une: "unknown", secondary: [] } });
+
+    const edition = await buildEdition(db, DEFAULT_USER_ID, { redacteur, now });
+
+    expect((await itemsOf(edition.id))[0].title).toBe("FR b");
+  });
+
   it("still comes out when the AI fails on an article (media's own title and summary)", async () => {
     await add(ordinary, "fine");
     await add(ordinary, "broken");

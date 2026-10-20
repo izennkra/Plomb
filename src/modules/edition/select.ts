@@ -76,5 +76,17 @@ export async function selectEditionPosts(
     if (!byUrl.has(row.url)) byUrl.set(row.url, { ...row, images: images?.length ? images : imageUrl ? [imageUrl] : [] });
   }
   const selected = [...byUrl.values()];
-  return { day, periodStart, periodEnd, posts: testMode ? selected.slice(0, TEST_MODE_MAX_POSTS) : selected };
+  return { day, periodStart, periodEnd, posts: testMode ? takeInTurns(selected, TEST_MODE_MAX_POSTS) : selected };
+}
+
+/** Test mode: one article of each source in turn, so a short test edition still mixes the media. */
+function takeInTurns(posts: EditionPost[], max: number): EditionPost[] {
+  const bySource = Map.groupBy(posts, (post) => post.sourceName);
+  const taken: EditionPost[] = [];
+  for (let round = 0; taken.length < max && taken.length < posts.length; round++) {
+    for (const list of bySource.values()) {
+      if (list[round] && taken.length < max) taken.push(list[round]);
+    }
+  }
+  return taken;
 }

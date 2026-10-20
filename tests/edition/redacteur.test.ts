@@ -88,4 +88,27 @@ describe("Ollama redacteur", () => {
     replies.push({ content: JSON.stringify({ texte: "  À Melbourne, Madeleine…  " }) });
     expect(await redacteur().writeLead(article)).toBe("À Melbourne, Madeleine…");
   });
+
+  describe("editorial meeting", () => {
+    const candidates = ["Coca-Cola", "Café matcha", "MoMA PS1", "Fulham"].map((title, index) => ({
+      title,
+      summary: "…",
+      subject: title,
+      sourceName: "s",
+      coveredBy: [],
+      importance: 8 - index,
+    }));
+
+    it("returns the chosen positions (the AI numbers from 1)", async () => {
+      replies.push({ content: JSON.stringify({ une: 1, secondaires: [3, 4], raison: "Coca-Cola, événement mondial" }) });
+      expect(await redacteur().chooseFrontPage(candidates)).toEqual({ une: 0, secondary: [2, 3] });
+    });
+
+    it("refuses an incoherent choice (unknown or repeated number)", async () => {
+      replies.push({ content: JSON.stringify({ une: 9, secondaires: [1, 2], raison: "" }) });
+      await expect(redacteur().chooseFrontPage(candidates)).rejects.toThrow(/incohérente/);
+      replies.push({ content: JSON.stringify({ une: 2, secondaires: [2, 3], raison: "" }) });
+      await expect(redacteur().chooseFrontPage(candidates)).rejects.toThrow(/incohérente/);
+    });
+  });
 });

@@ -88,8 +88,8 @@
 ## Tâche 11 : Conférence de rédaction
 **Description :** Une demande de plus à l'IA : elle compare les ~8 meilleurs candidats et choisit la Une (1 + 2). Réponse invalide → ordre des notes.
 **Critères :**
-- [ ] La Une suit le choix de l'IA quand il est valide
-- [ ] Réponse invalide ou erreur → la Une suit les notes
+- [x] La Une suit le choix de l'IA quand il est valide
+- [x] Réponse invalide ou erreur → la Une suit les notes
 **Vérification :** `npm test` + vraie édition · **Dépendances :** 9, 10 · **Taille :** M
 **Fichiers :** `src/modules/edition/redacteur/*`, `src/modules/edition/build.ts`, tests
 

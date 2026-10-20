@@ -1,7 +1,7 @@
 import { THEMES } from "@/db/schema";
 import { importanceOf } from "../scoring";
-import { LEAD_SCHEMA, leadPrompt, SUMMARY_SCHEMA, summaryPrompt, SYSTEM_PROMPT } from "./prompts";
-import type { ArticleSummary, Redacteur, Theme } from "./types";
+import { FRONT_PAGE_SCHEMA, frontPagePrompt, LEAD_SCHEMA, leadPrompt, SUMMARY_SCHEMA, summaryPrompt, SYSTEM_PROMPT } from "./prompts";
+import type { ArticleSummary, FrontPageChoice, Redacteur, Theme } from "./types";
 
 export const DEFAULT_OLLAMA_URL = "http://127.0.0.1:11434";
 
@@ -66,6 +66,12 @@ export function createOllamaRedacteur({
       }
       throw new RedacteurError("Le rédacteur n'a pas pu écrire : réponse incomplète.");
     },
+    async chooseFrontPage(candidates) {
+      const answer = await ask(frontPagePrompt(candidates), FRONT_PAGE_SCHEMA);
+      const choice = toFrontPageChoice(answer, candidates.length);
+      if (!choice) throw new RedacteurError("Le rédacteur n'a pas pu choisir la Une : réponse incohérente.");
+      return choice;
+    },
     async writeLead(article) {
       const answer = (await ask(leadPrompt(article), LEAD_SCHEMA)) as { texte?: unknown };
       const text = typeof answer?.texte === "string" ? answer.texte.trim() : "";
@@ -94,4 +100,18 @@ function toSummary(answer: unknown): ArticleSummary | null {
     criteria,
     importance: importanceOf(criteria),
   };
+}
+
+/** The meeting's answer uses numbers from 1; checks they exist and differ. */
+function toFrontPageChoice(answer: unknown, count: number): FrontPageChoice | null {
+  if (!answer || typeof answer !== "object") return null;
+  const { une, secondaires } = answer as Record<string, unknown>;
+  const picks = [une, ...(Array.isArray(secondaires) ? secondaires : [])].map(Number);
+  const wanted = Math.min(3, count);
+  if (picks.length < wanted) return null;
+  const chosen = picks.slice(0, wanted);
+  if (chosen.some((pick) => !Number.isInteger(pick) || pick < 1 || pick > count)) return null;
+  if (new Set(chosen).size !== chosen.length) return null;
+  const [first, ...rest] = chosen.map((pick) => pick - 1);
+  return { une: first, secondary: rest };
 }

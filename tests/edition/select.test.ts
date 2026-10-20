@@ -114,4 +114,17 @@ describe("selectEditionPosts", () => {
     const selection = await selectEditionPosts(db, DEFAULT_USER_ID, { now, testMode: true });
     expect(selection.posts).toHaveLength(10);
   });
+
+  it("test mode mixes the sources", async () => {
+    const [{ id: otherId }] = await db
+      .insert(sources)
+      .values({ type: "web", displayName: "other", url: "https://o.com", key: "web:o.com" })
+      .returning({ id: sources.id });
+    await db.insert(subscriptions).values({ userId: DEFAULT_USER_ID, sourceId: otherId });
+    for (let i = 0; i < 12; i++) await add(`main-${i}`, at("2026-10-21T05:00:00Z"));
+    await db.insert(posts).values({ sourceId: otherId, url: "https://o.com/x", title: "other-1", method: "rss", discoveredAt: at("2026-10-20T10:00:00Z") });
+
+    const selection = await selectEditionPosts(db, DEFAULT_USER_ID, { now, testMode: true });
+    expect(selection.posts.map((post) => post.title)).toContain("other-1");
+  });
 });

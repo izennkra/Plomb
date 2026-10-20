@@ -1,5 +1,5 @@
 import { THEMES } from "@/db/schema";
-import type { ArticleInput } from "./types";
+import type { ArticleInput, FrontPageCandidate } from "./types";
 
 /** Text of the article given to the AI: enough to understand, short enough to stay fast. */
 const MAX_CHARS = 6000;
@@ -68,4 +68,34 @@ export const LEAD_SCHEMA = {
   type: "object",
   properties: { texte: { type: "string" } },
   required: ["texte"],
+} as const;
+
+export function frontPagePrompt(candidates: FrontPageCandidate[]): string {
+  const list = candidates
+    .map(
+      (candidate, index) =>
+        `${index + 1}. ${candidate.title} — ${candidate.sourceName}${candidate.coveredBy.length ? ` (aussi couvert par ${candidate.coveredBy.join(", ")})` : ""}
+   Sujet : ${candidate.subject || "?"} · Note : ${candidate.importance.toFixed(1)}/10
+   ${candidate.summary}`,
+    )
+    .join("\n");
+  return `Conférence de rédaction de l'édition du matin. Voici les ${candidates.length} sujets les mieux notés :
+
+${list}
+
+Choisis la Une comme le ferait le rédacteur en chef d'un grand journal de design : l'événement le plus marquant pour la
+profession (notoriété du sujet, ampleur, retentissement, nombre de médias qui en parlent), pas seulement le plus joli.
+- "une" : le numéro du sujet qui fait la Une ;
+- "secondaires" : les numéros des 2 sujets suivants (différents de la Une) ;
+- "raison" : la raison de ce choix en une phrase.`;
+}
+
+export const FRONT_PAGE_SCHEMA = {
+  type: "object",
+  properties: {
+    une: { type: "integer" },
+    secondaires: { type: "array", items: { type: "integer" } },
+    raison: { type: "string" },
+  },
+  required: ["une", "secondaires", "raison"],
 } as const;
