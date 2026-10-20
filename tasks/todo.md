@@ -57,8 +57,8 @@
 ## Tâche 6 : Page Sources — ajouter et lister
 **Description :** Page avec un champ « Coller une URL », un bouton Ajouter, le message d'erreur éventuel et la liste des sources suivies (type + nom).
 **Critères :**
-- [ ] Ajouter une URL valide la fait apparaître dans la liste
-- [ ] Une erreur s'affiche en français sous le champ
+- [x] Ajouter une URL valide la fait apparaître dans la liste
+- [x] Une erreur s'affiche en français sous le champ
 **Vérification :** test manuel dans le navigateur
 **Dépendances :** 5 · **Taille :** M
 **Fichiers :** `src/app/page.tsx`, `src/app/actions.ts`, `src/modules/sources/list-sources.ts`

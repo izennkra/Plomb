@@ -31,7 +31,7 @@ reconnaissance des URL → base de données → vérification des sites → ajou
 - [x] Tous les tests passent, y compris les cas de doublons et de sites en erreur
 
 ### Phase 3 : Interface minimale
-- [ ] Tâche 6 : Page Sources — ajouter et lister
+- [x] Tâche 6 : Page Sources — ajouter et lister
 - [ ] Tâche 7 : Retirer une source
 
 ### Checkpoint final
