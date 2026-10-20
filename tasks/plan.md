@@ -32,10 +32,10 @@ figées des vrais sites d'Izenn : flux RSS → repérage des liens d'articles �
 - [x] Tâche 7 : Niveau 2b — lire un article (OpenGraph, date, texte complet)
 
 ### Checkpoint 2
-- [ ] Les 6 sites donnent des articles corrects sur leurs copies figées — point avec Izenn
+- [x] Les 6 sites donnent des articles corrects sur leurs copies figées — point avec Izenn
 
 ### Phase 3 : Relevé et interface
-- [ ] Tâche 8 : Relever une source (cascade, doublons, limite de 20, marqueur « antérieur », statut)
+- [x] Tâche 8 : Relever une source (cascade, doublons, limite de 20, marqueur « antérieur », statut)
 - [ ] Tâche 9 : Interface — relevé après l'ajout, bouton « Relever maintenant », statut et derniers articles
 
 ### Checkpoint final

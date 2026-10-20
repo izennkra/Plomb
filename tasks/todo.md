@@ -73,14 +73,14 @@
 **Fichiers :** `src/modules/aspiration-web/article.ts`, `tests/aspiration-web/article.test.ts`
 
 ## Checkpoint 2
-- [ ] Les 6 sites donnent des articles corrects sur leurs copies figées — point avec Izenn
+- [x] Les 6 sites donnent des articles corrects sur leurs copies figées — point avec Izenn
 
 ## Tâche 8 : Relever une source
 **Description :** `refreshSource(db, sourceId)` : méthode mémorisée d'abord, sinon cascade ; n'ouvre que les articles inconnus ; 20 max ; premier relevé marqué « antérieur » ; enregistre méthode, flux et statut sur la source. Relevé de toutes les sources web (une erreur n'arrête pas les autres).
 **Critères :**
-- [ ] Premier relevé → articles marqués « antérieurs » ; deuxième relevé → seuls les nouveaux, non marqués
-- [ ] Aucun doublon
-- [ ] Site en erreur → statut d'erreur clair, les autres sources sont relevées
+- [x] Premier relevé → articles marqués « antérieurs » ; deuxième relevé → seuls les nouveaux, non marqués
+- [x] Aucun doublon
+- [x] Site en erreur → statut d'erreur clair, les autres sources sont relevées
 **Vérification :** `npm test` (faux site local qui publie un nouvel article entre deux relevés)
 **Dépendances :** 1, 2, 3, 5, 6, 7 · **Taille :** M
 **Fichiers :** `src/modules/aspiration-web/refresh-source.ts`, `tests/aspiration-web/refresh-source.test.ts`
