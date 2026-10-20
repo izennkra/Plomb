@@ -14,7 +14,7 @@ export type SiteName =
 const dir = (site: SiteName) => join(__dirname, "..", "fixtures", "sites", site);
 
 /** Copy of a real site captured by `npm run fixtures:capture`. */
-export function fixture(site: SiteName, file: "list.html" | "article.html" | "feed.xml"): string {
+export function fixture(site: SiteName, file: "list.html" | "article.html" | "feed.xml" | "home.html"): string {
   return readFileSync(join(dir(site), file), "utf8");
 }
 

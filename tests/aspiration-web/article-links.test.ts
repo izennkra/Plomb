@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { findArticleLinks } from "@/modules/aspiration-web/article-links";
+import { findArticleLinks, readCard } from "@/modules/aspiration-web/article-links";
 import { fixture, fixtureMeta, type SiteName } from "../helpers/fixtures";
 
 function linksOf(site: SiteName) {
@@ -109,5 +109,25 @@ describe("findArticleLinks — rules", () => {
       "https://example.com/news/second-long-article-title-here",
       "https://example.com/news/third-long-article-title-here",
     ]);
+  });
+});
+
+describe("readCard — an article seen only on its list page", () => {
+  it("The Brand Identity home page: title and image of the card", () => {
+    const url = "https://the-brandidentity.com/project/why-carolanebel-studio-turned-a-fleur-de-lys-into-a-bird-for-club-pays";
+    const card = readCard(fixture("the-brandidentity", "home.html"), "https://the-brandidentity.com/", url);
+    expect(card).toMatchObject({ url, imageUrl: "https://the-brandidentity.com/uploads/videos/13888240.jpg" });
+    expect(card?.title).toMatch(/Carolanebel/i);
+    expect(card?.title).not.toBe("Project");
+  });
+
+  it("The Brand Identity features page: the longest heading is the title, not the « Project » label", () => {
+    const { listUrl, articleUrl } = fixtureMeta("the-brandidentity");
+    const card = readCard(fixture("the-brandidentity", "list.html"), listUrl, articleUrl!);
+    expect(card?.title).toBe("Studio Hi Ho pairs kraft and butter yellow in Madeleine’s packaging");
+  });
+
+  it("nothing when the list has no card for this address", () => {
+    expect(readCard("<a href='/other'>Other</a>", "https://a.com/", "https://a.com/project/missing-article-here-now")).toBeNull();
   });
 });

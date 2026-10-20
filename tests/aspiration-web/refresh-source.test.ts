@@ -55,6 +55,10 @@ beforeAll(async () => {
         <p>${"The whole article text, much longer than the feed extract. ".repeat(30)}</p></article></body></html>`);
     }
     if (url === "/news/feed") return res.writeHead(200, { "content-type": "application/rss+xml" }).end(feed(site.news, server.base));
+    // A site behind an anti-robot protection: its list answers, its articles refuse (403).
+    if (url === "/guarded")
+      return html(site.blog.map((s) => `<a href="/guarded/${s}"><img src="/i/${s}.jpg"><h5>Project</h5><h3>Card title of ${s}</h3></a>`).join(""));
+    if (url.startsWith("/guarded/")) return res.writeHead(403).end("Forbidden");
     if (url === "/menu") return html(`<a href="/about">About</a><a href="/contact">Contact</a>`);
     // A section (/mag/brand) whose page announces the feed of the whole site, about other things.
     if (url === "/mag/brand")
@@ -113,6 +117,19 @@ describe("refreshSource — site without RSS (page reading)", () => {
       method: "page",
     });
     expect(stored[0].content).toMatch(/Full text/);
+  });
+
+  it("articles refused by the site (403): their card on the list is kept (title, image, link)", async () => {
+    const { db, sourceId } = await setup("/guarded");
+
+    expect(await refreshSource(db, sourceId, { fetchPage: fetchPage() })).toEqual({ ok: true, method: "page", added: 5 });
+    const [first] = await postsOf(db, sourceId);
+    expect(first).toMatchObject({
+      url: `${server.base}/guarded/${slug(1)}`,
+      title: `Card title of ${slug(1)}`,
+      imageUrl: `${server.base}/i/${slug(1)}.jpg`,
+      content: null,
+    });
   });
 
   it("next relève: only the new article, opened alone, and it is real news", async () => {
