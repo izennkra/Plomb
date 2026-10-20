@@ -13,9 +13,9 @@
 ## Tâche 2 : Politesse
 **Description :** Lire et mettre en cache le robots.txt de chaque site ; refuser une page interdite. Pause d'au moins 1 s entre deux requêtes vers un même site.
 **Critères :**
-- [ ] Une page interdite par robots.txt n'est pas demandée
-- [ ] robots.txt absent ou en erreur → tout est autorisé
-- [ ] Deux requêtes vers un même site sont espacées d'au moins 1 s
+- [x] Une page interdite par robots.txt n'est pas demandée
+- [x] robots.txt absent ou en erreur → tout est autorisé
+- [x] Deux requêtes vers un même site sont espacées d'au moins 1 s
 **Vérification :** `npm test`
 **Dépendances :** 1 · **Taille :** S
 **Fichiers :** `src/modules/fetching/robots.ts`, `src/modules/fetching/polite-fetch.ts`, `tests/fetching/robots.test.ts`
