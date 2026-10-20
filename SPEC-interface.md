@@ -35,9 +35,10 @@ le texte continue), contrastes francs, survol = inversion de couleurs **instanta
 ### Journal
 - **La Une = grand bloc orange** : son titre en très grand (noir), l'étiquette « Édition N°25, 20 OCT 2026 » en noir.
   Un clic sur le bloc déplie le texte de Une (≈120 mots), son image et « En savoir plus ».
-- **Les fenêtres grises** (« New » sur la maquette) = les 2 articles secondaires puis la suite de l'actualité.
-  Chaque fenêtre : une barre de titre grise (la source ou le thème) et un panneau blanc (image, titre, résumé).
-  Tailles variées, posées en quinconce comme sur la maquette : les secondaires grandes, la suite plus petite.
+- **Les fenêtres grises** (« New » sur la maquette) = les 2 articles secondaires puis la suite de l'actualité,
+  posées sur une **grille de journal** : rapports de tailles différents selon l'importance, toujours alignés à la
+  grille (référence complémentaire d'Izenn à venir). Chaque fenêtre : une barre de titre grise (la source ou le
+  thème) et un panneau blanc (image, titre, résumé).
 - Sources favorites : barre de titre **noire** au lieu de grise (repérable sans avantage de classement).
 - « Couvert par 3 médias » en petite étiquette noire dans la barre de titre.
 - Navigation entre éditions : **← →** (flèches à l'écran et au clavier) ; réglages de fréquence et « Préparer
@@ -76,8 +77,6 @@ le texte continue), contrastes francs, survol = inversion de couleurs **instanta
 6. Survols : inversion instantanée, sans transition. Tout est coupé si l'ordinateur demande « réduire les animations ».
 
 ## Propositions d'amélioration (à valider)
-- **Lisibilité** : le texte blanc sur gris `#A8A8A8` est peu contrasté (difficile à lire longtemps). Proposition :
-  cartes un peu plus foncées (`#8F8F8F`) ou texte noir sur gris ; même esprit, lecture plus confortable.
 - **Repère « Nouveau »** (l'étiquette « New » de la maquette) sur ce qui est arrivé depuis la dernière visite.
 - **Raccourcis clavier** partout, pour un usage rapide.
 - **E-mail du matin** aux couleurs de Plomb (bloc orange de la Une, logo).
@@ -96,7 +95,7 @@ le texte continue), contrastes francs, survol = inversion de couleurs **instanta
 ## Boundaries
 - Toujours : rester fidèle aux maquettes ; garder chaque écran utilisable au clavier et sur téléphone.
 - Demander d'abord : tout écart visible par rapport aux maquettes (au-delà des propositions ci-dessus).
-- Jamais : publier la police sur GitHub sans licence adaptée (voir question 1).
+- Jamais : modifier les couleurs des maquettes (gris exact conservé, décision d'Izenn).
 
 ## Success Criteria
 - [ ] Les trois écrans reprennent les maquettes (couleurs, police, logo, barre d'onglets)
@@ -107,10 +106,11 @@ le texte continue), contrastes francs, survol = inversion de couleurs **instanta
 - [ ] Ordinateur et téléphone
 - [ ] `npm test`, `npm run lint`, `npm run typecheck` passent
 
+## Décisions (Izenn, 2026-10-20)
+1. **Police : ABC Diatype Compressed.** Izenn a acheté la licence (le créateur est un ami) ; les fichiers installés
+   sur le Mac sont utilisés tels quels.
+2. **Journal : grille de journal**, tailles selon l'importance, alignées à la grille ; référence complémentaire à venir.
+3. **Gris exact des maquettes** conservé (texte blanc sur `#A8A8A8`).
+
 ## Open Questions
-1. **Police** : les maquettes correspondent à **ABC Diatype Compressed**, installée sur ton Mac en version **Trial**
-   (d'essai). Une version d'essai n'est normalement pas autorisée en ligne, même pour un outil personnel, et peut
-   manquer de caractères. As-tu (ou prendras-tu) la licence web ? Sinon : je l'utilise en attendant, sans l'envoyer
-   sur GitHub, ou je prends une police gratuite proche (ex. « Archivo Narrow »).
-2. **Fenêtres « New » du journal** : est-ce bien les articles secondaires et la suite ? (mon interprétation ci-dessus)
-3. **Contraste des cartes** : garder exactement le gris des maquettes, ou foncer un peu pour la lecture ?
+- Référence de grille du Journal (pièce jointe annoncée par Izenn).
