@@ -13,8 +13,7 @@
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "mkdir -p data && drizzle-kit migrate",
-    "fixtures:capture": "node scripts/capture-fixtures.mjs",
-    "compare:ai": "node scripts/compare-ai.mjs"
+    "fixtures:capture": "node scripts/capture-fixtures.mjs"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.7",

@@ -15,7 +15,7 @@ export class FatalRedacteurError extends RedacteurError {}
 export type AskJson = (prompt: string, schema: object) => Promise<unknown>;
 
 /**
- * The editor's work, whatever the AI behind it (Ollama on the Mac, Mistral online…): same instructions,
+ * The editor's work, whatever the AI behind it: same instructions,
  * answers checked field by field, a second try when an answer is incomplete.
  */
 export function createJsonRedacteur({

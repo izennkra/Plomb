@@ -4,8 +4,7 @@ import type { Source } from "@/db/schema";
 import { listRecentPosts, type PostSummary } from "@/modules/aspiration-web/list-posts";
 import { isRefreshing } from "@/modules/aspiration-web/refresh-source";
 import { listSources } from "@/modules/sources/list-sources";
-import { countMissingGalleries } from "@/modules/depeches/complete-galleries";
-import { completeGalleriesAction, isCompletingGalleries, refreshAllAction, toggleFavoriteAction, unsubscribeAction } from "../actions";
+import { refreshAllAction, toggleFavoriteAction, unsubscribeAction } from "../actions";
 import { AddSourceForm } from "./add-source-form";
 import { AutoRefresh } from "../auto-refresh";
 
@@ -29,9 +28,7 @@ export default async function SourcesPage() {
     db,
     sources.map((source) => source.id),
   );
-  const completingGalleries = await isCompletingGalleries();
-  const refreshing = sources.some((source) => isRefreshing(source)) || completingGalleries;
-  const missingGalleries = await countMissingGalleries(db);
+  const refreshing = sources.some((source) => isRefreshing(source));
 
   return (
     <main>
@@ -48,15 +45,6 @@ export default async function SourcesPage() {
         </form>
       )}
 
-      {missingGalleries > 0 && (
-        <form action={completeGalleriesAction}>
-          <button type="submit" disabled={completingGalleries}>
-            {completingGalleries
-              ? `Galeries en cours… (${missingGalleries} restantes)`
-              : `Compléter les galeries (${missingGalleries} articles)`}
-          </button>
-        </form>
-      )}
 
       {sources.length === 0 ? (
         <p>Aucune source pour l&apos;instant. Collez le lien d&apos;un site, d&apos;un compte Instagram, X ou LinkedIn.</p>
