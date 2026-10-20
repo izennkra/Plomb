@@ -42,5 +42,8 @@
 **Vérification :** `npm test` · **Taille :** M
 
 ## Checkpoint final
-- [ ] Essai réel sur chaque plateforme ; 0 € facturé
-- [ ] `/review`, push, proposition de pull request
+- [x] Essai réel YouTube et Instagram ; X et LinkedIn lus sur de vraies réponses ; 0 € facturé (0,04 $ de crédit gratuit utilisé)
+- [ ] Essai réel X et LinkedIn avec les comptes d'Izenn (« Relever maintenant »)
+- [x] Relecture (résultats illisibles ne bloquent plus le relevé), build de production vérifié
+- [x] Instagram 2 fois par jour, X et LinkedIn 4 fois (coût mesuré)
+- [x] Push, pull request préparée
