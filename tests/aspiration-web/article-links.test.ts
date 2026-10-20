@@ -35,6 +35,16 @@ describe("findArticleLinks — real sites", () => {
     for (const link of links) expect(link).toMatch(/^https:\/\/www\.dandad\.org\/work\/d-ad-awards-archive\/[\w-]+$/);
   });
 
+  it("D&AD insights → editorial articles", () => {
+    const links = linksOf("dandad-insights");
+    expect(links.length).toBeGreaterThanOrEqual(5);
+    for (const link of links) expect(link).toMatch(/^https:\/\/www\.dandad\.org\/insights\/[\w-]+\/[\w%-]+$/);
+  });
+
+  it("D&AD work (showcase with short addresses) → nothing: marked unreadable until level 3", () => {
+    expect(linksOf("dandad-work")).toEqual([]);
+  });
+
   it("returns each article once, in page order", () => {
     const links = linksOf("itsnicethat");
     expect(new Set(links).size).toBe(links.length);

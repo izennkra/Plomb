@@ -45,6 +45,14 @@ describe("readArticle — real articles", () => {
   });
 });
 
+describe("readArticle — D&AD insights", () => {
+  it("reads an editorial article", () => {
+    const post = read("dandad-insights");
+    expect(post.title.length).toBeGreaterThan(10);
+    expect(post.content?.length).toBeGreaterThan(300);
+  });
+});
+
 describe("readArticle — rules", () => {
   const html = (head: string, body = "<p>Some text</p>") => `<html><head>${head}</head><body>${body}</body></html>`;
 

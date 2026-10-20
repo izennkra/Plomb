@@ -1,7 +1,15 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-export type SiteName = "the-brandidentity" | "itsnicethat" | "brandnew" | "dandad" | "findings" | "offbrand";
+export type SiteName =
+  | "the-brandidentity"
+  | "itsnicethat"
+  | "brandnew"
+  | "dandad"
+  | "dandad-insights"
+  | "dandad-work"
+  | "findings"
+  | "offbrand";
 
 const dir = (site: SiteName) => join(__dirname, "..", "fixtures", "sites", site);
 

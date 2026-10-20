@@ -17,7 +17,9 @@ Instagram, X et LinkedIn ne sont **pas** concernés (brique `aspiration-sociale`
 | the-brandidentity.com/features | 2 — page | ~20 liens `/project/…` ; chaque article a titre, résumé, image HD (OpenGraph) et date |
 | itsnicethat.com | 2 — page | flux RSS interdit aux robots ; ~60 liens `/articles/…` |
 | underconsideration.com/brandnew | 2 — page | seul flux annoncé = podcast (à ignorer) ; articles `/brandnew/archives/….php` **mélangés à 44 liens de catégories** (cas piège) ; pas de date dans l'article |
-| dandad.org/work/d-ad-awards-archive | 2 — page | archive des prix : liens `/work/d-ad-awards-archive/…` ; **classée par ordre alphabétique**, pas par date ; image de partage générique |
+| dandad.org/insights | 2 — page | rubrique éditoriale (articles, interviews) — remplace l'archive |
+| dandad.org/work | ❌ illisible | vitrine de 6 projets aux adresses courtes ; attendra le niveau 3 (IA) |
+| ~~dandad.org/work/d-ad-awards-archive~~ | 2 — page | archive des prix : liens `/work/d-ad-awards-archive/…` ; **classée par ordre alphabétique**, pas par date ; image de partage générique |
 
 → Le **niveau 2** de la cascade (lire la page) n'est pas un cas rare : c'est le cas principal pour les médias design.
 
@@ -100,7 +102,7 @@ Comme la brique 1 : fonctions courtes, logique séparée de l'interface, réseau
 
 ## Success Criteria
 - [ ] the-brandidentity.com/features, itsnicethat.com et underconsideration.com/brandnew → au moins 10 articles chacun, avec titre, image et lien, **sans pages de catégorie**
-- [ ] dandad.org (archive des prix) → les entrées de l'archive sont reconnues comme articles
+- [ ] dandad.org/insights → articles reconnus ; dandad.org/work → marqué « illisible » (pas de faux articles)
 - [ ] findings.mouthwash.studio et offbrandkoto.substack.com → articles avec date de publication (via RSS)
 - [ ] Un deuxième relevé n'ajoute que les nouveaux articles (0 doublon), qui ne sont **pas** marqués « antérieurs »
 - [ ] Les articles du premier relevé sont marqués « antérieurs à l'abonnement »
@@ -111,7 +113,7 @@ Comme la brique 1 : fonctions courtes, logique séparée de l'interface, réseau
 ## Décisions
 1. Niveau 3 (IA) : **plus tard** — on mesure d'abord combien de sites restent illisibles, et on choisit l'IA (locale) avec la brique `edition`.
 2. Texte complet des articles : **stocké pour l'IA**, jamais affiché.
-3. Sites de test : ceux d'Izenn (tableau ci-dessus). D&AD est ajouté sans `?page=2` (les nouveautés sont en page 1).
+3. Sites de test : ceux d'Izenn (tableau ci-dessus). D&AD : l'archive (classée par ordre alphabétique) est remplacée par `/insights` + `/work` (choix d'Izenn).
 4. Articles du premier relevé gardés comme matière de test et point de départ, mais marqués « antérieurs à l'abonnement ».
 
 ## Open Questions

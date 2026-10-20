@@ -1,5 +1,6 @@
 // Saves copies of the test sites in tests/fixtures/sites/ so tests don't depend on the internet.
-// Usage: npm run fixtures:capture   (re-run when a site changes its layout)
+// Usage: npm run fixtures:capture             (all sites; re-run when a site changes its layout)
+//        npm run fixtures:capture -- dandad   (only some sites)
 import { mkdir, writeFile } from "node:fs/promises";
 
 const SITES = {
@@ -7,6 +8,8 @@ const SITES = {
   itsnicethat: { list: "https://www.itsnicethat.com/", article: /\/articles\/[^"'#?]+/ },
   brandnew: { list: "https://www.underconsideration.com/brandnew/", article: /\/brandnew\/archives\/[\w-]+\.php/ },
   dandad: { list: "https://www.dandad.org/work/d-ad-awards-archive", article: /\/work\/d-ad-awards-archive\/[^"'#?]+/ },
+  "dandad-insights": { list: "https://www.dandad.org/insights", article: /\/insights\/(awards|features)\/[^"'#?]+/ },
+  "dandad-work": { list: "https://www.dandad.org/work" },
   findings: { list: "https://findings.mouthwash.studio/", feed: "https://findings.mouthwash.studio/feed" },
   offbrand: { list: "https://offbrandkoto.substack.com/", feed: "https://offbrandkoto.substack.com/feed" },
 };
@@ -24,7 +27,10 @@ async function get(url) {
 
 const pause = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
+const only = process.argv.slice(2);
+
 for (const [name, site] of Object.entries(SITES)) {
+  if (only.length > 0 && !only.includes(name)) continue;
   const dir = new URL(`../tests/fixtures/sites/${name}/`, import.meta.url);
   await mkdir(dir, { recursive: true });
   const meta = { capturedAt: new Date().toISOString().slice(0, 10) };
