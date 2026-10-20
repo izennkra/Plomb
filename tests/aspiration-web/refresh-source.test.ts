@@ -51,7 +51,8 @@ beforeAll(async () => {
     if (url.startsWith("/news/") && url !== "/news/feed") {
       const name = url.split("/").pop();
       return html(`<html><head><meta property="og:title" content="t"><meta property="og:image" content="/g/${name}-1.jpg"></head>
-        <body><img src="/g/${name}-2.jpg"><img src="/g/${name}-3.jpg"></body></html>`);
+        <body><article><img src="/g/${name}-2.jpg"><img src="/g/${name}-3.jpg">
+        <p>${"The whole article text, much longer than the feed extract. ".repeat(30)}</p></article></body></html>`);
     }
     if (url === "/news/feed") return res.writeHead(200, { "content-type": "application/rss+xml" }).end(feed(site.news, server.base));
     if (url === "/menu") return html(`<a href="/about">About</a><a href="/contact">Contact</a>`);
@@ -192,12 +193,14 @@ describe("refreshSource — site with RSS", () => {
     expect(source).toMatchObject({ fetchMethod: "rss", feedUrl: `${server.base}/news/feed` });
   });
 
-  it("reads the article page for its gallery when the feed has a single image", async () => {
+  it("reads the article page for its gallery and full text when the feed only gives an extract", async () => {
     const { db, sourceId } = await setup("/news");
     await refreshSource(db, sourceId, { fetchPage: fetchPage() });
 
     const [post] = await postsOf(db, sourceId);
     expect(post.images).toHaveLength(3);
+    expect(post.content?.length).toBeGreaterThan(1000);
+    expect(post.content).toContain("The whole article text");
   });
 
   it("goes straight to the remembered feed next time", async () => {

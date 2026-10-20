@@ -4,7 +4,7 @@ import { posts, seenLinks, sources, type Source } from "@/db/schema";
 import { createPoliteFetcher, type PageFetcher, type PoliteResult } from "@/modules/fetching/polite-fetch";
 import { readArticle } from "./article";
 import { findArticleLinks } from "./article-links";
-import { richerGallery } from "./enrich-gallery";
+import { enrichFromPage } from "./enrich-from-page";
 import { findFeedUrls, parseFeed } from "./feed";
 import type { PostCandidate } from "./post";
 import { purgeOldPosts } from "@/modules/depeches/purge";
@@ -175,7 +175,8 @@ async function readFromFeed(
     const handled = await newOnes(db, source.id, listed);
     const wanted = new Set(handled);
     const fresh = inSection.filter((post) => wanted.has(post.url));
-    for (const post of fresh) post.images = await richerGallery(post.url, post.images, fetchPage);
+    // Feeds with a single image or a short extract: the article page gives the gallery and the full text.
+    for (const post of fresh) Object.assign(post, await enrichFromPage(post, fetchPage));
     return { ok: true, method: "rss", feedUrl, listed, handled, posts: fresh, unreadable: 0 };
   }
   return { ok: false, error: UNREADABLE };
