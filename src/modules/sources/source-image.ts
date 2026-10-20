@@ -56,13 +56,14 @@ export function avatarFromItems(source: Pick<Source, "type">, items: unknown[]):
   return null;
 }
 
-/** Instagram pages are closed to servers: the free unavatar.io service gives the public profile picture. */
+/**
+ * X profile picture through the free unavatar.io service (before the account's first posts arrive). Its Instagram
+ * pictures need a paid plan: Instagram accounts show their initials.
+ */
 export function unavatarUrl(source: Pick<Source, "type" | "key">): string | null {
   const handle = source.key.split(":")[1];
-  if (!handle) return null;
-  if (source.type === "instagram") return `https://unavatar.io/instagram/${encodeURIComponent(handle)}?fallback=false`;
-  if (source.type === "x") return `https://unavatar.io/x/${encodeURIComponent(handle)}?fallback=false`;
-  return null;
+  if (!handle || source.type !== "x") return null;
+  return `https://unavatar.io/x/${encodeURIComponent(handle)}?fallback=false`;
 }
 
 const download: DownloadImage = async (url) => {
@@ -86,8 +87,8 @@ export async function saveSourceImage(
 }
 
 /**
- * Finds the pictures still missing (a few per call): the site's icon, the YouTube channel's picture, the Instagram
- * or X profile picture. Without one, the tile shows the source's initials.
+ * Finds the pictures still missing (a few per call): the site's icon, the YouTube channel's picture, the X profile
+ * picture. Without one, the tile shows the source's initials.
  */
 export async function refreshSourceImages(
   db: Db,

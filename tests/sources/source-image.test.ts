@@ -31,8 +31,9 @@ describe("social pictures", () => {
     expect(avatarFromItems({ type: "linkedin" }, social("linkedin"))).toMatch(/^https:\/\/media\.licdn\.com\//);
   });
 
-  it("Instagram: through unavatar.io", () => {
-    expect(unavatarUrl({ type: "instagram", key: "instagram:studiokoto" })).toBe("https://unavatar.io/instagram/studiokoto?fallback=false");
+  it("X through unavatar.io; Instagram has none there (paid plan): initials instead", () => {
+    expect(unavatarUrl({ type: "x", key: "x:helloHEX" })).toBe("https://unavatar.io/x/helloHEX?fallback=false");
+    expect(unavatarUrl({ type: "instagram", key: "instagram:studiokoto" })).toBeNull();
   });
 });
 

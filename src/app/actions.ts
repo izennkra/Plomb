@@ -21,6 +21,8 @@ import { createApifyClient } from "@/modules/social/apify";
 import { createDbMediaStore } from "@/modules/social/media-store";
 import { collectSocialRuns, launchSocialRuns } from "@/modules/social/refresh-social";
 import { addSource } from "@/modules/sources/add-source";
+import { refreshSourceImages } from "@/modules/sources/source-image";
+import { createPoliteFetcher } from "@/modules/fetching/polite-fetch";
 import { setFavorite } from "@/modules/sources/favorite";
 import { unsubscribe } from "@/modules/sources/unsubscribe";
 
@@ -45,6 +47,10 @@ export async function addSourceAction(_previous: AddSourceState, formData: FormD
     await markRefreshing(db, [source.id]);
     after(() => refreshSource(db, source.id));
   }
+  // Its picture for the tile (site logo, profile picture), right away.
+  if (!source.imageUrl) {
+    after(() => refreshSourceImages(db, { fetchPage: createPoliteFetcher(), mediaStore: createDbMediaStore(db), max: 3 }).catch(() => 0));
+  }
 
   revalidatePath("/", "layout");
   const name = source.displayName;
@@ -63,7 +69,11 @@ export async function refreshAllAction(): Promise<void> {
     db,
     websites.map((source) => source.id),
   );
-  after(() => refreshAllSources(db));
+  after(async () => {
+    await refreshAllSources(db);
+    // Pictures still missing on the Sources page (logo of a site, profile picture…).
+    await refreshSourceImages(db, { fetchPage: createPoliteFetcher(), mediaStore: createDbMediaStore(db), max: 30 }).catch(() => 0);
+  });
   // Social networks too (button only: the clock does it at 7:30 and 17:30), within the free credit.
   if (process.env.APIFY_TOKEN) {
     const apify = createApifyClient({ token: process.env.APIFY_TOKEN });
