@@ -45,10 +45,22 @@ beforeAll(async () => {
     site.hits.push(url);
     const html = (body: string) => res.writeHead(200, { "content-type": "text/html" }).end(body);
     if (url === "/blog") return html(site.blog.map((s) => `<a href="/blog/${s}">${s}</a>`).join(""));
+    if (url === "/blog/broken-article-that-has-no-title") return html("<p>no title here</p>");
     if (url.startsWith("/blog/")) return html(articlePage(url));
     if (url === "/news") return html(`<link rel="alternate" type="application/rss+xml" href="/news/feed">`);
     if (url === "/news/feed") return res.writeHead(200, { "content-type": "application/rss+xml" }).end(feed(site.news, server.base));
     if (url === "/menu") return html(`<a href="/about">About</a><a href="/contact">Contact</a>`);
+    // A section (/mag/brand) whose page announces the feed of the whole site, about other things.
+    if (url === "/mag/brand")
+      return html(
+        `<link rel="alternate" type="application/rss+xml" href="/feed">` +
+          site.blog.map((s) => `<a href="/mag/brand/${s}">${s}</a>`).join(""),
+      );
+    if (url.startsWith("/mag/brand/")) return html(articlePage(url));
+    if (url === "/feed")
+      return res
+        .writeHead(200, { "content-type": "application/rss+xml" })
+        .end(feed(["company-news-about-our-conference", "another-company-announcement-here"], `${server.base}/company`));
     res.writeHead(404).end();
   });
 });
@@ -118,6 +130,38 @@ describe("refreshSource — site without RSS (page reading)", () => {
     expect(await refreshSource(db, sourceId, { fetchPage: fetchPage() })).toMatchObject({ ok: true, added: 20 });
   });
 
+  it("does not take the older articles left out of the first relève for news", async () => {
+    site.blog = Array.from({ length: 25 }, (_, i) => slug(i));
+    const { db, sourceId } = await setup("/blog");
+    await refreshSource(db, sourceId, { fetchPage: fetchPage() });
+
+    expect(await refreshSource(db, sourceId, { fetchPage: fetchPage() })).toMatchObject({ ok: true, added: 0 });
+
+    site.blog.unshift(slug(99));
+    expect(await refreshSource(db, sourceId, { fetchPage: fetchPage() })).toMatchObject({ ok: true, added: 1 });
+  });
+
+  it("same rule for a long RSS feed", async () => {
+    site.news = Array.from({ length: 25 }, (_, i) => slug(i));
+    const { db, sourceId } = await setup("/news");
+
+    expect(await refreshSource(db, sourceId, { fetchPage: fetchPage() })).toMatchObject({ added: 20 });
+    expect(await refreshSource(db, sourceId, { fetchPage: fetchPage() })).toMatchObject({ added: 0 });
+  });
+
+  it("does not retry forever an article that cannot be read", async () => {
+    const { db, sourceId } = await setup("/blog");
+    await refreshSource(db, sourceId, { fetchPage: fetchPage() });
+
+    site.blog.unshift("broken-article-that-has-no-title");
+    site.hits = [];
+    await refreshSource(db, sourceId, { fetchPage: fetchPage() });
+    site.hits = [];
+    await refreshSource(db, sourceId, { fetchPage: fetchPage() });
+
+    expect(site.hits).not.toContain("/blog/broken-article-that-has-no-title");
+  });
+
   it("remembers the method and records the status on the source", async () => {
     const { db, sourceId } = await setup("/blog");
     await refreshSource(db, sourceId, { fetchPage: fetchPage() });
@@ -150,6 +194,15 @@ describe("refreshSource — site with RSS", () => {
     site.hits = [];
     expect(await refreshSource(db, sourceId, { fetchPage: fetchPage() })).toMatchObject({ added: 1 });
     expect(site.hits).not.toContain("/news");
+  });
+});
+
+describe("refreshSource — section of a site", () => {
+  it("ignores a site-wide feed that has nothing from the section, and reads the page instead", async () => {
+    const { db, sourceId } = await setup("/mag/brand");
+
+    expect(await refreshSource(db, sourceId, { fetchPage: fetchPage() })).toEqual({ ok: true, method: "page", added: 5 });
+    for (const post of await postsOf(db, sourceId)) expect(post.url).toContain("/mag/brand/");
   });
 });
 
@@ -196,5 +249,39 @@ describe("refreshAllSources", () => {
     const summary = await refreshAllSources(db, { fetchPage: fetchPage() });
 
     expect(summary).toEqual({ sources: 2, failed: 1, added: 5 });
+  });
+
+  it("says when there is nothing new", async () => {
+    const { db, sourceId } = await setup("/blog");
+    await refreshSource(db, sourceId, { fetchPage: fetchPage() });
+    await refreshSource(db, sourceId, { fetchPage: fetchPage() });
+
+    const source = await db.query.sources.findFirst({ where: eq(sources.id, sourceId) });
+    expect(source?.lastFetchMessage).toBe("aucun nouvel article");
+  });
+});
+
+describe("isInSection", () => {
+  it("accepts everything for a whole site", async () => {
+    const { isInSection } = await import("@/modules/aspiration-web/refresh-source");
+    expect(isInSection("https://other.com/a", "https://www.itsnicethat.com/")).toBe(true);
+  });
+
+  it("keeps only the section's articles, with or without www", async () => {
+    const { isInSection } = await import("@/modules/aspiration-web/refresh-source");
+    const section = "https://www.underconsideration.com/brandnew";
+    expect(isInSection("https://underconsideration.com/brandnew/archives/a.php", section)).toBe(true);
+    expect(isInSection("https://underconsideration.com/headline_news/conference", section)).toBe(false);
+    expect(isInSection("https://underconsideration.com/brandnewsletter/x", section)).toBe(false);
+  });
+});
+
+describe("isRefreshing", () => {
+  it("is true only while a relève is recent", async () => {
+    const { isRefreshing } = await import("@/modules/aspiration-web/refresh-source");
+    const now = Date.parse("2026-10-20T10:00:00Z");
+    expect(isRefreshing({ lastFetchStatus: "running", lastFetchedAt: new Date(now - 60_000) }, now)).toBe(true);
+    expect(isRefreshing({ lastFetchStatus: "running", lastFetchedAt: new Date(now - 10 * 60_000) }, now)).toBe(false);
+    expect(isRefreshing({ lastFetchStatus: "ok", lastFetchedAt: new Date(now) }, now)).toBe(false);
   });
 });

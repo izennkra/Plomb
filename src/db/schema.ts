@@ -18,7 +18,7 @@ export const sources = sqliteTable("sources", {
   fetchMethod: text("fetch_method", { enum: ["rss", "page"] }),
   feedUrl: text("feed_url"),
   lastFetchedAt: integer("last_fetched_at", { mode: "timestamp" }),
-  lastFetchStatus: text("last_fetch_status", { enum: ["ok", "error"] }),
+  lastFetchStatus: text("last_fetch_status", { enum: ["ok", "error", "running"] }),
   /** Error message shown to the user, or the number of new articles on success. */
   lastFetchMessage: text("last_fetch_message"),
 });
@@ -50,6 +50,22 @@ export const posts = sqliteTable(
     uniqueIndex("posts_source_url_unique").on(table.sourceId, table.url),
     index("posts_source_idx").on(table.sourceId, table.discoveredAt),
   ],
+);
+
+/**
+ * Every article address already listed by a source, read or not: only addresses that appear later are news.
+ * (A first relève reads 20 articles out of maybe 40 listed: the other 20 are old, not news.)
+ */
+export const seenLinks = sqliteTable(
+  "seen_links",
+  {
+    sourceId: integer("source_id")
+      .notNull()
+      .references(() => sources.id, { onDelete: "cascade" }),
+    url: text("url").notNull(),
+    seenAt: createdAt(),
+  },
+  (table) => [primaryKey({ columns: [table.sourceId, table.url] })],
 );
 
 export const users = sqliteTable("users", {
