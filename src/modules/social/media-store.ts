@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
-import { mkdir, rm, writeFile } from "node:fs/promises";
-import { join } from "node:path";
-import { del, put } from "@vercel/blob";
+import { eq, inArray } from "drizzle-orm";
+import type { Db } from "@/db/client";
+import { media } from "@/db/schema";
 
 /** Where copies of expiring images (Instagram, LinkedIn) are kept. */
 export type MediaStore = {
@@ -12,50 +12,36 @@ export type MediaStore = {
   owns(url: string): boolean;
 };
 
-/** Online: Vercel Blob (free up to 1 GB), with BLOB_READ_WRITE_TOKEN. */
-export function createBlobStore(token: string): MediaStore {
-  const owns = (url: string) => /\.public\.blob\.vercel-storage\.com\//.test(url);
+export const MEDIA_PATH = "/media/";
+
+/**
+ * Copies live in Plomb's own database (Turso online: 5 GB free, no limit on the number of uploads) and are served
+ * by the app at /media/<name>. Nothing else to set up.
+ */
+export function createDbMediaStore(db: Db): MediaStore {
+  const owns = (url: string) => url.startsWith(MEDIA_PATH);
   return {
     async save(name, bytes, contentType) {
-      const { url } = await put(`media/${name}`, Buffer.from(bytes), {
-        access: "public",
-        contentType,
-        token,
-        addRandomSuffix: false,
-        allowOverwrite: true,
-      });
-      return url;
+      await db
+        .insert(media)
+        .values({ name, contentType, data: Buffer.from(bytes) })
+        .onConflictDoNothing();
+      return `${MEDIA_PATH}${name}`;
     },
     async remove(urls) {
-      const mine = urls.filter(owns);
-      if (mine.length > 0) await del(mine, { token });
+      const names = urls.filter(owns).map((url) => url.slice(MEDIA_PATH.length));
+      if (names.length > 0) await db.delete(media).where(inArray(media.name, names));
     },
     owns,
   };
 }
 
-/** On the Mac: the public/media folder, served by the app at /media/…. */
-export function createLocalStore(dir = join(process.cwd(), "public", "media")): MediaStore {
-  const owns = (url: string) => url.startsWith("/media/");
-  return {
-    async save(name, bytes) {
-      await mkdir(dir, { recursive: true });
-      await writeFile(join(dir, name), bytes);
-      return `/media/${name}`;
-    },
-    async remove(urls) {
-      for (const url of urls.filter(owns)) await rm(join(dir, url.slice("/media/".length)), { force: true });
-    },
-    owns,
-  };
+export async function readMedia(db: Db, name: string): Promise<{ contentType: string; data: Buffer } | null> {
+  const row = await db.query.media.findFirst({ where: eq(media.name, name) });
+  return row ? { contentType: row.contentType, data: row.data } : null;
 }
 
-export function getMediaStore(): MediaStore {
-  const token = process.env.BLOB_READ_WRITE_TOKEN;
-  return token ? createBlobStore(token) : createLocalStore();
-}
-
-/** Same image address = same file name: copying twice costs nothing more. */
+/** Same image address = same name: copying twice costs nothing more. */
 export function mediaName(url: string, contentType: string): string {
   const extension = /png/.test(contentType) ? "png" : /webp/.test(contentType) ? "webp" : /gif/.test(contentType) ? "gif" : "jpg";
   return `${createHash("sha1").update(url).digest("hex")}.${extension}`;

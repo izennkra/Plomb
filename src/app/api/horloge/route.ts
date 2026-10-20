@@ -4,7 +4,7 @@ import { isClockAuthorized } from "@/modules/planification/clock-auth";
 import { runClock } from "@/modules/planification/clock";
 import { createResendSender } from "@/modules/planification/resend-sender";
 import { createApifyClient } from "@/modules/social/apify";
-import { getMediaStore } from "@/modules/social/media-store";
+import { createDbMediaStore } from "@/modules/social/media-store";
 
 // The online host stops a call after 5 minutes; the clock keeps a margin.
 export const maxDuration = 300;
@@ -20,13 +20,14 @@ async function handle(request: Request): Promise<Response> {
   }
 
   const appUrl = process.env.PLOMB_APP_URL ?? new URL(request.url).origin;
-  const report = await runClock(await getDb(), {
+  const db = await getDb();
+  const report = await runClock(db, {
     redacteur: getRedacteur,
     sendEmail: (message) => createResendSender({ apiKey: process.env.RESEND_API_KEY ?? "", from: process.env.PLOMB_EMAIL_FROM })(message),
     emailTo: process.env.PLOMB_EMAIL_TO ?? "",
     journalUrl: `${appUrl}/journal`,
     apify: () => (process.env.APIFY_TOKEN ? createApifyClient({ token: process.env.APIFY_TOKEN }) : null),
-    mediaStore: getMediaStore(),
+    mediaStore: createDbMediaStore(db),
   });
   return Response.json(report);
 }

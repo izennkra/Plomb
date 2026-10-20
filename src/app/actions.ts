@@ -19,7 +19,7 @@ import { editionTestMode } from "@/modules/edition/select";
 import { saveSchedule } from "@/modules/edition/settings";
 import { getRedacteur } from "@/modules/edition/redacteur";
 import { createApifyClient } from "@/modules/social/apify";
-import { getMediaStore } from "@/modules/social/media-store";
+import { createDbMediaStore } from "@/modules/social/media-store";
 import { collectSocialRuns, launchSocialRuns } from "@/modules/social/refresh-social";
 import { addSource } from "@/modules/sources/add-source";
 import { setFavorite } from "@/modules/sources/favorite";
@@ -76,7 +76,7 @@ export async function refreshAllAction(): Promise<void> {
 
 /** After the button: collects the social answers as they come back (a minute or two), for up to 4 minutes. */
 async function waitForSocialRuns(db: Awaited<ReturnType<typeof getDb>>, apify: ReturnType<typeof createApifyClient>) {
-  const mediaStore = getMediaStore();
+  const mediaStore = createDbMediaStore(db);
   for (let round = 0; round < 24; round++) {
     await new Promise((resolve) => setTimeout(resolve, 10_000));
     await collectSocialRuns(db, { apify, mediaStore }).catch(() => null);

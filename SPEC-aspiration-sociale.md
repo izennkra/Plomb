@@ -40,8 +40,10 @@ pour un usage personnel ; à revoir avant les abonnés payants.
   aucune attente dans la limite de 5 minutes.
 - Seuls les posts **plus récents que le dernier relevé** sont demandés (premier relevé : 3 derniers posts, marqués
   « avant l'abonnement » comme pour les sites).
-- **Images** : copiées dans **Vercel Blob** (gratuit jusqu'à 1 Go) en ligne, dans `data/media/` sur le Mac ;
-  supprimées avec les posts au bout de 7 jours.
+- **Images** : dès l'arrivée d'un post Instagram ou LinkedIn, **tout le carrousel** (jusqu'à 20 slides, qualité d'origine)
+  est copié **dans la base de Plomb** (Turso en ligne : 5 Go gratuits, aucune limite de nombre de dépôts) et servi par Plomb
+  à `/media/…` ; supprimé avec les posts au bout de 7 jours. Les images de X ne sont pas copiées (elles n'expirent pas).
+  (Vercel Blob, d'abord prévu, limitait à ~2 000 dépôts par mois : abandonné.)
 - Les règles existantes s'appliquent : doublons, 7 jours, date de publication, journal, écho médiatique, favoris.
 
 ## Modèle de données
@@ -51,7 +53,7 @@ pour un usage personnel ; à revoir avant les abonnés payants.
 
 ## Tech Stack (ajouts)
 - Apify par son API HTTP (clé `APIFY_TOKEN`), sans bibliothèque si possible.
-- `@vercel/blob` pour la copie des images en ligne.
+- Copies d'images dans la base (table `media`), servies par Plomb : aucun service de stockage en plus.
 
 ## Testing Strategy
 - Copies figées d'un flux YouTube et de réponses Apify (Instagram, X, LinkedIn) ; faux serveur Apify (lancer / statut / résultats).
@@ -65,9 +67,9 @@ pour un usage personnel ; à revoir avant les abonnés payants.
 
 ## Success Criteria
 - [ ] Une chaîne YouTube s'ajoute par son adresse `@nom` et ses nouvelles vidéos apparaissent
-- [ ] Instagram : nouveaux posts avec toutes les images du carrousel, images toujours visibles après 48 h
+- [ ] Instagram : nouveaux posts avec toutes les images du carrousel (copiées), images toujours visibles après expiration
 - [ ] X et LinkedIn : nouveaux posts
-- [ ] Relevés sociaux à 7h30 et 17h30, résultats récupérés au passage suivant, jamais de doublon
+- [ ] Relevés sociaux 4 fois par jour (7h30, 11h30, 15h30, 19h30), une demande par réseau, résultats récupérés au passage suivant, jamais de doublon
 - [ ] Consommation Apify suivie ; arrêt avant ~4 $ dans le mois ; 0 € facturé
 - [ ] Les posts sociaux entrent dans la Salle de Dépêches et le journal (titre et résumé rédigés par l'IA)
 - [ ] `npm test`, `npm run lint`, `npm run typecheck` passent

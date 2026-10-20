@@ -16,9 +16,10 @@ describe("session", () => {
     expect(await isValidSession(token, "nouveau")).toBe(false);
   });
 
-  it("only the sign-in page, the clock and Next.js files are open", () => {
+  it("only the sign-in page, the clock, image copies and Next.js files are open", () => {
     expect(isPublicPath("/connexion")).toBe(true);
     expect(isPublicPath("/api/horloge")).toBe(true);
+    expect(isPublicPath("/media/0123.jpg")).toBe(true);
     expect(isPublicPath("/_next/static/chunk.js")).toBe(true);
     expect(isPublicPath("/")).toBe(false);
     expect(isPublicPath("/journal/3/email")).toBe(false);

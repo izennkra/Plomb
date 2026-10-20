@@ -13,7 +13,7 @@ garde-fou de crédit), puis Instagram, X, LinkedIn un par un, la copie des image
   jamais d'attente qui risquerait la limite de 5 minutes.
 - **Un « lecteur » par plateforme** (Instagram, X, LinkedIn) qui transforme la réponse d'Apify en articles Plomb
   (même format que les sites : titre, résumé, images, date, texte, lien).
-- **Stockage d'images interchangeable** : Vercel Blob en ligne, dossier local sur le Mac.
+- **Copies d'images dans la base** (table `media`, servie à `/media/…`) : ni Vercel Blob ni limite de dépôts.
 - **Garde-fou** : consommation du mois lue chez Apify avant chaque demande ; arrêt à ~4 $.
 
 ## Liste des tâches
@@ -36,6 +36,11 @@ garde-fou de crédit), puis Instagram, X, LinkedIn un par un, la copie des image
 
 ### Phase 4 : Horloge
 - [x] Tâche 8 : Relevés sociaux à 7h30 et 17h30, récupération au passage suivant, garde-fou
+
+### Ajouts (retours d'Izenn, 2026-10-20)
+- [x] Images grises : image de partage générique ignorée, carte sans image = texte seul
+- [x] 4 vérifications par jour, une seule demande par réseau
+- [x] Carrousels complets (20 slides) copiés dans la base
 
 ### Checkpoint final
 - [ ] Essai réel sur un compte de chaque plateforme ; consommation Apify vérifiée (0 € facturé)

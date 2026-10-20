@@ -1,8 +1,8 @@
 import { safeFetch } from "@/modules/fetching/safe-fetch";
 import { mediaName, type MediaStore } from "./media-store";
 
-/** Images copied per post: enough for the carousel, within the free storage operations. */
-export const MAX_COPIED_IMAGES = 8;
+/** Every slide of a carousel is kept (Instagram allows 20). */
+export const MAX_COPIED_IMAGES = 20;
 const MAX_IMAGE_BYTES = 8_000_000;
 
 export type DownloadImage = (url: string) => Promise<{ bytes: Uint8Array; contentType: string } | null>;
@@ -14,8 +14,8 @@ const download: DownloadImage = async (url) => {
 };
 
 /**
- * Copies a post's images into Plomb's storage (their original addresses expire after a few days). An image that cannot
- * be copied keeps its original address; images beyond the first 8 are dropped.
+ * Copies a post's images into Plomb's storage as soon as it arrives (their original addresses expire after a few days):
+ * the whole carousel, in original quality. An image that cannot be copied keeps its original address.
  */
 export async function copyImages(
   images: string[],

@@ -13,5 +13,3 @@ data/
 
 .DS_Store
 
-# Copies of social media images (local development)
-public/media/

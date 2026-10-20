@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { blob, index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 const createdAt = () =>
   integer("created_at", { mode: "timestamp" })
@@ -75,6 +75,18 @@ export const socialRuns = sqliteTable(
   },
   (table) => [index("social_runs_status_idx").on(table.status, table.sourceId)],
 );
+
+/**
+ * Copies of social images (Instagram and LinkedIn addresses expire after a few days), served by Plomb at /media/<name>.
+ * Deleted with their posts after 7 days.
+ */
+export const media = sqliteTable("media", {
+  /** "<sha1 of the original address>.<extension>": copying the same image twice costs nothing. */
+  name: text("name").primaryKey(),
+  contentType: text("content_type").notNull(),
+  data: blob("data", { mode: "buffer" }).notNull(),
+  createdAt: createdAt(),
+});
 
 /**
  * Every article address already listed by a source, read or not: only addresses that appear later are news.

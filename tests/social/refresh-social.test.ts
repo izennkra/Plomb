@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { DEFAULT_USER_ID, type Db } from "@/db/client";
 import { posts, socialRuns, sources, subscriptions } from "@/db/schema";
 import type { ApifyClient, RunStatus } from "@/modules/social/apify";
-import { createLocalStore } from "@/modules/social/media-store";
+import { createDbMediaStore } from "@/modules/social/media-store";
 import { collectSocialRuns, launchSocialRuns, socialWindowStart } from "@/modules/social/refresh-social";
 import { createTestDb } from "../helpers/test-db";
 
@@ -75,7 +75,7 @@ describe("social relève", () => {
     expect(apify.started[0].input).toMatchObject({ username: ["mouthwash.studio", "another.studio"] });
 
     apify.finish();
-    await collectSocialRuns(db, { apify: apify.client, mediaStore: createLocalStore(mediaDir), now: paris("07:46"), fetchImage: fakeImage });
+    await collectSocialRuns(db, { apify: apify.client, mediaStore: createDbMediaStore(db), now: paris("07:46"), fetchImage: fakeImage });
     const bySource = await db.select().from(posts);
     expect(bySource.filter((post) => post.sourceId === sourceId)).toHaveLength(3);
     expect(bySource.filter((post) => post.sourceId === otherId)).toHaveLength(0);
@@ -89,7 +89,7 @@ describe("social relève", () => {
     expect(apify.started[0]).toMatchObject({ actor: "apify/instagram-post-scraper", input: { username: ["mouthwash.studio"], resultsLimit: 3 } });
     expect(await launchSocialRuns(db, { apify: apify.client, now: paris("07:46") })).toEqual({ launched: 0 });
 
-    const store = createLocalStore(mediaDir);
+    const store = createDbMediaStore(db);
     expect(await collectSocialRuns(db, { apify: apify.client, mediaStore: store, now: paris("07:46"), fetchImage: fakeImage })).toEqual({
       collected: 0,
       added: 0,
@@ -111,7 +111,7 @@ describe("social relève", () => {
     const apify = fakeApify();
     await launchSocialRuns(db, { apify: apify.client, now: paris("07:31") });
     apify.finish();
-    await collectSocialRuns(db, { apify: apify.client, mediaStore: createLocalStore(mediaDir), now: paris("07:46"), fetchImage: fakeImage });
+    await collectSocialRuns(db, { apify: apify.client, mediaStore: createDbMediaStore(db), now: paris("07:46"), fetchImage: fakeImage });
 
     await launchSocialRuns(db, { apify: apify.client, now: paris("11:31") });
 
@@ -131,7 +131,7 @@ describe("social relève", () => {
     await launchSocialRuns(db, { apify: apify.client, now: paris("07:31") });
     apify.finish("FAILED");
 
-    await collectSocialRuns(db, { apify: apify.client, mediaStore: createLocalStore(mediaDir), now: paris("07:46") });
+    await collectSocialRuns(db, { apify: apify.client, mediaStore: createDbMediaStore(db), now: paris("07:46") });
 
     expect((await db.select().from(socialRuns))[0].status).toBe("failed");
     expect((await db.query.sources.findFirst())?.lastFetchStatus).toBe("error");

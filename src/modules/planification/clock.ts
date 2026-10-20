@@ -101,7 +101,7 @@ export async function runClock(db: Db, deps: ClockDeps): Promise<ClockReport> {
     fetchPage: deps.fetchPage,
     timeLeft: () => budget - elapsed(),
   });
-  await purgeOldPosts(db, now(), { mediaStore: deps.mediaStore });
+  await purgeOldPosts(db, now());
   return report;
 }
 
