@@ -25,8 +25,17 @@ Rédige pour l'édition du matin :
 - "titre" : un titre de journal en français (90 caractères max) ;
 - "resume" : l'essentiel en 2 ou 3 phrases (60 mots max) ;
 - "theme" : un thème parmi ${THEMES.join(", ")} ;
-- "importance" : une note de 1 à 10 de l'intérêt pour un designer (ampleur du projet, originalité, qualité du travail).
-  Sois exigeant et étale tes notes : 5 = actualité ordinaire, 7 = projet notable, 9 ou 10 = exceptionnel (rare).`;
+- "sujet" : le sujet principal en 1 à 4 mots, en général la marque, l'institution ou le studio concerné (ex. "Coca-Cola", "MoMA PS1") ;
+- puis 5 critères notés de 1 à 5, pour décider de ce qui fait la Une. Sois exigeant, utilise toute l'échelle :
+  - "notoriete" : notoriété du sujet. 5 = marque ou institution connue dans le monde entier (Coca-Cola, Google, les JO) ;
+    3 = marque connue dans son pays ou son secteur ; 1 = commerce ou projet local (un café de quartier) ;
+  - "ampleur" : ampleur du projet. 5 = refonte complète d'une identité ou d'un système ; 3 = un volet (packaging, campagne) ;
+    1 = un détail ou une petite pièce ;
+  - "auteurs" : renommée des auteurs. 5 = studio ou agence de référence (Pentagram, Wolff Olins…) ; 1 = inconnu ou non cité ;
+  - "portee" : portée culturelle. 5 = fait débat ou change les pratiques du métier ; 1 = sans écho attendu ;
+  - "qualite" : qualité et originalité du travail présenté.
+Exemple de calibrage : la refonte de Coca-Cola par une grande agence ≈ notoriete 5, ampleur 5, portee 5 ;
+la nouvelle identité d'un café matcha de quartier ≈ notoriete 1, ampleur 2, portee 1, même si elle est très réussie.`;
 }
 
 export function leadPrompt(article: ArticleInput): string {
@@ -37,15 +46,22 @@ en un ou deux paragraphes, qui présente le projet, les personnes ou studios imp
 uniquement d'après le texte. Sans titre (il est déjà écrit), sans Markdown, sans lien ni signature.`;
 }
 
+const NOTE = { type: "integer", minimum: 1, maximum: 5 } as const;
+
 export const SUMMARY_SCHEMA = {
   type: "object",
   properties: {
     titre: { type: "string" },
     resume: { type: "string" },
     theme: { type: "string", enum: [...THEMES] },
-    importance: { type: "integer", minimum: 1, maximum: 10 },
+    sujet: { type: "string" },
+    notoriete: NOTE,
+    ampleur: NOTE,
+    auteurs: NOTE,
+    portee: NOTE,
+    qualite: NOTE,
   },
-  required: ["titre", "resume", "theme", "importance"],
+  required: ["titre", "resume", "theme", "sujet", "notoriete", "ampleur", "auteurs", "portee", "qualite"],
 } as const;
 
 export const LEAD_SCHEMA = {

@@ -27,7 +27,20 @@ beforeEach(() => {
 
 const article = { title: "Studio Hi Ho", content: "Madeleine is a butter maker…", excerpt: null, sourceName: "the-brandidentity.com" };
 const redacteur = () => createOllamaRedacteur({ model: "test-model", baseUrl: server.base });
-const valid = JSON.stringify({ titre: "Le beurre de Madeleine", resume: "Studio Hi Ho signe…", theme: "Packaging", importance: 8 });
+const answer = (extra: object = {}) =>
+  JSON.stringify({
+    titre: "Le beurre de Madeleine",
+    resume: "Studio Hi Ho signe…",
+    theme: "Packaging",
+    sujet: "Madeleine",
+    notoriete: 1,
+    ampleur: 3,
+    auteurs: 2,
+    portee: 1,
+    qualite: 5,
+    ...extra,
+  });
+const valid = answer();
 
 describe("Ollama redacteur", () => {
   it("writes a summary from a valid JSON answer", async () => {
@@ -36,7 +49,9 @@ describe("Ollama redacteur", () => {
       title: "Le beurre de Madeleine",
       summary: "Studio Hi Ho signe…",
       theme: "Packaging",
-      importance: 8,
+      subject: "Madeleine",
+      criteria: { notoriety: 1, scale: 3, authors: 2, reach: 1, quality: 5 },
+      importance: expect.closeTo(3.36, 2),
     });
     expect(requests[0]).toMatchObject({ model: "test-model", format: { type: "object" } });
   });
@@ -45,13 +60,18 @@ describe("Ollama redacteur", () => {
     replies.push({ content: "not json" }, { content: valid });
     expect((await redacteur().summarize(article)).theme).toBe("Packaging");
 
-    replies.push({ content: JSON.stringify({ titre: "x", resume: "y", theme: "Cuisine", importance: 5 }) }, { content: valid });
+    replies.push({ content: answer({ theme: "Cuisine" }) }, { content: valid });
     expect((await redacteur().summarize(article)).theme).toBe("Packaging");
   });
 
-  it("keeps the note between 1 and 10", async () => {
-    replies.push({ content: JSON.stringify({ titre: "t", resume: "r", theme: "Typographie", importance: 14 }) });
-    expect((await redacteur().summarize(article)).importance).toBe(10);
+  it("keeps each criterion between 1 and 5", async () => {
+    replies.push({ content: answer({ notoriete: 9, ampleur: 0 }) });
+    expect((await redacteur().summarize(article)).criteria).toMatchObject({ notoriety: 5, scale: 1 });
+  });
+
+  it("refuses an answer with a missing criterion", async () => {
+    replies.push({ content: answer({ portee: "beaucoup" }) }, { content: answer({ portee: undefined }) });
+    await expect(redacteur().summarize(article)).rejects.toThrow(/réponse incomplète/);
   });
 
   it("gives up with a clear error after repeated failures", async () => {

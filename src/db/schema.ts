@@ -146,6 +146,12 @@ export const editionItems = sqliteTable(
     leadText: text("lead_text"),
     theme: text("theme", { enum: THEMES }),
     importance: integer("importance"),
+    /** Main subject named by the editor ("Coca-Cola"). */
+    subject: text("subject"),
+    /** Notes behind the importance (notoriety, scale, authors, reach, quality — 1 to 5). */
+    criteria: text("criteria", { mode: "json" }).$type<Record<string, number>>(),
+    /** Other media that covered the same subject: a sign of a big story. */
+    coveredBy: text("covered_by", { mode: "json" }).$type<string[]>().notNull().default([]),
     url: text("url").notNull(),
     images: text("images", { mode: "json" }).$type<string[]>().notNull(),
     sourceName: text("source_name").notNull(),

@@ -1,4 +1,5 @@
 import type { THEMES } from "@/db/schema";
+import type { Criteria } from "../scoring";
 
 export type Theme = (typeof THEMES)[number];
 
@@ -15,7 +16,11 @@ export type ArticleSummary = {
   title: string;
   summary: string;
   theme: Theme;
-  /** Interest for a designer, 1 to 10. */
+  /** Main subject (brand, institution, studio…), e.g. "Coca-Cola": the same story covered by several media is merged. */
+  subject: string;
+  /** What makes it front-page material, each from 1 to 5. */
+  criteria: Criteria;
+  /** Importance out of 10, computed from the criteria. */
   importance: number;
 };
 

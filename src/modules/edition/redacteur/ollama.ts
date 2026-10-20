@@ -1,4 +1,5 @@
 import { THEMES } from "@/db/schema";
+import { importanceOf } from "../scoring";
 import { LEAD_SCHEMA, leadPrompt, SUMMARY_SCHEMA, summaryPrompt, SYSTEM_PROMPT } from "./prompts";
 import type { ArticleSummary, Redacteur, Theme } from "./types";
 
@@ -77,15 +78,20 @@ export function createOllamaRedacteur({
 /** Checks an answer: every field present and sensible, or null. */
 function toSummary(answer: unknown): ArticleSummary | null {
   if (!answer || typeof answer !== "object") return null;
-  const { titre, resume, theme, importance } = answer as Record<string, unknown>;
+  const { titre, resume, theme, sujet, notoriete, ampleur, auteurs, portee, qualite } = answer as Record<string, unknown>;
   if (typeof titre !== "string" || !titre.trim() || typeof resume !== "string" || !resume.trim()) return null;
   if (!THEMES.includes(theme as Theme)) return null;
-  const note = Math.round(Number(importance));
-  if (!Number.isFinite(note)) return null;
+
+  const notes = [notoriete, ampleur, auteurs, portee, qualite].map((value) => Math.round(Number(value)));
+  if (notes.some((note) => !Number.isFinite(note))) return null;
+  const [notoriety, scale, authors, reach, quality] = notes.map((note) => Math.min(5, Math.max(1, note)));
+  const criteria = { notoriety, scale, authors, reach, quality };
   return {
     title: titre.trim(),
     summary: resume.trim(),
     theme: theme as Theme,
-    importance: Math.min(10, Math.max(1, note)),
+    subject: typeof sujet === "string" ? sujet.trim() : "",
+    criteria,
+    importance: importanceOf(criteria),
   };
 }

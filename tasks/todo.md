@@ -72,8 +72,8 @@
 ## Tâche 9 : Grille de critères
 **Description :** Le rédacteur note 5 critères (notoriété, ampleur, auteurs, portée, qualité, de 1 à 5) et nomme le sujet principal ; Plomb calcule la note sur 10 avec des poids. Consigne calibrée par des exemples. Favoris : plus de bonus.
 **Critères :**
-- [ ] Note calculée correctement à partir des critères ; notoriété et ampleur pèsent le plus
-- [ ] Un article favori n'est pas avantagé dans le classement, mais reste marqué
+- [x] Note calculée correctement à partir des critères ; notoriété et ampleur pèsent le plus
+- [x] Un article favori n'est pas avantagé dans le classement, mais reste marqué
 **Vérification :** `npm test` · **Dépendances :** 5 · **Taille :** M
 **Fichiers :** `src/modules/edition/redacteur/*`, `src/modules/edition/scoring.ts`, `src/modules/edition/build.ts`, `src/db/schema.ts`, tests
 

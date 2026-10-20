@@ -47,7 +47,7 @@ const itemsOf = async (editionId: number) =>
 describe("buildEdition", () => {
   it("puts the most important article in the Une, then 2 secondary ones, then the rest by importance", async () => {
     for (const title of ["a", "b", "c", "d", "e"]) await add(ordinary, title);
-    const { redacteur, leads } = createFakeRedacteur({ importance: { a: 3, b: 9, c: 7, d: 8, e: 4 } });
+    const { redacteur, leads } = createFakeRedacteur({ importance: { a: 1, b: 5, c: 3, d: 4, e: 2 } });
 
     const edition = await buildEdition(db, DEFAULT_USER_ID, { redacteur, now });
 
@@ -60,25 +60,34 @@ describe("buildEdition", () => {
       ["suite", "FR e"],
       ["suite", "FR a"],
     ]);
-    expect(items[0]).toMatchObject({ summary: "Résumé de b", leadText: "Une de b", theme: "Identité", importance: 9, images: ["https://img/b.jpg"] });
+    expect(items[0]).toMatchObject({
+      summary: "Résumé de b",
+      leadText: "Une de b",
+      theme: "Identité",
+      importance: 10,
+      subject: "b",
+      criteria: { notoriety: 5, scale: 5, authors: 5, reach: 5, quality: 5 },
+      images: ["https://img/b.jpg"],
+    });
     expect(leads.sort()).toEqual(["b", "c", "d"]);
   });
 
-  it("gives favourite sources a bonus and marks them", async () => {
-    await add(ordinary, "big-news");
-    await add(favorite, "favourite-news");
-    const { redacteur } = createFakeRedacteur({ importance: { "big-news": 8, "favourite-news": 7 } });
+  it("gives favourite sources no ranking advantage, but marks them", async () => {
+    await add(ordinary, "coca-cola-rebrand");
+    await add(favorite, "local-cafe");
+    const { redacteur } = createFakeRedacteur({ importance: { "coca-cola-rebrand": 5, "local-cafe": 2 } });
 
     const edition = await buildEdition(db, DEFAULT_USER_ID, { redacteur, now });
 
-    const [une] = await itemsOf(edition.id);
-    expect(une).toMatchObject({ title: "FR favourite-news", favorite: true, sourceName: "fav.studio" });
+    const [une, last] = await itemsOf(edition.id);
+    expect(une).toMatchObject({ title: "FR coca-cola-rebrand", favorite: false });
+    expect(last).toMatchObject({ title: "FR local-cafe", favorite: true, sourceName: "fav.studio" });
   });
 
   it("still comes out when the AI fails on an article (media's own title and summary)", async () => {
     await add(ordinary, "fine");
     await add(ordinary, "broken");
-    const { redacteur } = createFakeRedacteur({ failsOn: ["broken"], importance: { fine: 6 } });
+    const { redacteur } = createFakeRedacteur({ failsOn: ["broken"], importance: { fine: 4 } });
 
     const edition = await buildEdition(db, DEFAULT_USER_ID, { redacteur, now });
 

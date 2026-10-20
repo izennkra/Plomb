@@ -1,21 +1,21 @@
 import { and, eq } from "drizzle-orm";
 import type { Db } from "@/db/client";
-import { editionItems, editions, type Edition } from "@/db/schema";
+import { editionItems, editions, type Edition, type EditionItem } from "@/db/schema";
 import type { ArticleSummary, Redacteur } from "./redacteur/types";
+import { importanceOf, type Criteria } from "./scoring";
 import { selectEditionPosts, type EditionPost } from "./select";
 
-/** A favourite source's article counts as if it were this much more important. */
-export const FAVORITE_BONUS = 2;
 /** The Une: 1 major article + 2 secondary ones. */
 const UNE_SIZE = 3;
-/** Note given when the AI could not judge an article. */
-const DEFAULT_IMPORTANCE = 5;
+/** Criteria given when the AI could not judge an article: an average story. */
+const DEFAULT_CRITERIA: Criteria = { notoriety: 3, scale: 3, authors: 3, reach: 3, quality: 3 };
 
 type Written = { post: EditionPost; summary: ArticleSummary; fallback: boolean; score: number };
 
 /**
- * Prepares the user's edition of the day: the editor writes every new article, the most important ones make the Une
- * (favourite sources get a bonus), the rest follows by importance. Preparing again the same day replaces the edition.
+ * Prepares the user's edition of the day: the editor writes and judges every new article, the most important ones make
+ * the Une, the rest follows by importance. Favourite sources get no ranking advantage (they are only highlighted).
+ * Preparing again the same day replaces the edition.
  */
 export async function buildEdition(
   db: Db,
@@ -31,20 +31,15 @@ export async function buildEdition(
       const article = { title: post.title, content: post.content, excerpt: post.excerpt, sourceName: post.sourceName };
       const summary = await redacteur.summarize(article).catch(() => null);
       const final = summary ?? fallbackSummary(post);
-      written.push({ post, summary: final, fallback: !summary, score: final.importance + (post.favorite ? FAVORITE_BONUS : 0) });
+      written.push({ post, summary: final, fallback: !summary, score: final.importance });
     }
-    // Most important first; on a tie, favourites, then the richer gallery.
-    written.sort(
-      (a, b) =>
-        b.score - a.score ||
-        Number(b.post.favorite) - Number(a.post.favorite) ||
-        b.post.images.length - a.post.images.length,
-    );
+    // Most important first; on a tie, the richer gallery.
+    written.sort((a, b) => b.score - a.score || b.post.images.length - a.post.images.length);
 
-    const items = [];
+    const items: (typeof editionItems.$inferInsert)[] = [];
     for (const [index, entry] of written.entries()) {
       const { post, summary, fallback } = entry;
-      const placement = index === 0 ? "une" : index < UNE_SIZE ? "secondaire" : "suite";
+      const placement: EditionItem["placement"] = index === 0 ? "une" : index < UNE_SIZE ? "secondaire" : "suite";
       const leadText =
         placement === "suite" || fallback
           ? null
@@ -60,13 +55,16 @@ export async function buildEdition(
         summary: summary.summary,
         leadText,
         theme: fallback ? null : summary.theme,
-        importance: fallback ? null : summary.importance,
+        importance: fallback ? null : Math.round(entry.score),
+        subject: fallback ? null : summary.subject || null,
+        criteria: fallback ? null : summary.criteria,
+        coveredBy: [],
         url: post.url,
         images: post.images,
         sourceName: post.sourceName,
         favorite: post.favorite,
         fallback,
-      } as const);
+      });
     }
     if (items.length > 0) await db.insert(editionItems).values(items);
 
@@ -104,5 +102,12 @@ async function finish(db: Db, id: number, values: Pick<Edition, "status" | "mess
 
 /** When the AI fails on an article, the media's own title and summary are used: the edition still comes out. */
 function fallbackSummary(post: EditionPost): ArticleSummary {
-  return { title: post.title, summary: post.excerpt ?? "", theme: "Culture & métier", importance: DEFAULT_IMPORTANCE };
+  return {
+    title: post.title,
+    summary: post.excerpt ?? "",
+    theme: "Culture & métier",
+    subject: "",
+    criteria: DEFAULT_CRITERIA,
+    importance: importanceOf(DEFAULT_CRITERIA),
+  };
 }
