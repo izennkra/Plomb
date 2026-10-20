@@ -13,6 +13,7 @@ export const dynamic = "force-dynamic";
 
 const TYPE_LABELS: Record<Source["type"], string> = {
   web: "Site web",
+  youtube: "YouTube",
   instagram: "Instagram",
   x: "X",
   linkedin: "LinkedIn",
@@ -39,7 +40,7 @@ export default async function SourcesPage() {
       <AddSourceForm />
 
       <h2>Mes sources ({sources.length})</h2>
-      {sources.some((source) => source.type === "web") && (
+      {sources.some((source) => source.type === "web" || source.type === "youtube") && (
         <form action={refreshAllAction}>
           <button type="submit" disabled={refreshing}>
             {refreshing ? "Relevé en cours…" : "Relever maintenant"}
@@ -110,7 +111,9 @@ export default async function SourcesPage() {
 }
 
 function statusLine(source: Source, total: number): string {
-  if (source.type !== "web") return "En attente : Instagram, X et LinkedIn seront relevés dans une prochaine étape.";
+  if (source.type !== "web" && source.type !== "youtube") {
+    return "En attente : Instagram, X et LinkedIn seront relevés dans une prochaine étape.";
+  }
   if (isRefreshing(source)) return "Relevé en cours…";
   if (source.lastFetchStatus === "error") return `⚠ ${source.lastFetchMessage}`;
   if (!source.lastFetchedAt) return "Pas encore relevé.";

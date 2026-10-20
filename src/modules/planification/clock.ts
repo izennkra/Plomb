@@ -1,7 +1,7 @@
-import { and, asc, eq, isNull, lt, or, sql } from "drizzle-orm";
+import { and, asc, eq, inArray, isNull, lt, or, sql } from "drizzle-orm";
 import type { Db } from "@/db/client";
 import { editions, sources, users } from "@/db/schema";
-import { refreshSource } from "@/modules/aspiration-web/refresh-source";
+import { FEED_SOURCE_TYPES, refreshSource } from "@/modules/aspiration-web/refresh-source";
 import { purgeOldPosts } from "@/modules/depeches/purge";
 import { buildEdition } from "@/modules/edition/build";
 import { renderEditionEmail } from "@/modules/edition/email";
@@ -180,7 +180,9 @@ async function refreshDueSources(
   const due = await db
     .select({ id: sources.id })
     .from(sources)
-    .where(and(eq(sources.type, "web"), or(isNull(sources.lastFetchedAt), lt(sources.lastFetchedAt, dueBefore))))
+    .where(
+      and(inArray(sources.type, FEED_SOURCE_TYPES), or(isNull(sources.lastFetchedAt), lt(sources.lastFetchedAt, dueBefore))),
+    )
     .orderBy(asc(sql`coalesce(${sources.lastFetchedAt}, 0)`));
 
   const fetcher = fetchPage?.();

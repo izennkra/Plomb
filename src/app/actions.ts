@@ -2,11 +2,17 @@
 
 import { revalidatePath } from "next/cache";
 import { after } from "next/server";
-import { eq } from "drizzle-orm";
+import { inArray } from "drizzle-orm";
 import { DEFAULT_USER_ID } from "@/db/client";
 import { getDb } from "@/db";
 import { sources } from "@/db/schema";
-import { markRefreshing, refreshAllSources, refreshSource } from "@/modules/aspiration-web/refresh-source";
+import {
+  FEED_SOURCE_TYPES,
+  isFeedSource,
+  markRefreshing,
+  refreshAllSources,
+  refreshSource,
+} from "@/modules/aspiration-web/refresh-source";
 import { completeGalleries } from "@/modules/depeches/complete-galleries";
 import { buildEdition } from "@/modules/edition/build";
 import { editionTestMode } from "@/modules/edition/select";
@@ -31,7 +37,7 @@ export async function addSourceAction(_previous: AddSourceState, formData: FormD
   if (!result.ok) return { status: "error", message: result.error, input };
 
   const { source } = result;
-  const firstRelève = source.type === "web" && source.lastFetchedAt === null;
+  const firstRelève = isFeedSource(source.type) && source.lastFetchedAt === null;
   if (firstRelève) {
     // The first relève takes a few seconds per article: it runs after the answer, the page updates itself.
     await markRefreshing(db, [source.id]);
@@ -50,7 +56,7 @@ export async function addSourceAction(_previous: AddSourceState, formData: FormD
 
 export async function refreshAllAction(): Promise<void> {
   const db = await getDb();
-  const websites = await db.select({ id: sources.id }).from(sources).where(eq(sources.type, "web"));
+  const websites = await db.select({ id: sources.id }).from(sources).where(inArray(sources.type, FEED_SOURCE_TYPES));
   await markRefreshing(
     db,
     websites.map((source) => source.id),

@@ -9,7 +9,7 @@ const createdAt = () =>
 /** A source is stored once, shared by every user who follows it. */
 export const sources = sqliteTable("sources", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  type: text("type", { enum: ["web", "instagram", "x", "linkedin"] }).notNull(),
+  type: text("type", { enum: ["web", "youtube", "instagram", "x", "linkedin"] }).notNull(),
   displayName: text("display_name").notNull(),
   url: text("url").notNull(),
   key: text("key").notNull().unique(),

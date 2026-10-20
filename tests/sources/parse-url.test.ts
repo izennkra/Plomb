@@ -53,6 +53,35 @@ describe("parseSourceUrl — exemples de la spec", () => {
   });
 });
 
+describe("parseSourceUrl — YouTube", () => {
+  it("reconnaît une chaîne par son @nom", () => {
+    expect(ok(parseSourceUrl("https://www.youtube.com/@itsnicethat"))).toEqual({
+      type: "youtube",
+      displayName: "@itsnicethat",
+      url: "https://www.youtube.com/@itsnicethat",
+      key: "youtube:@itsnicethat",
+    });
+  });
+
+  it("même chaîne écrite différemment (majuscules, m., sous-page vidéos)", () => {
+    expect(ok(parseSourceUrl("m.youtube.com/@ItsNiceThat/videos?si=abc")).key).toBe("youtube:@itsnicethat");
+  });
+
+  it("reconnaît les anciennes adresses de chaîne", () => {
+    expect(ok(parseSourceUrl("https://www.youtube.com/channel/UChPo_E4H5QTm-OXBALKerXw")).key).toBe(
+      "youtube:channel/UChPo_E4H5QTm-OXBALKerXw",
+    );
+    expect(ok(parseSourceUrl("youtube.com/c/Pentagram")).key).toBe("youtube:c/pentagram");
+    expect(ok(parseSourceUrl("youtube.com/user/pentagram")).key).toBe("youtube:user/pentagram");
+  });
+
+  it("refuse un lien de vidéo ou de playlist", () => {
+    expect(error(parseSourceUrl("https://www.youtube.com/watch?v=n5PkNF61z9w"))).toMatch(/chaîne/i);
+    expect(error(parseSourceUrl("https://youtu.be/n5PkNF61z9w"))).toMatch(/chaîne/i);
+    expect(error(parseSourceUrl("youtube.com/shorts/abc"))).toMatch(/chaîne/i);
+  });
+});
+
 describe("parseSourceUrl — même source écrite différemment", () => {
   it("Instagram : www, paramètres, slash final et majuscules ignorés", () => {
     const a = ok(parseSourceUrl("https://www.instagram.com/mouthwash.studio/?hl=fr"));
