@@ -24,7 +24,7 @@ reconnaissance des URL → base de données → vérification des sites → ajou
 
 ### Phase 2 : Moteur
 - [x] Tâche 3 : Créer la base de données (sources, users, subscriptions)
-- [ ] Tâche 4 : Vérifier qu'un site web répond
+- [x] Tâche 4 : Vérifier qu'un site web répond
 - [ ] Tâche 5 : Ajouter une source (reconnaissance + vérification + enregistrement sans doublon)
 
 ### Checkpoint 2

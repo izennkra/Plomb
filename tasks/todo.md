@@ -34,9 +34,9 @@
 ## Tâche 4 : Vérifier qu'un site web répond
 **Description :** Fonction `checkWebsite(url)` : contacte le site (10 s max, redirections suivies), renvoie l'adresse finale ou une erreur claire.
 **Critères :**
-- [ ] Site OK → accepté, adresse finale renvoyée
-- [ ] 404 / 500 / délai dépassé / domaine inexistant → refus avec message clair
-- [ ] Redirection → l'adresse finale est utilisée
+- [x] Site OK → accepté, adresse finale renvoyée
+- [x] 404 / 500 / délai dépassé / domaine inexistant → refus avec message clair
+- [x] Redirection → l'adresse finale est utilisée
 **Vérification :** `npm test` avec faux serveur local
 **Dépendances :** 2 · **Taille :** S
 **Fichiers :** `src/modules/sources/check-website.ts`, `tests/sources/check-website.test.ts`
