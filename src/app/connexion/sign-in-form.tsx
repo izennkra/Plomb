@@ -8,8 +8,11 @@ export function SignInForm({ next }: { next: string }) {
   return (
     <form action={action} className="sign-in">
       <input type="hidden" name="suite" value={next} />
-      <label htmlFor="password">Mot de passe</label>
-      <input id="password" name="password" type="password" autoComplete="current-password" required autoFocus />
+      <p>Ton journal de veille est privé.</p>
+      <label htmlFor="password" className="visually-hidden">
+        Mot de passe
+      </label>
+      <input id="password" name="password" type="password" placeholder="Mot de passe" autoComplete="current-password" required autoFocus />
       <button type="submit" disabled={pending}>
         {pending ? "Vérification…" : "Entrer"}
       </button>

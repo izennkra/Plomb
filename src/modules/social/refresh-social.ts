@@ -7,6 +7,7 @@ import { isFinished, type ApifyClient } from "./apify";
 import { copyImages, type DownloadImage } from "./copy-images";
 import type { MediaStore } from "./media-store";
 import { platformOf } from "./platforms";
+import { avatarFromItems, saveSourceImage } from "@/modules/sources/source-image";
 
 export const SOCIAL_TYPES: Source["type"][] = ["instagram", "x", "linkedin"];
 /** Four times a day (Paris): 7:30, in time for the 8:00 edition, then 11:30, 15:30 and 19:30. */
@@ -161,6 +162,11 @@ export async function collectSocialRuns(
         continue;
       }
       const found = platform.read(items, source);
+      // The account's picture comes with its posts (X, LinkedIn): kept for its tile on the Sources page.
+      if (!source.imageUrl) {
+        const avatar = avatarFromItems(source, items.filter((item) => platform.read([item], source).length > 0));
+        if (avatar) await saveSourceImage(db, source.id, avatar, { mediaStore, now });
+      }
       const listed = found.map((post) => post.url);
       const handled = await newOnes(db, source.id, listed);
       const fresh = found.filter((post) => handled.includes(post.url));

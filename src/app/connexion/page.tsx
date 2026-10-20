@@ -6,9 +6,7 @@ export default async function SignInPage({ searchParams }: { searchParams: Searc
   const { suite } = await searchParams;
   return (
     <main>
-      <h1 className="page-title">Plomb</h1>
-      <p>Votre journal de veille créative est privé.</p>
-      <SignInForm next={suite ?? "/"} />
+      <SignInForm next={suite ?? "/journal"} />
     </main>
   );
 }

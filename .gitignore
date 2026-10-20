@@ -13,3 +13,6 @@ data/
 
 .DS_Store
 
+
+# Licensed font (ABC Diatype Compressed): kept off the public repository until it is private.
+/public/fonts/
