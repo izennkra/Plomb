@@ -22,8 +22,8 @@
 ## Tâche 3 : Base de données
 **Description :** Tables `editions` et `edition_items`, colonne `subscriptions.favorite`. Migration.
 **Critères :**
-- [ ] Une édition et ses articles s'enregistrent et se relisent
-- [ ] Supprimer un article supprime sa ligne d'édition, pas l'édition
+- [x] Une édition et ses articles s'enregistrent et se relisent
+- [x] Supprimer un article supprime sa ligne d'édition, pas l'édition
 **Vérification :** `npm test` + `npm run db:migrate` · **Dépendances :** aucune · **Taille :** S
 **Fichiers :** `src/db/schema.ts`, `drizzle/*`, `tests/db/schema.test.ts`
 
