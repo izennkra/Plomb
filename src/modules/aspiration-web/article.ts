@@ -1,7 +1,7 @@
 import { Readability } from "@mozilla/readability";
 import { load, type CheerioAPI } from "cheerio";
 import { parseHTML } from "linkedom";
-import { findArticleImages } from "./images";
+import { findArticleImages, isGenericImage } from "./images";
 import { cleanPostUrl, toDate, toExcerpt, type PostCandidate } from "./post";
 
 export type ArticleResult = { ok: true; post: PostCandidate } | { ok: false; error: string };
@@ -21,7 +21,9 @@ export function readArticle(html: string, url: string): ArticleResult {
 
   const content = extractText(html, url);
   const image = meta("og:image") ?? meta("twitter:image");
-  const imageUrl = image ? absolute(image, url) : null;
+  const absoluteImage = image ? absolute(image, url) : null;
+  // A site-wide share picture (social.jpg…) is not the article's image.
+  const imageUrl = absoluteImage && !isGenericImage(absoluteImage) ? absoluteImage : null;
   const images = findArticleImages(html, url, imageUrl);
 
   return {

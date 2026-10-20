@@ -40,6 +40,23 @@ describe("article gallery — real articles", () => {
   });
 });
 
+describe("generic share pictures", () => {
+  it("are recognised (It's Nice That's /images/social.jpg, which is even missing)", async () => {
+    const { isGenericImage } = await import("@/modules/aspiration-web/images");
+    expect(isGenericImage("https://www.itsnicethat.com/images/social.jpg")).toBe(true);
+    expect(isGenericImage("https://example.com/assets/og-image.png")).toBe(true);
+    expect(isGenericImage("https://example.com/share-default.jpg")).toBe(true);
+    expect(isGenericImage("https://m.itsnicethat.com/original_images/studio-herrstrom-milkshake-1.png")).toBe(false);
+    expect(isGenericImage("https://example.com/uploads/socialist-poster-design.jpg")).toBe(false);
+  });
+
+  it("an article whose only picture is the generic one has no image", () => {
+    const html = '<html><head><meta property="og:title" content="Nicer Tuesdays"><meta property="og:image" content="https://www.itsnicethat.com/images/social.jpg"></head><body><p>Text</p></body></html>';
+    const result = readArticle(html, "https://www.itsnicethat.com/articles/nicer-tuesdays");
+    expect(result).toMatchObject({ ok: true, post: { imageUrl: null, images: [] } });
+  });
+});
+
 describe("findArticleImages — rules", () => {
   const page = (body: string) => `<html><body>${body}</body></html>`;
 

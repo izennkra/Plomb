@@ -13,7 +13,8 @@ export function Carousel({ images, title }: { images: string[]; title: string })
   const dialog = useRef<HTMLDialogElement>(null);
   const current = Math.min(index, Math.max(visible.length - 1, 0));
 
-  if (visible.length === 0) return <div className="carousel carousel--empty" aria-hidden="true" />;
+  // No usable picture (none given, or every one failed to load): the card shows its text only.
+  if (visible.length === 0) return null;
 
   const many = visible.length > 1;
   const go = (step: number) => setIndex((current + step + visible.length) % visible.length);

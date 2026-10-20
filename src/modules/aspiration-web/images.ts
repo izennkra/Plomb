@@ -12,6 +12,18 @@ const GENERIC_WORDS = new Set([
   "untitled", "the", "studio", "project", "brand", "identity", "design", "web", "post", "article", "featured",
 ]);
 const SIZE_SUFFIX = /-\d{2,4}x\d{2,4}$/;
+/** The site's generic share picture (same for every article, sometimes even missing): not the article's image. */
+const GENERIC_IMAGE = /(^|[-_/])(social|share|sharing|og[-_]?image|og[-_]?default|default|placeholder|fallback|thumbnail[-_]default)([-_.]|$)/i;
+
+/** True for a site-wide share picture such as /images/social.jpg. */
+export function isGenericImage(url: string): boolean {
+  try {
+    const file = new URL(url).pathname.split("/").pop() ?? "";
+    return GENERIC_IMAGE.test(file.replace(/\.\w+$/, ""));
+  } catch {
+    return false;
+  }
+}
 /** Cache copies add a code to the name (photo-01-54723.webp, photo-01-bc9e4.webp): same picture as photo-01.jpg. */
 const CACHE_SUFFIX = /[-_][0-9a-f]{5,}$/;
 
@@ -21,7 +33,7 @@ const CACHE_SUFFIX = /[-_][0-9a-f]{5,}$/;
  * shown on the page ("read also") don't share that family and are left out.
  */
 export function findArticleImages(html: string, pageUrl: string, mainImage: string | null): string[] {
-  if (!mainImage) return [];
+  if (!mainImage || isGenericImage(mainImage)) return [];
   const main = parse(mainImage, 0, { isMain: true });
   if (!main) return [];
   const articleSlug = slugOf(pageUrl);
