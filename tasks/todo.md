@@ -35,8 +35,8 @@
 ## Tâche 4 : Copies figées des sites
 **Description :** Script qui télécharge la page de chaque site de test et un article de chacun dans `tests/fixtures/`, plus les flux RSS de Findings et OFF Brand.
 **Critères :**
-- [ ] 6 pages de liste + articles + 2 flux enregistrés
-- [ ] Le script peut être relancé pour rafraîchir les copies
+- [x] 6 pages de liste + articles + 2 flux enregistrés
+- [x] Le script peut être relancé pour rafraîchir les copies
 **Vérification :** fichiers présents, taille raisonnable
 **Dépendances :** aucune · **Taille :** S
 **Fichiers :** `scripts/capture-fixtures.ts`, `tests/fixtures/*`
