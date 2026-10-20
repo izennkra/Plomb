@@ -122,7 +122,7 @@ const lines = [
   "| IA | Taille | Temps moyen par article (résumé + Une) | Réponses illisibles |",
   "|---|---|---|---|",
 ];
-const SIZES = { "ministral-3:14b": "~9 Go (Mistral AI)", "gemma4:12b": "~8 Go (Google)", "gemma4:e4b": "~5 Go (Google, léger)" };
+const SIZES = { "ministral-3:14b": "9,1 Go (Mistral AI)", "gemma4:12b": "7,7 Go (Google)", "gemma4:e4b": "9,5 Go (Google, « edge »)" };
 for (const model of MODELS) {
   const runs = results[model];
   const average = runs.reduce((sum, run) => sum + run.summary.seconds + run.lead.seconds, 0) / runs.length;

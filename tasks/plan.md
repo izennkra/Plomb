@@ -19,10 +19,10 @@ la fabrication de l'édition (sélection, notation, Une, rédaction), et enfin l
 ## Liste des tâches
 
 ### Phase 1 : Choisir l'IA
-- [ ] Tâche 1 : Comparatif de 3 IA locales sur 5 vrais articles → `docs/comparatif-ia.md`
+- [x] Tâche 1 : Comparatif de 3 IA locales sur 5 vrais articles → `docs/comparatif-ia.md`
 
 ### Checkpoint 1
-- [ ] Izenn choisit l'IA
+- [x] Izenn choisit l'IA → Mistral (Ministral 3 14B), API en ligne si le Mac rame
 
 ### Phase 2 : Le rédacteur et l'édition
 - [x] Tâche 2 : Rédacteur Ollama (JSON, essais, secours) + faux rédacteur de test

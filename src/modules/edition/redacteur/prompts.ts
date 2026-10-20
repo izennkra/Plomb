@@ -24,14 +24,16 @@ Rédige pour l'édition du matin :
 - "titre" : un titre de journal en français (90 caractères max) ;
 - "resume" : l'essentiel en 2 ou 3 phrases (60 mots max) ;
 - "theme" : un thème parmi ${THEMES.join(", ")} ;
-- "importance" : une note de 1 à 10 de l'intérêt pour un designer (ampleur du projet, originalité, qualité du travail).`;
+- "importance" : une note de 1 à 10 de l'intérêt pour un designer (ampleur du projet, originalité, qualité du travail).
+  Sois exigeant et étale tes notes : 5 = actualité ordinaire, 7 = projet notable, 9 ou 10 = exceptionnel (rare).`;
 }
 
 export function leadPrompt(article: ArticleInput): string {
   return `${articleBlock(article)}
 
-Cet article fait la Une de l'édition du matin. Rédige "texte" : un article de Une d'environ 120 mots en français,
-qui présente le projet, les personnes ou studios impliqués, et ce qui le rend remarquable — uniquement d'après le texte.`;
+Cet article fait la Une de l'édition du matin. Rédige "texte" : un article de Une de 100 à 130 mots en français,
+en un ou deux paragraphes, qui présente le projet, les personnes ou studios impliqués, et ce qui le rend remarquable —
+uniquement d'après le texte. Sans titre (il est déjà écrit), sans Markdown, sans lien ni signature.`;
 }
 
 export const SUMMARY_SCHEMA = {

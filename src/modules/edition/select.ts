@@ -21,6 +21,8 @@ export type EditionPost = {
 export type EditionSelection = { day: string; periodStart: Date; periodEnd: Date; posts: EditionPost[] };
 
 /** Test phase (PLOMB_EDITION_TEST=1 in .env.local): see `selectEditionPosts`. */
+/** In test mode, an edition is limited so the Mac is not busy for an hour. */
+export const TEST_MODE_MAX_POSTS = 10;
 export const editionTestMode = () => process.env.PLOMB_EDITION_TEST === "1";
 
 /**
@@ -73,5 +75,6 @@ export async function selectEditionPosts(
   for (const { imageUrl, images, ...row } of rows) {
     if (!byUrl.has(row.url)) byUrl.set(row.url, { ...row, images: images?.length ? images : imageUrl ? [imageUrl] : [] });
   }
-  return { day, periodStart, periodEnd, posts: [...byUrl.values()] };
+  const selected = [...byUrl.values()];
+  return { day, periodStart, periodEnd, posts: testMode ? selected.slice(0, TEST_MODE_MAX_POSTS) : selected };
 }

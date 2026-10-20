@@ -34,6 +34,8 @@ export function createOllamaRedacteur({
             stream: false,
             think: false,
             format: schema,
+            // Free the Mac's memory soon after the edition is written.
+            keep_alive: "30s",
             options: { temperature: 0.3, num_ctx: 8192 },
             messages: [
               { role: "system", content: SYSTEM_PROMPT },

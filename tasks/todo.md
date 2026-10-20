@@ -3,13 +3,13 @@
 ## Tâche 1 : Comparatif des IA locales
 **Description :** Script qui donne les 5 mêmes vrais articles (variés : The Brand Identity, It's Nice That, Findings…) à 3 IA locales (Ministral 3 14B, Gemma 4 12B, Gemma 4 E4B) avec la consigne du rédacteur ; mesure le temps ; résultats côte à côte dans `docs/comparatif-ia.md`.
 **Critères :**
-- [ ] 5 articles × 3 IA : titre, résumé, thème, note, texte de Une
-- [ ] Temps par article noté ; erreurs de format notées
+- [x] 5 articles × 3 IA : titre, résumé, thème, note, texte de Une
+- [x] Temps par article noté ; erreurs de format notées
 **Vérification :** lecture du document par Izenn · **Dépendances :** aucune · **Taille :** M
 **Fichiers :** `scripts/compare-ai.mjs`, `docs/comparatif-ia.md`
 
 ## Checkpoint 1
-- [ ] Izenn choisit l'IA
+- [x] Izenn choisit l'IA → Mistral (Ministral 3 14B), API en ligne si le Mac rame
 
 ## Tâche 2 : Rédacteur Ollama
 **Description :** Interface `Redacteur` (`summarize(article)`, `writeLead(article)`), implémentation Ollama (JSON imposé, délai max, 2 essais), faux rédacteur pour les tests.

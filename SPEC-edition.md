@@ -26,7 +26,7 @@ Cette brique fabrique l'édition (à la demande, via un bouton) et prépare l'e-
 - **Importance** : l'IA note chaque article (intérêt pour un designer, ampleur du projet, qualité visuelle) ;
   les articles des **sources favorites** reçoivent un bonus. La Une = les 3 plus importants (1 majeur + 2 secondaires).
 - **Rédaction** : pour chaque article, un titre et un résumé de 2–3 phrases (Une : un texte plus développé, ~120 mots),
-  à partir du texte complet de l'article. Ton : journal, factuel, sans inventer. Langue : français par défaut.
+  à partir du texte complet de l'article (si le flux RSS n'en donne qu'un extrait, la page de l'article est lue). Ton : journal, factuel, sans inventer. Langue : français par défaut.
 - **Thème** : l'IA attribue aussi une étiquette de thème provisoire (Identité, Typographie, Packaging, Édition,
   Digital & motion, Illustration & photo, Culture & métier). Elle n'est **pas encore affichée en rubriques** :
   ce choix sera fait au moment de l'UX, mais la donnée sera prête.
@@ -91,6 +91,9 @@ scripts/compare-ai.ts            → comparatif des IA sur 5 articles (résultat
 6. Un **e-mail** est envoyé à 9h00 avec un extrait du journal (envoi : brique `planification`).
 
 7. Comparatif : **IA locales uniquement** (pas de Claude) ; téléchargement de 2–3 modèles accepté.
+8. **IA retenue : Mistral (Ministral 3 14B), en local** — voir [docs/comparatif-ia.md](docs/comparatif-ia.md).
+   Si le Mac rame à chaque journal du matin → **IA en ligne** (API payante, choisie selon le prix).
+   Protections du Mac : modèle déchargé 30 s après la rédaction ; en mode test, 10 articles maximum.
 
 ## Open Questions
 - Aucune.

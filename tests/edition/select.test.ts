@@ -108,4 +108,10 @@ describe("selectEditionPosts", () => {
     expect(selection.periodEnd).toEqual(now);
     expect(selection.posts.map((post) => post.title)).toEqual(["backfill-this-afternoon"]);
   });
+
+  it("test mode keeps at most 10 articles (the Mac stays usable)", async () => {
+    for (let i = 0; i < 15; i++) await add(`post-${i}`, at("2026-10-21T05:00:00Z"));
+    const selection = await selectEditionPosts(db, DEFAULT_USER_ID, { now, testMode: true });
+    expect(selection.posts).toHaveLength(10);
+  });
 });
