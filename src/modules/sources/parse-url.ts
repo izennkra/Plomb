@@ -2,7 +2,7 @@ export type SourceType = "web" | "instagram" | "x" | "linkedin";
 
 export type ParsedSource = {
   type: SourceType;
-  /** Name shown to the user, e.g. "@mouthwash.studio" or "the-brandidentity.com". */
+  /** Name shown to the user, e.g. "@mouthwash.studio" or "the-brandidentity.com/features". */
   displayName: string;
   /** Canonical address used to reach the source. */
   url: string;
@@ -20,7 +20,7 @@ const ERRORS = {
 };
 
 /** Query parameters that only track where a click came from. */
-const TRACKING_PARAMS = new Set([
+export const TRACKING_PARAMS = new Set([
   "fbclid", "gclid", "dclid", "msclkid", "igsh", "igshid", "hl", "ref", "ref_src", "ref_url",
   "si", "mc_cid", "mc_eid", "_ga", "yclid",
 ]);
@@ -50,7 +50,8 @@ export function parseSourceUrl(input: string): ParseResult {
   if (host === "instagram.com" || host.endsWith(".instagram.com")) return parseInstagram(segments);
   if (["x.com", "twitter.com", "mobile.twitter.com", "mobile.x.com"].includes(host)) return parseX(segments);
   if (host === "linkedin.com" || host.endsWith(".linkedin.com")) return parseLinkedIn(segments);
-  return parseWeb(url, host);
+  // Keep a non-standard port (example.com:8080): it is part of the address.
+  return parseWeb(url, url.port ? `${host}:${url.port}` : host);
 }
 
 function toUrl(input: string): URL | null {
@@ -116,7 +117,8 @@ function parseWeb(url: URL, host: string): ParseResult {
 
   return success({
     type: "web",
-    displayName: host,
+    // The section matters: dandad.org/insights and dandad.org/work are two different sources.
+    displayName: `${host}${path}`,
     url: `${url.protocol}//${location}`,
     key: `web:${location}`,
   });

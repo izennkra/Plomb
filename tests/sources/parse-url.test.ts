@@ -33,7 +33,7 @@ describe("parseSourceUrl — exemples de la spec", () => {
   it("reconnaît un site web", () => {
     expect(ok(parseSourceUrl("the-brandidentity.com/features"))).toEqual({
       type: "web",
-      displayName: "the-brandidentity.com",
+      displayName: "the-brandidentity.com/features",
       url: "https://the-brandidentity.com/features",
       key: "web:the-brandidentity.com/features",
     });
@@ -87,6 +87,14 @@ describe("parseSourceUrl — même source écrite différemment", () => {
 
   it("Web : la page d'accueil n'a pas de chemin dans la clé", () => {
     expect(ok(parseSourceUrl("https://www.itsnicethat.com/")).key).toBe("web:itsnicethat.com");
+  });
+
+  it("Web : un port non standard est conservé", () => {
+    expect(ok(parseSourceUrl("http://example.com:8080/blog"))).toMatchObject({
+      url: "http://example.com:8080/blog",
+      key: "web:example.com:8080/blog",
+    });
+    expect(ok(parseSourceUrl("https://example.com:443/blog")).key).toBe("web:example.com/blog");
   });
 
   it("Web : http est conservé dans l'adresse mais pas dans la clé", () => {

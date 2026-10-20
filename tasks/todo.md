@@ -1,77 +1,99 @@
-# Tâches : brique `sources`
+# Tâches : brique `aspiration-web`
 
-## Tâche 1 : Mettre en place le projet
-**Description :** Créer le squelette Next.js 15 + TypeScript, configurer Vitest, ESLint et les scripts npm de la spec. Ignorer `data/` et `.env*` dans git.
+## Tâche 1 : Accès réseau sécurisé
+**Description :** Fonction `safeFetch(url)` utilisée par tout Plomb : résout l'adresse et refuse les adresses internes (loopback, réseaux privés, link-local, adresses du cloud), suit les redirections une par une en revérifiant chacune (5 max), 10 s max, 5 Mo max. `checkWebsite` (brique 1) l'utilise.
 **Critères :**
-- [x] `npm run dev` affiche une page « Plomb »
-- [x] `npm test` lance Vitest (un test d'exemple passe)
-- [x] `npm run lint` et `npm run typecheck` passent
+- [x] 127.0.0.1, localhost, 10.x, 192.168.x, 169.254.169.254, ::1 refusés avec un message clair
+- [x] Une redirection vers une adresse interne est refusée
+- [x] Réponse trop grosse ou trop lente → erreur claire
+**Vérification :** `npm test`
 **Dépendances :** aucune · **Taille :** M
-**Fichiers :** `package.json`, `tsconfig.json`, `vitest.config.ts`, `src/app/page.tsx`, `.gitignore`
+**Fichiers :** `src/modules/fetching/safe-fetch.ts`, `src/modules/fetching/ip.ts`, `src/modules/sources/check-website.ts`, `tests/fetching/*.test.ts`
 
-## Tâche 2 : Reconnaître et normaliser une URL
-**Description :** Fonction pure `parseSourceUrl(input)` qui renvoie type, nom affiché, URL normalisée et clé unique — ou un message d'erreur en français. Écrite en TDD (tests d'abord).
+## Tâche 2 : Politesse
+**Description :** Lire et mettre en cache le robots.txt de chaque site ; refuser une page interdite. Pause d'au moins 1 s entre deux requêtes vers un même site.
 **Critères :**
-- [x] Tous les exemples du tableau de la spec sont reconnus
-- [x] www, majuscules, paramètres de suivi et `/` final n'influencent pas la clé
-- [x] URL invalide et pages non-profil → message clair
+- [x] Une page interdite par robots.txt n'est pas demandée
+- [x] robots.txt absent ou en erreur → tout est autorisé
+- [x] Deux requêtes vers un même site sont espacées d'au moins 1 s
 **Vérification :** `npm test`
 **Dépendances :** 1 · **Taille :** S
-**Fichiers :** `src/modules/sources/parse-url.ts`, `tests/sources/parse-url.test.ts`
+**Fichiers :** `src/modules/fetching/robots.ts`, `src/modules/fetching/polite-fetch.ts`, `tests/fetching/robots.test.ts`
+
+## Tâche 3 : Base de données
+**Description :** Table `posts` (source, adresse unique, titre, résumé, image, date de publication, date de découverte, texte complet, méthode, marqueur « antérieur ») et colonnes de relevé sur `sources` (méthode, flux, date/statut/message du dernier relevé). Migration.
+**Critères :**
+- [x] Une même adresse d'article ne peut pas être enregistrée deux fois
+- [x] Supprimer une source supprime ses articles
+**Vérification :** `npm test` + `npm run db:migrate`
+**Dépendances :** aucune · **Taille :** S
+**Fichiers :** `src/db/schema.ts`, `drizzle/*`, `tests/db/schema.test.ts`
 
 ## Checkpoint 1
-- [x] Tests, lint, typecheck OK — point avec Izenn
+- [x] Tests OK ; ajout d'une source toujours fonctionnel dans le navigateur
 
-## Tâche 3 : Créer la base de données
-**Description :** Schéma Drizzle (`sources`, `users`, `subscriptions`), migration, connexion SQLite dans `data/plomb.db`, utilisateur par défaut.
+## Tâche 4 : Copies figées des sites
+**Description :** Script qui télécharge la page de chaque site de test et un article de chacun dans `tests/fixtures/`, plus les flux RSS de Findings et OFF Brand.
 **Critères :**
-- [x] `npm run db:migrate` crée la base
-- [x] La clé unique d'une source est protégée par la base (pas de doublon possible)
-**Vérification :** `npm test` (test sur base en mémoire)
-**Dépendances :** 1 · **Taille :** M
-**Fichiers :** `src/db/schema.ts`, `src/db/client.ts`, `drizzle.config.ts`, `tests/db/schema.test.ts`
+- [x] 6 pages de liste + articles + 2 flux enregistrés
+- [x] Le script peut être relancé pour rafraîchir les copies
+**Vérification :** fichiers présents, taille raisonnable
+**Dépendances :** aucune · **Taille :** S
+**Fichiers :** `scripts/capture-fixtures.ts`, `tests/fixtures/*`
 
-## Tâche 4 : Vérifier qu'un site web répond
-**Description :** Fonction `checkWebsite(url)` : contacte le site (10 s max, redirections suivies), renvoie l'adresse finale ou une erreur claire.
+## Tâche 5 : Niveau 1 — flux RSS/Atom
+**Description :** `discoverFeed(html, pageUrl)` (balises `<link rel="alternate">` puis adresses courantes) et `readFeed(xml)` → articles candidats. Ignorer les flux de podcast et les « faux flux » HTML.
 **Critères :**
-- [x] Site OK → accepté, adresse finale renvoyée
-- [x] 404 / 500 / délai dépassé / domaine inexistant → refus avec message clair
-- [x] Redirection → l'adresse finale est utilisée
-**Vérification :** `npm test` avec faux serveur local
-**Dépendances :** 2 · **Taille :** S
-**Fichiers :** `src/modules/sources/check-website.ts`, `tests/sources/check-website.test.ts`
+- [x] Findings et OFF Brand → flux trouvé, articles avec titre, lien, date, image si présente
+- [x] Brand New → le flux podcast est ignoré
+- [x] the-brandidentity.com/feed (page HTML) → pas considéré comme un flux
+**Vérification :** `npm test` sur copies figées
+**Dépendances :** 4 · **Taille :** M
+**Fichiers :** `src/modules/aspiration-web/feed.ts`, `tests/aspiration-web/feed.test.ts`
 
-## Tâche 5 : Ajouter une source
-**Description :** Service `addSource(userId, input)` : reconnaît l'URL, vérifie le site si c'est du web, enregistre la source si elle n'existe pas encore, puis abonne l'utilisateur.
+## Tâche 6 : Niveau 2a — liens d'articles
+**Description :** `findArticleLinks(html, pageUrl)` : liens du même site, regroupés par famille d'adresse, en écartant catégories, tags, auteurs, pages de menu ; renvoie les liens dans l'ordre de la page.
 **Critères :**
-- [x] Même source écrite de 2 façons → 1 seule ligne en base
-- [x] Deux utilisateurs suivent la même source → 1 source, 2 abonnements
-- [x] Erreurs de reconnaissance et de vérification remontées telles quelles
-**Vérification :** `npm test`
-**Dépendances :** 2, 3, 4 · **Taille :** M
-**Fichiers :** `src/modules/sources/add-source.ts`, `tests/sources/add-source.test.ts`
+- [x] the-brandidentity.com/features → ≥ 10 liens `/project/…`
+- [x] itsnicethat.com → ≥ 10 liens `/articles/…`
+- [x] Brand New → ≥ 10 liens d'articles, **aucun** lien `/category/…`
+- [x] D&AD → entrées de l'archive reconnues
+**Vérification :** `npm test` sur copies figées
+**Dépendances :** 4 · **Taille :** M
+**Fichiers :** `src/modules/aspiration-web/article-links.ts`, `tests/aspiration-web/article-links.test.ts`
+
+## Tâche 7 : Niveau 2b — lire un article
+**Description :** `readArticle(html, url)` : titre (sans le suffixe « — Nom du site »), résumé, image OpenGraph, date (`article:published_time` ou JSON-LD), texte complet via Readability.
+**Critères :**
+- [x] Article The Brand Identity → titre propre, résumé, image HD, pas de date (null)
+- [x] Article avec date → date lue correctement
+- [x] Page sans titre exploitable → rejetée
+**Vérification :** `npm test` sur copies figées
+**Dépendances :** 4 · **Taille :** M
+**Fichiers :** `src/modules/aspiration-web/article.ts`, `tests/aspiration-web/article.test.ts`
 
 ## Checkpoint 2
-- [x] Tous les tests passent — point avec Izenn
+- [x] Les 6 sites donnent des articles corrects sur leurs copies figées — point avec Izenn
 
-## Tâche 6 : Page Sources — ajouter et lister
-**Description :** Page avec un champ « Coller une URL », un bouton Ajouter, le message d'erreur éventuel et la liste des sources suivies (type + nom).
+## Tâche 8 : Relever une source
+**Description :** `refreshSource(db, sourceId)` : méthode mémorisée d'abord, sinon cascade ; n'ouvre que les articles inconnus ; 20 max ; premier relevé marqué « antérieur » ; enregistre méthode, flux et statut sur la source. Relevé de toutes les sources web (une erreur n'arrête pas les autres).
 **Critères :**
-- [x] Ajouter une URL valide la fait apparaître dans la liste
-- [x] Une erreur s'affiche en français sous le champ
-**Vérification :** test manuel dans le navigateur
-**Dépendances :** 5 · **Taille :** M
-**Fichiers :** `src/app/page.tsx`, `src/app/actions.ts`, `src/modules/sources/list-sources.ts`
+- [x] Premier relevé → articles marqués « antérieurs » ; deuxième relevé → seuls les nouveaux, non marqués
+- [x] Aucun doublon
+- [x] Site en erreur → statut d'erreur clair, les autres sources sont relevées
+**Vérification :** `npm test` (faux site local qui publie un nouvel article entre deux relevés)
+**Dépendances :** 1, 2, 3, 5, 6, 7 · **Taille :** M
+**Fichiers :** `src/modules/aspiration-web/refresh-source.ts`, `tests/aspiration-web/refresh-source.test.ts`
 
-## Tâche 7 : Retirer une source
-**Description :** Service `unsubscribe(userId, sourceId)` + bouton « Retirer » sur la page. La source reste en base si un autre utilisateur la suit.
+## Tâche 9 : Interface
+**Description :** Relevé lancé juste après l'ajout d'une source web ; bouton « Relever maintenant » ; pour chaque source : statut du dernier relevé et ses derniers articles (vignette, titre, lien). Instagram/X/LinkedIn affichés « en attente ».
 **Critères :**
-- [x] La source disparaît de ma liste
-- [x] Elle n'est pas supprimée si quelqu'un d'autre la suit
-**Vérification :** `npm test` + test manuel
-**Dépendances :** 6 · **Taille :** S
-**Fichiers :** `src/modules/sources/unsubscribe.ts`, `tests/sources/unsubscribe.test.ts`, `src/app/page.tsx`, `src/app/actions.ts`
+- [x] Ajouter the-brandidentity.com/features → ses articles apparaissent
+- [x] « Relever maintenant » fonctionne et met à jour les statuts
+**Vérification :** test manuel sur les 6 vrais sites
+**Dépendances :** 8 · **Taille :** M
+**Fichiers :** `src/app/page.tsx`, `src/app/actions.ts`, `src/modules/aspiration-web/list-posts.ts`
 
 ## Checkpoint final
-- [x] Tous les critères de succès de SPEC-sources.md cochés
+- [x] Tous les critères de succès de SPEC-aspiration-web.md cochés
 - [x] `/review`, push de la branche, proposition de pull request

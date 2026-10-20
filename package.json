@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "mkdir -p data && drizzle-kit migrate"
+    "db:migrate": "mkdir -p data && drizzle-kit migrate",
+    "fixtures:capture": "node scripts/capture-fixtures.mjs"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.7",
@@ -26,11 +27,16 @@
     "vitest": "^5.0.5"
   },
   "dependencies": {
+    "@extractus/feed-extractor": "^8.0.3",
     "@libsql/client": "^0.18.0",
+    "@mozilla/readability": "^0.6.0",
+    "cheerio": "^1.2.0",
     "drizzle-orm": "^0.45.4",
+    "linkedom": "^0.18.13",
     "next": "^15.5.28",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "robots-parser": "^3.0.1",
     "server-only": "^0.0.1"
   }
 }

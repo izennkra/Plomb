@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 import { DEFAULT_USER_ID, prepareDb } from "@/db/client";
-import { sources, subscriptions, users } from "@/db/schema";
+import { posts, sources, subscriptions, users } from "@/db/schema";
 import { createTestDb } from "../helpers/test-db";
 
 const source = {
@@ -43,5 +43,49 @@ describe("database", () => {
       { userId: "other", sourceId: id },
     ]);
     expect(await db.select().from(subscriptions).where(eq(subscriptions.sourceId, id))).toHaveLength(2);
+  });
+
+  describe("posts", () => {
+    const post = (sourceId: number) => ({
+      sourceId,
+      url: "https://the-brandidentity.com/project/madeleine",
+      title: "Studio Hi Ho pairs kraft and butter yellow",
+      method: "page" as const,
+    });
+
+    it("stores an article only once per source", async () => {
+      const db = await createTestDb();
+      const [{ id }] = await db.insert(sources).values(source).returning({ id: sources.id });
+      await db.insert(posts).values(post(id));
+      await expect(db.insert(posts).values(post(id))).rejects.toThrow();
+    });
+
+    it("lets two sources share the same article", async () => {
+      const db = await createTestDb();
+      const [a] = await db.insert(sources).values(source).returning({ id: sources.id });
+      const [b] = await db
+        .insert(sources)
+        .values({ ...source, key: "web:the-brandidentity.com" })
+        .returning({ id: sources.id });
+      await db.insert(posts).values([post(a.id), post(b.id)]);
+      expect(await db.select().from(posts)).toHaveLength(2);
+    });
+
+    it("is new news by default, with its discovery date", async () => {
+      const db = await createTestDb();
+      const [{ id }] = await db.insert(sources).values(source).returning({ id: sources.id });
+      const [stored] = await db.insert(posts).values(post(id)).returning();
+      expect(stored.beforeSubscription).toBe(false);
+      expect(stored.discoveredAt).toBeInstanceOf(Date);
+      expect(stored.publishedAt).toBeNull();
+    });
+
+    it("deletes the articles of a deleted source", async () => {
+      const db = await createTestDb();
+      const [{ id }] = await db.insert(sources).values(source).returning({ id: sources.id });
+      await db.insert(posts).values(post(id));
+      await db.delete(sources).where(eq(sources.id, id));
+      expect(await db.select().from(posts)).toHaveLength(0);
+    });
   });
 });
