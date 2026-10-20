@@ -1,56 +1,54 @@
-# Plan d'implémentation : brique `sources`
+# Plan d'implémentation : brique `aspiration-web`
 
-Spec : [SPEC-sources.md](../SPEC-sources.md) · Tâches détaillées : [todo.md](todo.md)
+Spec : [SPEC-aspiration-web.md](../SPEC-aspiration-web.md) · Tâches détaillées : [todo.md](todo.md)
+Plan précédent (brique `sources`) : terminé et fusionné (pull request #1).
 
 ## Vue d'ensemble
-On met en place le projet Next.js, puis on construit la brique en petites étapes testées :
-reconnaissance des URL → base de données → vérification des sites → ajout d'une source → page Sources → retrait.
+On sécurise d'abord l'accès réseau, puis on construit la cascade pièce par pièce, chacune testée sur des copies
+figées des vrais sites d'Izenn : flux RSS → repérage des liens d'articles → lecture d'un article → relevé complet d'une source → interface.
 
 ## Décisions d'architecture
-- **Logique séparée de l'interface** : toute la logique vit dans `src/modules/sources/` et se teste sans navigateur.
-  La page Next.js ne fait qu'appeler ces fonctions.
-- **Drizzle ORM** : le même code de base de données fonctionnera avec SQLite (local) et Supabase/Postgres (plus tard).
-- **Vérification réseau injectable** : la fonction qui contacte les sites est passée en paramètre, pour la tester avec un faux serveur local.
-- **Un utilisateur par défaut** créé automatiquement (pas de connexion), mais la table `subscriptions` est déjà prête pour plusieurs utilisateurs.
+- **Un seul point d'accès réseau** (`src/modules/fetching/`) : toutes les requêtes passent par lui (blocage des adresses
+  internes, taille max, délai, robots.txt, pause entre deux pages d'un même site). La vérification de la brique 1 l'utilise aussi.
+- **Copies figées des vrais sites** dans `tests/fixtures/` : les tests ne dépendent pas d'internet et restent reproductibles.
+  Un script permet de les rafraîchir quand un site change de structure.
+- **Chaque niveau de la cascade renvoie le même format** (« article candidat ») : le relevé ne sait pas d'où vient l'article.
+- **Méthode mémorisée par source** : on retente d'abord la méthode qui a marché la dernière fois.
 
 ## Liste des tâches
 
 ### Phase 1 : Fondations
-- [x] Tâche 1 : Mettre en place le projet (Next.js, TypeScript, Vitest, lint)
-- [x] Tâche 2 : Reconnaître et normaliser une URL
+- [ ] Tâche 1 : Accès réseau sécurisé (adresses internes bloquées, taille, délai, redirections vérifiées)
+- [ ] Tâche 2 : Politesse (robots.txt + pause entre deux pages d'un même site)
+- [ ] Tâche 3 : Base de données (table `posts` + infos de relevé sur `sources`)
 
 ### Checkpoint 1
-- [x] Tests, lint et typecheck passent ; la page d'accueil s'affiche
+- [ ] Tests OK ; la brique 1 marche toujours (ajout d'une source dans le navigateur)
 
-### Phase 2 : Moteur
-- [x] Tâche 3 : Créer la base de données (sources, users, subscriptions)
-- [x] Tâche 4 : Vérifier qu'un site web répond
-- [x] Tâche 5 : Ajouter une source (reconnaissance + vérification + enregistrement sans doublon)
+### Phase 2 : La cascade
+- [ ] Tâche 4 : Copies figées des 6 sites (+ un article de chacun)
+- [ ] Tâche 5 : Niveau 1 — trouver et lire un flux RSS/Atom
+- [ ] Tâche 6 : Niveau 2a — repérer les liens d'articles dans une page (piège Brand New inclus)
+- [ ] Tâche 7 : Niveau 2b — lire un article (OpenGraph, date, texte complet)
 
 ### Checkpoint 2
-- [x] Tous les tests passent, y compris les cas de doublons et de sites en erreur
+- [ ] Les 6 sites donnent des articles corrects sur leurs copies figées — point avec Izenn
 
-### Phase 3 : Interface minimale
-- [x] Tâche 6 : Page Sources — ajouter et lister
-- [x] Tâche 7 : Retirer une source
+### Phase 3 : Relevé et interface
+- [ ] Tâche 8 : Relever une source (cascade, doublons, limite de 20, marqueur « antérieur », statut)
+- [ ] Tâche 9 : Interface — relevé après l'ajout, bouton « Relever maintenant », statut et derniers articles
 
 ### Checkpoint final
-- [x] Tous les critères de succès de la spec sont cochés
-- [x] Review (`/review`), push de la branche, proposition de pull request
+- [ ] Tous les critères de succès de la spec cochés, testés sur les vrais sites
+- [ ] `/review`, push de la branche, proposition de pull request
 
 ## Risques
 | Risque | Impact | Parade |
 |---|---|---|
-| `better-sqlite3` ne s'installe pas avec Node 26 (module compilé) | Moyen | **Appliqué** : `@libsql/client` utilisé dès la tâche 3 |
-| Certains sites bloquent les robots (erreur 403) alors qu'ils existent | Moyen | Envoyer un en-tête navigateur classique ; traiter 403 comme « existe mais protégé » et accepter la source |
-| Règles d'URL des réseaux sociaux qui changent | Faible | Règles regroupées dans un seul fichier, couvertes par des tests |
-
-## Review (fin de brique)
-- Corrigé : une erreur au démarrage de la base n'est plus gardée en mémoire (nouvel essai à la requête suivante).
-- Corrigé : test d'exemple de la tâche 1 supprimé (remplacé par les vrais tests).
-- **À faire avant la mise en ligne** (sécurité) : la vérification des sites contacte n'importe quelle adresse,
-  y compris celles du réseau interne du serveur (ex. 127.0.0.1, 192.168.x.x). Sans danger en local, mais à bloquer
-  avant d'héberger Plomb pour d'autres utilisateurs. À traiter dans la brique `aspiration-web`, qui contactera aussi les sites.
+| Le repérage des liens d'articles se trompe sur un site (catégories, menus) | Élevé | Règles testées sur les 6 vrais sites ; un site raté est marqué « illisible » plutôt que de produire des faux articles |
+| Un site change de structure | Moyen | Copies figées rafraîchissables par script ; statut d'erreur visible par source |
+| Un site bloque Plomb (anti-robot) | Moyen | Statut « bloqué » visible ; ces sites seront candidats au niveau 3 / service tiers |
+| Relevé lent (20 articles × 1 s de pause) | Faible | Normal pour un premier relevé ; ensuite seuls les nouveaux articles sont ouverts |
 
 ## Questions ouvertes
-- Aucune pour l'instant.
+- Aucune.

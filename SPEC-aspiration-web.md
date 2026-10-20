@@ -1,6 +1,6 @@
 # Spec : aspiration-web
 
-Brique 2 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [sources](SPEC-sources.md). Statut : **en attente de validation**.
+Brique 2 de [CAPABILITY-MAP.md](CAPABILITY-MAP.md). Dépend de [sources](SPEC-sources.md). Statut : **validée le 2026-10-20**.
 
 ## Objectif
 Pour chaque source de type **site web**, récupérer ses publications récentes (titre, lien, résumé, image, date)
@@ -43,7 +43,10 @@ Instagram, X et LinkedIn ne sont **pas** concernés (brique `aspiration-sociale`
 La méthode qui a marché (RSS ou page) est mémorisée par source pour aller directement au bon niveau la fois suivante.
 
 ### Règles
-- **Premier relevé** : les 20 publications les plus récentes. **Relevés suivants** : uniquement les nouvelles (au plus 20).
+- **Principe produit** : Plomb informe sur **ce qui arrive maintenant**, pas sur le passé.
+- **Premier relevé** : les 20 publications les plus récentes, marquées **« antérieures à l'abonnement »** : elles servent
+  de point de départ (« déjà vu ») et de matière pour les tests, et les briques `depeches` / `edition` pourront les exclure.
+- **Relevés suivants** : uniquement les nouvelles (au plus 20), qui sont les vraies nouveautés.
 - **Date** : la date de publication si le site la donne, sinon la date à laquelle Plomb a découvert l'article.
 - **Doublons** : un article est identifié par son adresse nettoyée (même règles que les sources) — jamais enregistré deux fois.
 - **Déclenchement** : automatiquement juste après l'ajout d'une source web, et via un bouton « Relever maintenant ».
@@ -77,7 +80,7 @@ tests/fixtures/                 → copies de pages réelles (the-brandidentity,
 
 ## Modèle de données
 - Nouvelle table `posts` : source, adresse (unique), titre, résumé, image, date de publication (si connue),
-  date de découverte, texte complet (pour l'IA), méthode (`rss` | `page`).
+  date de découverte, texte complet (pour l'IA), méthode (`rss` | `page`), marqueur « antérieur à l'abonnement ».
 - Ajouts à `sources` : méthode retenue, adresse du flux trouvé, date / statut / message du dernier relevé.
 
 ## Code Style
@@ -99,7 +102,8 @@ Comme la brique 1 : fonctions courtes, logique séparée de l'interface, réseau
 - [ ] the-brandidentity.com/features, itsnicethat.com et underconsideration.com/brandnew → au moins 10 articles chacun, avec titre, image et lien, **sans pages de catégorie**
 - [ ] dandad.org (archive des prix) → les entrées de l'archive sont reconnues comme articles
 - [ ] findings.mouthwash.studio et offbrandkoto.substack.com → articles avec date de publication (via RSS)
-- [ ] Un deuxième relevé n'ajoute que les nouveaux articles (0 doublon)
+- [ ] Un deuxième relevé n'ajoute que les nouveaux articles (0 doublon), qui ne sont **pas** marqués « antérieurs »
+- [ ] Les articles du premier relevé sont marqués « antérieurs à l'abonnement »
 - [ ] Un site illisible ou injoignable affiche un statut d'erreur clair sans bloquer les autres sources
 - [ ] Les adresses internes sont refusées (ajout et relevé)
 - [ ] `npm test`, `npm run lint` et `npm run typecheck` passent
@@ -107,8 +111,8 @@ Comme la brique 1 : fonctions courtes, logique séparée de l'interface, réseau
 ## Décisions
 1. Niveau 3 (IA) : **plus tard** — on mesure d'abord combien de sites restent illisibles, et on choisit l'IA (locale) avec la brique `edition`.
 2. Texte complet des articles : **stocké pour l'IA**, jamais affiché.
-3. Sites de test : ceux d'Izenn (tableau ci-dessus).
+3. Sites de test : ceux d'Izenn (tableau ci-dessus). D&AD est ajouté sans `?page=2` (les nouveautés sont en page 1).
+4. Articles du premier relevé gardés comme matière de test et point de départ, mais marqués « antérieurs à l'abonnement ».
 
 ## Open Questions
-1. D&AD : l'adresse donnée pointe vers la **page 2** de l'archive (`?page=2`). Les nouveautés sont en page 1 :
-   proposition d'ajouter la source sans `?page=2`.
+- Aucune.
