@@ -88,8 +88,8 @@
 ## Tâche 9 : Interface
 **Description :** Relevé lancé juste après l'ajout d'une source web ; bouton « Relever maintenant » ; pour chaque source : statut du dernier relevé et ses derniers articles (vignette, titre, lien). Instagram/X/LinkedIn affichés « en attente ».
 **Critères :**
-- [ ] Ajouter the-brandidentity.com/features → ses articles apparaissent
-- [ ] « Relever maintenant » fonctionne et met à jour les statuts
+- [x] Ajouter the-brandidentity.com/features → ses articles apparaissent
+- [x] « Relever maintenant » fonctionne et met à jour les statuts
 **Vérification :** test manuel sur les 6 vrais sites
 **Dépendances :** 8 · **Taille :** M
 **Fichiers :** `src/app/page.tsx`, `src/app/actions.ts`, `src/modules/aspiration-web/list-posts.ts`

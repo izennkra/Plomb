@@ -36,7 +36,7 @@ figées des vrais sites d'Izenn : flux RSS → repérage des liens d'articles �
 
 ### Phase 3 : Relevé et interface
 - [x] Tâche 8 : Relever une source (cascade, doublons, limite de 20, marqueur « antérieur », statut)
-- [ ] Tâche 9 : Interface — relevé après l'ajout, bouton « Relever maintenant », statut et derniers articles
+- [x] Tâche 9 : Interface — relevé après l'ajout, bouton « Relever maintenant », statut et derniers articles
 
 ### Checkpoint final
 - [ ] Tous les critères de succès de la spec cochés, testés sur les vrais sites
